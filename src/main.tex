@@ -1,0 +1,354 @@
+% \section{はじめに}
+% Chubanovが線形計画問題の許容解を得るための強多項式時間アルゴリズムを提案している。そこで、本論文でがこのアルゴリズムを半正定値計画問題の許容解をみつけることができるよう拡張したアルゴリズムを提案する。すなわち、
+% \begin{align}
+%   \begin{array}{lll}
+%     \mathrm{find} & X \\
+%     \mathrm{s.t.} & A_i \cdot X = 0 & (i = 1, 2, \cdots, m) \\
+%                   & X \succeq 0
+%   \end{array}
+% \end{align} \label{SDP}
+% という問題を解くアルゴリズムを提案する。
+
+\section{半正定値計画問題}
+\subsection{半正定値と正定値}
+$n$次実対称行列$A$が半正定値であるとは
+\begin{align}
+  \forall \mathbf{x} \in \mathbb{R}^n, \mathbf{x}^T A \mathbf{x} \geq 0
+\end{align} \label{PSD}
+であることをいい、$A$が正定値であるとは
+\begin{align}
+  \begin{array}{ll}
+    \forall \mathbf{x} \in \mathbb{R}^n, \mathbf{x}^T A \mathbf{x} > 0 & \text{ただし}\mathbf{x} \not = \mathbf{0}
+  \end{array}
+\end{align} \label{PD}
+ということを言う。$A$が半正定値・正定値を示すときはそれぞれ
+\begin{description}
+  \item[半正定値] $A \succeq 0$
+  \item[正定値]   $A \succ 0$
+\end{description}
+で表す。また、$n$次対称行列の集合を$S^n$、$n$次対称行列の集合を$S_+^n$とする。
+
+$A$が半正定値である事の同値条件は$A$の固有値$\lambda$が$\lambda \geq 0$であり、$A$が正定値である事の同値条件は$\lambda > 0$であることである。実際、半正定値の場合だけ見てみると、固有ベクトルは$A x_\lambda = \lambda x_\lambda$を満たし、(\ref{PSD})から
+\begin{align*}
+                  & x_\lambda^T A x_\lambda \geq 0 \\
+  \Leftrightarrow & x_\lambda^T \lambda x_\lambda \geq 0 \\
+  \Leftrightarrow & \lambda \|x_\lambda\| \geq 0 \\
+\end{align*}
+ここで、$\|x_\lambda\| \geq 0$なので、$\lambda \geq 0$。同様に正定値の場合も(\ref{PD})から示す事ができる。
+
+\subsection{行列の内積とノルム}
+$n$次実対称行列$X, Y$に対して、行列の内積を
+\begin{align*}
+  X \cdot Y = \mathrm{tr}(X Y)
+\end{align*}
+、ノルムを
+\begin{align*}
+  \|X\| = \sqrt{X \cdot X}
+\end{align*}
+とする。
+
+\subsection{錐}
+錐$\mathcal{K} \subseteq \mathbb{R}^n$とは任意の$\mathbf{x} \in \mathcal{K}$、任意の$\alpha > 0$に対して、$\alpha \mathbf{x} \in \mathcal{K}$となるような集合のことをいう。錐が凸、すなわち、
+\begin{align*}
+  \mathbf{x}_1, \mathbf{x}_2 \in \mathcal{K}, \alpha_1, \alpha_2 \in \mathbb{R}
+\end{align*}
+に対し、$\alpha_1 + \alpha_2 = 1$かつ$\alpha_1, \alpha_2 \geq 0$に対し、$\alpha_1 \mathbf{x}_1 + \alpha_2 \mathbf{x}_2 \in \mathcal{K}$を満たすとき$\mathcal{K}$を凸錐といい、その凸錐が閉集合の時、その錐のことを閉凸錐という。
+
+すると、次の定理を得る事ができる。
+\begin{theorem*}
+  $S_+^n$は凸錐である。
+\end{theorem*}
+
+\begin{proof}
+  まず、$S_+^n$が錐であることを示す。$\alpha > 0$と任意のベクトル$\mathbf{x} \in \mathbb{R}^n$および$A \in S_+^n$に対して、$\alpha A$が$S_+^n$に入るかを確認する。
+  \begin{align*}
+    \mathbf{x}^T \alpha A \mathbf{x} = \alpha \mathbf{x}^T A \mathbf{x}
+  \end{align*}
+  であり、$\alpha > 0$、$\mathbf{x}^T A \mathbf{x} \geq 0$より、$\alpha \mathbf{x}^T A \mathbf{x} \geq 0$。すなわち$\alpha A \in S_+^n$である。
+
+  次に、$S_+^n$が凸であることを示す。任意の$A, B \in S_+^n$、$\alpha, \beta \geq 0$に対して、$\alpha + \beta = 1$とする。任意のベクトル$\mathbf{x} \in \mathbf{R}^n$に対して、
+  \begin{align*}
+    \mathbf{x}^T (\alpha A + \beta B) \mathbf{x} = \alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x}
+  \end{align*}
+  ここで、$\alpha \mathbf{x}^T A \mathbf{x} \geq 0$であることと$\beta \mathbf{x}^T B \mathbf{x} \geq 0$であることより、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \geq 0$。したがって、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \in S_+^n$。
+\end{proof}
+
+\subsection{最適化問題}
+最適化問題とはある空間$X$の部分集合$S$の中で関数$f: X \rightarrow R$を最小化・最大化する問題のことをいう。それは例えば
+\begin{align*}
+  \begin{array}{ll}
+    \text{minimize} & f(\mathbf{x}) \\
+    \text{s.t.}     & \mathbf{x} \in S
+  \end{array}
+\end{align*}
+のような問題の事を言う。与えられる関数$f$のことを目的関数といい、$S$のことを実行可能領域という。$S$を決定する条件を制約といい、$S$の要素を許容解という。許容解のうち、目的関数を最小化するような解のことを最適解といい、最適解によって得られる目的関数値を最適値という。
+
+\subsection{半正定値計画問題}
+半正定値計画問題(SDP)とは
+\begin{align*}
+  \begin{array}{lll}
+    \mathrm{minimize} & C \cdot X \\
+    \mathrm{s.t.}     & A_i \cdot X = b_i & (i = 1, 2, \cdots, m) \\
+                      & X \succeq 0
+  \end{array}
+\end{align*}
+と表される問題のことを言う。この問題の双対問題は
+\begin{align*}
+  \begin{array}{lll}
+    \mathrm{maximize} & \mathbf{b}^T \mathbf{y} \\
+    \mathrm{s.t.}     & \displaystyle{\sum_{i = 1}^m y_i A_i + S = C} \\
+                      & S \succeq 0
+  \end{array}
+\end{align*}
+となる。この主問題と双対問題との間には次のような弱双対性と言われる関係性が存在している事が知られている:
+\begin{align*}
+  C \cdot X \geq \mathbf{b}^T \mathbf{y}
+\end{align*}
+。これは次のように簡単に示す事ができる。
+\begin{theorem*}
+  \begin{align*}
+    C \cdot X \geq \mathbf{b}^T \mathbf{y}
+  \end{align*}
+\end{theorem*}
+\begin{proof}
+  \begin{align*}
+    C \cdot X - \mathbf{b}^T \mathbf{y} = (S + \displaystyle{\sum_{i = 1}^m y_i A_i}) \cdot X - \displaystyle{\sum_{i = 1}^m y_i A_i \cdot X} = S \cdot X \geq 0
+  \end{align*}
+\end{proof}
+等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の解は存在し、それは最適値となるが、等号が成立しないとき、すなわち、$C \cdot X \geq \mathbf{b}^T \mathbf{y}$のとき、双対ギャップが存在するという。このとき、主問題と双対問題の解は一致しない。
+
+\section{固有値分解}
+\subsection{固有値分解}
+$n$次実対称行列$A$の固有ベクトルは互いに直行している。$\lambda_1 \not= \lambda_2$を$A$の固有値とする。すると、
+\begin{align*}
+  A \mathbf{x}_1 = \lambda_1 \mathbf{x}_1 \\
+  A \mathbf{x}_2 = \lambda_2 \mathbf{x}_2
+\end{align*}
+となる固有ベクトル$\mathbf{x}_1, \mathbf{x}_2$が存在するが、この各固有ベクトルの転置$\mathbf{x}_1^T, \mathbf{x}_2^T$をそれぞれ左からかけると、
+\begin{align*}
+  \mathbf{x}_2^T A \mathbf{x}_1 = \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 \\
+  \mathbf{x}_1^T A \mathbf{x}_2 = \lambda_2 \mathbf{x}_1^T \mathbf{x}_2
+\end{align*}
+となる。$A$は対称行列なので、
+\begin{align*}
+  \mathbf{x}_2^T A \mathbf{x}_1 & = (A \mathbf{x}_2)^T \mathbf{x}_1 \\
+                                & = (\mathbf{x}_1^T A \mathbf{x_2}) \\
+                                & = (\lambda_2 \mathbf{x}_1^T \mathbf{x}_2)^T \\
+                                & = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1
+\end{align*}
+となる。したがって、
+\begin{align*}
+                  & \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1 \\
+  \Leftrightarrow & (\lambda_1 - \lambda_2) \mathbf{x}_2^T \mathbf{x}_1 = 0
+\end{align*}
+。$\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^T \mathbf{x}_1 = 0$。この事実は$A$の固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べている。この事実から次の定理を得る。
+\begin{theorem*}
+  $A$の固有値を対角成分に並べた行列$\Lambda = \displaystyle{\left(\begin{array}{ccc} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{array}\right)}$とする。$A$は$A = V \Lambda V^T$に分解される。
+\end{theorem*}
+\begin{proof}
+  先ほどの固有ベクトルは直行するという事実を使うと、$V^T V = I$から$V^T = V^{-1}$という関係を導出する事ができる。この事実から
+  \begin{align*}
+    A V = V \Lambda \Rightarrow A = V \Lambda V^{-1} = V \Lambda V^T
+  \end{align*}
+\end{proof}
+
+このように$n$次実対称行列を固有ベクトル$V$と$A$の固有値を対角成分に並べた行列$\Lambda$との積に分解する事を固有値分解という。
+\subsection{行列の平方根}
+固有値分解を使うと、$n$次実対称行列$A$の平方根$\displaystyle{A^{\frac{1}{2}}}$、すなわち
+\begin{align*}
+  A^{\frac{1}{2}} = V \Lambda^{\frac{1}{2}} V^T
+\end{align*}
+を考える事ができる。これは2乗すると、
+\begin{align*}
+  A^{\frac{1}{2}} A^{\frac{1}{2}} & = (V \Lambda^{\frac{1}{2}} V^T) (V \Lambda^{\frac{1}{2}} V^T) \\
+                                  & = V \Lambda^{\frac{1}{2}} \Lambda^{\frac{1}{2}} V^T \\
+                                  & = V \Lambda V^T \\
+                                  & = A
+\end{align*}
+となり、元の$A$と一致することがわかる。$\displaystyle{\Lambda^{\frac{1}{2}}}$は
+\begin{align*}
+  \Lambda^{\frac{1}{2}} = \left(
+                            \begin{array}{ccc}
+                              \sqrt{\Lambda_1} &        & \\
+                                               & \ddots & \\
+                                               &        & \sqrt{\Lambda_n}
+                            \end{array}
+                          \right)
+\end{align*}
+とすれば良い。実際、
+\begin{align*}
+  \Lambda^{\frac{1}{2}} \Lambda^{\frac{1}{2}} & = \left(
+                                                    \begin{array}{ccc}
+                                                      \sqrt{\Lambda_1} &        & \\
+                                                                       & \ddots & \\
+                                                                       &        & \sqrt{\Lambda_n}
+                                                    \end{array}
+                                                  \right)
+                                                  \left(
+                                                    \begin{array}{ccc}
+                                                      \sqrt{\Lambda_1} &        & \\
+                                                                       & \ddots & \\
+                                                                       &        & \sqrt{\Lambda_n}
+                                                    \end{array}
+                                                  \right) \\
+                                              & = \Lambda
+\end{align*}
+
+\section{Chubanovのアルゴリズム}
+Chubanovは線形計画問題
+\begin{align*}
+  \begin{array}{ll}
+    \text{minimize} & \mathbf{c}^T \mathbf{x} \\
+    \text{s.t.}     & A \mathbf{x} = \mathbf{b} \\
+                    & \mathbf{x} \geq \mathbf{0}
+  \end{array}
+\end{align*}
+という半正定値計画問題の特殊ケースの許容解を探し出す強多項式時間アルゴリズムを提案した。このアルゴリズムは2つの手続き
+\begin{itemize}
+  \item Basic Procedure
+  \item Main Procedure
+\end{itemize}
+から構成されている。
+
+Basic Procedureは$A$と$\mathbf{y} \mathbf{1} = 1$となるようなアルゴリズムの開始点$\mathbf{y}$を入力として受け取り、次の3つのうちどれかをさがし、アルゴリズムによって更新した$\mathbf{y}^{out}$とともに出力する。
+\begin{itemize}
+  \item 許容解$\mathbf{x}^* > 0$
+  \item 許容解すべてにおいて$k$番目の要素$\mathbf{x}_k^*$が$0$となっている$P_A \mathbf{y}^T$
+  \item 許容解すべてにおいて$k$番目の要素$\mathbf{x}_k^*$が$\frac{1}{2}$以下になっているときの$P_A \mathbf{y}^T$
+\end{itemize}
+$P_A$は$A$への射影を表している。このアルゴリズムの計算量は$O(n)$で、最大でも$O(n^3)$である。
+
+Main Procedureは$A$を入力とし、このBasic Procedureを呼び出して次の3つを探し出す。
+\begin{itemize}
+  \item 許容解$\mathbf{x}^* > 0$
+  \item 許容解はないが$\mathbf{y} = \mathbf{z} A、\mathbf{y} > \mathbf{0}$となる$\mathbf{y}$が存在する
+  \item 許容解は存在しない
+\end{itemize}
+このアルゴリズムの計算量は$O(n^4 + n^3 L_{\text{min}})$である。$L_{\text{min}}$はMain Procedureのループを一定回数で終了するための上限値である。
+
+\section{ChubanovのアルゴリズムのSDPへの拡張}
+ChubanovのアルゴリズムをSDPへと拡張したアルゴリズムを実装した。そのアルゴリズムをここに記す。
+\subsection{Basic Procedure}
+この手続きは、
+\begin{align*}
+  \left\{
+    \begin{array}{l}
+      A_1, A_2, \cdots, A_m \in S^n\\
+      Y_0 \in S_+^n
+    \end{array}
+  \right.
+\end{align*}
+を入力とし、次のうちどれかを出力として返す。
+\begin{itemize}
+  \item $\displaystyle{\|P_\mathcal{A} Y\| \leq \frac{1}{n^{\frac{3}{2}}} \mathrm{tr}(Y)}$となるような$Y \succ 0$
+  \item $A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X \succ 0$、すなわち許容解
+  \item $\displaystyle{\sum_{i = 1}^m u_i A_i \succ 0}$となるような$\mathbf{u} \in \mathbb{R}^m$
+\end{itemize}
+$P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot Y = 0 (i = 1, 2, \cdots, m)\}$への射影を、$Y_0$はアルゴリズムの開始点をそれぞれ表している。
+
+アルゴリズムはAlgorithm \ref{BasicProcedure}のようになる。
+\begin{algorithm}
+  \caption{Basic Procedure}
+  \label{BasicProcedure}
+  \begin{algorithmic}[1]
+    \State $i \leftarrow 0$
+    \State $Z \leftarrow P_\mathcal{A} Y_0$
+
+    \While {$Z \not= 0 \And Z \not\succ 0 \And \|Z\| > \displaystyle{\frac{1}{n^\frac{3}{2}} \mathrm{tr}Y_i}$}
+      \State $C \leftarrow \text{getIdempotent}(Z)$
+      \State $P \leftarrow P_\mathcal{A} C$
+      \If {$P \not= 0$}
+        \State $\alpha \leftarrow \displaystyle{\frac{P \cdot (P - Z)}{\|Z - P\|^2}}$
+        \State $Y_{i + 1} \leftarrow \alpha Y_i + (1 - \alpha) C$
+      \Else
+        \State \Return $P$ and $C$
+      \EndIf
+
+      \State $i \leftarrow i + 1$
+      \State $Z \leftarrow P_\mathcal{A} Y_i$
+    \EndWhile
+  \end{algorithmic}
+\end{algorithm}
+
+アルゴリズム中のgetIdempotentという関数はAlgorithm \ref{getIdempotent}のようになっている。
+\begin{algorithm}
+  \caption{getIdempotent($Z$)}
+  \label{getIdempotent}
+  \begin{algorithmic}
+    \Input $Z \in S^n \And Z \not= O \And Z \not\succ 0$
+    \State $\mathbf{q} \leftarrow Z\text{の固有値の中でもっとも小さなものにおける単位固有ベクトル}$
+    \State \Return $\mathbf{q} \mathbf{q}^T$
+  \end{algorithmic}
+\end{algorithm}
+
+このアルゴリズムの計算量を示すために、いくつかの補題を示す。
+\begin{lemma*}
+  $q$を$Z$のもっとも小さい固有値における単位固有ベクトルとする。
+  \begin{align*}
+    Z \cdot (\mathbf{q} \mathbf{q}^T) \leq 0
+  \end{align*}
+\end{lemma*}
+\begin{proof}
+  $Z$を固有値分解したときの固有値が対角成分に並ぶ行列を
+  \begin{align*}
+    \Lambda = \left(
+                \begin{array}{ccc}
+                  \lambda_1 &        & \\
+                            & \ddots & \\
+                            &        & \lambda_n
+                \end{array}
+              \right)
+  \end{align*}
+  、単位固有ベクトルを列ベクトルとしたものの行列を
+  \begin{align*}
+    X = \left(
+          \begin{array}{ccc}
+            \mathbf{x}_1 & \cdots & \mathbf{x}_n
+          \end{array}
+        \right)
+  \end{align*}
+  とする。このとき、$\lambda_1 \geq \cdots \geq \lambda_n$となるようにする。すると、
+  \begin{align*}
+    Z \cdot (\mathbf{q} \mathbf{q}^T) & = (X \Lambda X^T) \cdot (\mathbf{q} \mathbf{q}^T) \\
+                                      & = \mathrm{tr}(X \Lambda X^T \mathbf{q} \mathbf{q}^T) \\
+                                      & = \mathrm{tr}(X \Lambda (\mathbf{q} \mathbf{q}^T X)^T) \\
+                                      & = \mathrm{tr}(X \Lambda (\mathbf{q} \left(0, \cdots, 0, \|\mathbf{q}\|^2\right))^T) \\
+                                      & = \mathrm{tr}(X \Lambda \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ \|\mathbf{q}\|^2 \end{array}\right) \mathbf{q}^T) \\
+                                      & = \mathrm{tr}(X \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ \lambda_n \|\mathbf{q}\|^2 \end{array}\right) \mathbf{q}^T) \\
+                                      & = \mathrm{tr}(\lambda_n \|\mathbf{q}\|^2 \mathbf{q} \mathbf{q}^T) \\
+                                      & = \mathrm{tr}(\lambda_n \|\mathbf{q}\|^4) \\
+                                      & = \lambda_n \|\mathbf{q}\|^4
+  \end{align*}
+  $\|\mathbf{q}\|^4 \geq 0$で、$\lambda_n < 0$なので、$Z \cdot (\mathbf{q} \mathbf{q}^T) \leq 0$
+\end{proof}
+
+\begin{lemma*}
+  \begin{align*}
+    \frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2} \geq \frac{1}{\|P_\mathcal{A} Y_i\|^2} + 1
+  \end{align*}
+\end{lemma*}
+\begin{proof}
+  \begin{align*}
+    Z \cdot P = \mathrm{tr}(Z P) = \mathrm{tr}(Z^T P_\mathcal{A} C) = \mathrm{tr}((P_\mathcal{A} Z)^T C) = (P_\mathcal{A} Z) \cdot C
+  \end{align*}
+  であり、$P_\alpha$が射影であることから、$P_\mathcal{A} Z = Z$。なぜならば、$Z$はすでに$\mathcal{A}$上に射影された$Y_i$だからである。したがって、
+  \begin{align*}
+    (P_\mathcal{A} Z) \cdot C = Z \cdot C \leq 0
+  \end{align*}
+  したがって、
+  \begin{align*}
+    \|Z - P\|^2 = \mathrm{tr}((Z - P)(Z - P)) = \mathrm{tr}(Z^2 - 2 P Z + P^2) = \|Z\|^2 - 2 Z \cdot P + \|P\|^2
+  \end{align*}
+  となり、この関係式を変形すると、
+  \begin{align*}
+    \frac{\|Z\|^2 - Z \cdot P}{\|Z - P\|^2} + \frac{\|P^2\| - Z \cdot P}{\|Z - P\|^2} = 1
+  \end{align*}
+  また、
+  \begin{align*}
+    P_\mathcal{A} Y_{i + 1} = \alpha P_\mathcal{A} Y_i + (1 - \alpha) P_\mathcal{A} C = \alpha Z + (1 - \alpha) P
+  \end{align*}
+  から、
+  \begin{align*}
+    \|P_\mathcal{A} Y_{i + 1}\|^2 = 
+  \end{align*}
+\end{proof}

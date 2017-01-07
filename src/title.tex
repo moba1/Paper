@@ -1,0 +1,23 @@
+\documentclass[a4paper,uplatex]{jsarticle}
+
+\usepackage[backend=biber, style=numeric]{biblatex}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{algorithm, algpseudocode}
+
+% アルゴリズム関連
+\algnewcommand\algorithmicinput{\textbf{INPUT: }}
+\algnewcommand\Input{\item[\algorithmicinput]}
+
+% 定理関連
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem*{theorem*}{定理}
+\newtheorem{definition}[theorem]{定義}
+\newtheorem*{definition*}{定義}
+\newtheorem{lemma}[theorem]{補題}
+\newtheorem*{lemma*}{補題}
+\renewcommand\proofname{\textbf{証明}}
+
+\begin{document}
+  \input main.tex
+\end{document}
