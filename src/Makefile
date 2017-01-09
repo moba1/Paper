@@ -5,6 +5,9 @@ entry := title
 all: $(entry)
 
 $(entry):
+	latexmk $@
+
+pvc:
 	latexmk -pvc $(entry)
 
 clean:

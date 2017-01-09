@@ -3,10 +3,13 @@
 \usepackage[backend=biber, style=numeric]{biblatex}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{algorithm, algpseudocode}
+\usepackage{enumitem}
 
 % アルゴリズム関連
 \algnewcommand\algorithmicinput{\textbf{INPUT: }}
 \algnewcommand\Input{\item[\algorithmicinput]}
+\algnewcommand{\algorithmicgoto}{\textbf{go to}}
+\algnewcommand{\Goto}[1]{\algorithmicgoto~\ref{#1}}
 
 % 定理関連
 \theoremstyle{definition}
