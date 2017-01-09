@@ -274,18 +274,18 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
 \begin{algorithm}
   \caption{getIdempotent($Z$)}
   \label{getIdempotent}
-  \begin{algorithmic}
+  \begin{algorithmic}[1]
     \Input $Z \in S^n \And Z \not= O \And Z \not\succ 0$
     \State $\mathbf{q} \leftarrow Z\text{の固有値の中でもっとも小さなものにおける単位固有ベクトル}$
     \State \Return $\mathbf{q} \mathbf{q}^T$
   \end{algorithmic}
 \end{algorithm}
-射影$Z = P_\mathcal{A} Y$の計算は次のような問題
+射影$Z = P_\mathcal{A} Y$の計算は次のような$Y$と$Z \in \mathrm{ker} \mathcal{A}$の距離を最小化するような問題
 \begin{align*}
   \left\{
     \begin{array}{lll}
-      \text{minimize} & \frac{1}{2} \|Y - Z\|^2 & \\
-      \text{s.t.}     & A_i \cdot Z             & (i = 1, \cdots, m)
+      \text{minimize} & \displaystyle{\frac{1}{2}} \|Y - Z\|^2 & \\
+      \text{s.t.}     & A_i \cdot Z = 0         & (i = 1, \cdots, m)
     \end{array}
   \right.
 \end{align*}
@@ -308,10 +308,10 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
 \begin{algorithm}
   \caption{$Z = P_\mathcal{A} Y$の計算}
   \label{projection}
-  \begin{algorithmic}
+  \begin{algorithmic}[1]
     \State $G_{i j} \leftarrow \mathrm{tr}(A_i A_j)$
     \State $b_j \leftarrow A_j \cdot Y$
-    \State $G \mathbf{\lambda} = \mathbf{b}$を解く。
+    \State $G {\bm \lambda} = \mathbf{b}$を解く。
     \State \Return $Z \leftarrow Y - \displaystyle{\sum_{i = 1}^m \lambda_i A_i}$
   \end{algorithmic}
 \end{algorithm}
