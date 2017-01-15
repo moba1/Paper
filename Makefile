@@ -1,6 +1,6 @@
 srcdir := src
 
-.PHONY: all, clean, $(srcdir), pvc
+.PHONY: all, clean, pvc, $(srcdir)
 
 all: $(srcdir)
 

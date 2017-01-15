@@ -1,13 +1,15 @@
-% \section{はじめに}
-% Chubanovが線形計画問題の許容解を得るための強多項式時間アルゴリズムを提案している。そこで、本論文でがこのアルゴリズムを半正定値計画問題の許容解をみつけることができるよう拡張したアルゴリズムを提案する。すなわち、
-% \begin{align}
-%   \begin{array}{lll}
-%     \mathrm{find} & X \\
-%     \mathrm{s.t.} & A_i \cdot X = 0 & (i = 1, 2, \cdots, m) \\
-%                   & X \succeq 0
-%   \end{array}
-% \end{align} \label{SDP}
-% という問題を解くアルゴリズムを提案する。
+\section{はじめに}
+Chubanovが$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、$A \mathbf{x} = 0, \mathbf{x} \geq 0$という問題の許容解を得るための強多項式時間アルゴリズムを提案した。それは$\{\mathbf{x} | A \mathbf{x} = \mathbf{0}\}$という空間への射影$P_A$の各列ベクトル$\mathbf{p}_1, \mathbf{p}_2, \cdots, \mathbf{p}_n$の中で$\mathbf{p}_i^T \mathbf{x} > \mathbf{0} \,\, (i = 1, 2, \cdots, n)$を満たさないもの、すなわち$\mathbf{p}_i^T \mathbf{x} < 0$となる$\mathbf{p}_i$および$\mathbf{x}$を$\mathbf{x}' = \alpha \mathbf{x} + (1 - \alpha) \mathbf{p}$と次々凸結合して$\mathbf{x}$を$\mathbf{x}'$へと更新していくBasic Procedureと呼ばれるアルゴリズムと$\mathbf{p}_i^T \mathbf{x} < 0 (i = 1, 2, \cdots, n)$となる$A$の$i$行目を$1 / 2$倍するMain Procedureと呼ばれるアルゴリズムの2つからなる。この2つを使って、$\mathbf{x} > \mathbf{0}$となる許容解かそれともそのような許容解が存在しないかを導く。
+
+本論文ではこのアルゴリズムを$A_i \cdot X = 0, X \succeq 0 \,\, (i = 1, 2, \cdots m)$の許容解$X \succ 0$が存在するかを導けるように拡張したアルゴリズムを提案する。すなわち、
+\begin{align}
+  \begin{array}{lll}
+    \mathrm{find} & X \\
+    \mathrm{s.t.} & A_i \cdot X = 0 & (i = 1, 2, \cdots, m) \\
+                  & X \succ 0
+  \end{array}
+\end{align} \label{SDP}
+という問題を解くアルゴリズムを提案する。
 
 \section{半正定値計画問題}
 \subsection{半正定値と正定値}
@@ -15,26 +17,54 @@ $n$次実対称行列$A$が半正定値であるとは
 \begin{align} \label{PSD}
   \forall \mathbf{x} \in \mathbb{R}^n, \mathbf{x}^T A \mathbf{x} \geq 0
 \end{align}
-であることをいい、$A$が正定値であるとは
+であることをいい、$A$が正定値であるとは任意の$\mathbf{0}$でない$\mathbf{x} \in \mathbb{R}^n$に対して、
 \begin{align} \label{PD}
-  \begin{array}{ll}
-    \forall \mathbf{x} \in \mathbb{R}^n, \mathbf{x}^T A \mathbf{x} > 0 & \text{ただし}\mathbf{x} \not = \mathbf{0}
-  \end{array}
+  \mathbf{x}^T A \mathbf{x} > 0
 \end{align}
-ということを言う。$A$が半正定値・正定値を示すときはそれぞれ
+であることをいう。$A$が半正定値・正定値を示すときはそれぞれ
 \begin{description}
   \item[半正定値] $A \succeq 0$
   \item[正定値]   $A \succ 0$
 \end{description}
-で表す。また、$n$次対称行列の集合を$S^n$、$n$次対称行列の集合を$S_+^n$とする。
+で表す。また、$n$次対称行列の集合を$S^n$、$n$次対称行列のなかでも半正定値の集合を$S_+^n$と表記する。
 
-$A$が半正定値である事の同値条件は$A$の固有値$\lambda$が$\lambda \geq 0$であり、$A$が正定値である事の同値条件は$\lambda > 0$であることである。実際、半正定値の場合だけ見てみると、固有ベクトルは$A x_\lambda = \lambda x_\lambda$を満たし、(\ref{PSD})から
-\begin{align*}
-                  & x_\lambda^T A x_\lambda \geq 0 \\
-  \Leftrightarrow & x_\lambda^T \lambda x_\lambda \geq 0 \\
-  \Leftrightarrow & \lambda \|x_\lambda\| \geq 0 \\
-\end{align*}
-。ここで、$\|x_\lambda\| \geq 0$なので、$\lambda \geq 0$。同様に正定値の場合も(\ref{PD})から示す事ができる。
+$A$が半正定値ならば$A$の全ての固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$が非負、すなわち$\lambda_i \geq 0 \,\, (i = 1, 2, \cdots, n)$であり、$A$が正定値であるなら正、すなわち$\lambda_i > 0 \,\, (i = 1, 2, \cdots, n)$である。実際、半正定値の場合だけ見てみると、
+\begin{theorem*}
+  $A$が半正定値ならば$A$の全ての固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$は非負である。
+\end{theorem*}
+\begin{proof}
+  $A$の固有値のなかから任意にひとつとってきて$\lambda$とする。この固有値に対応する固有ベクトルを$\mathbf{x}_\lambda$とすると、(\ref{PSD})から
+  \begin{align*}
+    \mathbf{x}_\lambda^T A \mathbf{x}_\lambda \geq 0
+  \end{align*}
+  である。$\lambda$は$A$の固有値なので、
+  \begin{align*}
+    A \mathbf{x}_\lambda = \lambda \mathbf{x}_\lambda
+  \end{align*}
+  という関係式が成立するので、
+  \begin{align*}
+    \mathbf{x}_\lambda^T A \mathbf{x}_\lambda = \mathbf{x}_\lambda^T \lambda \mathbf{x}_\lambda \geq 0
+  \end{align*}
+  。$\lambda$は非負の実数なので
+  \begin{align*}
+    \mathbf{x}_\lambda^T \lambda \mathbf{x}_\lambda = \lambda \mathbf{x}_\lambda^T \mathbf{x}_\lambda = \lambda \|\mathbf{x}_\lambda\|^2 \geq 0
+  \end{align*}
+  となる。ここで、$\|\mathbf{x}_\lambda\|^2 \geq 0$なので、$\lambda \geq 0$。
+\end{proof}
+から簡単に示すことができる。正定値の場合は(\ref{PD})を使い、同様の手順で簡単に示す事ができる。
+
+さらに、$\mathbf{x} \in \mathbb{R}^n$に対して、
+\begin{lemma*} %\ref{SemidefiniteDuality}
+  $\mathbf{x} \in \mathbb{R}^n$に対して、$\mathbf{x} \mathbf{x}^T \in S_+^n$である。
+\end{lemma*}
+\begin{proof}
+  任意の$\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$に対し、$\mathbf{y}^T \mathbf{x} \mathbf{x}^T \mathbf{y}$を考える。すると
+  \begin{align*}
+    \mathbf{y}^T \mathbf{x} \mathbf{x}^T \mathbf{y} = (\mathbf{x}^T \mathbf{y})^T \mathbf{x}^T \mathbf{y} = |\mathbf{x}^T \mathbf{y}|^2 \geq 0
+  \end{align*}
+  となる。よって$\mathbf{x} \mathbf{x}^T \in S_+^n$である。
+\end{proof}
+が成立する。
 
 \subsection{行列の内積とノルム}
 $n$次実対称行列$X, Y$に対して、行列の内積を
@@ -48,74 +78,40 @@ $n$次実対称行列$X, Y$に対して、行列の内積を
 とする。
 
 \subsection{錐}
-錐$\mathcal{K} \subseteq \mathbb{R}^n$とは任意の$\mathbf{x} \in \mathcal{K}$、任意の$\alpha > 0$に対して、$\alpha \mathbf{x} \in \mathcal{K}$となるような集合のことをいう。錐が凸、すなわち、
+錐$\mathcal{K} \subseteq \mathbb{R}^n$とは任意の$\mathbf{x} \in \mathcal{K}, \alpha > 0$に対して、$\alpha \mathbf{x} \in \mathcal{K}$となるような集合のことをいい、集合$\mathcal{K}$が凸であるとは
 \begin{align*}
   \mathbf{x}_1, \mathbf{x}_2 \in \mathcal{K}, \alpha_1, \alpha_2 \in \mathbb{R}
 \end{align*}
-に対し、$\alpha_1 + \alpha_2 = 1$かつ$\alpha_1, \alpha_2 \geq 0$に対し、$\alpha_1 \mathbf{x}_1 + \alpha_2 \mathbf{x}_2 \in \mathcal{K}$を満たすとき$\mathcal{K}$を凸錐といい、その凸錐が閉集合の時、その錐のことを閉凸錐という。
+に対して
+\begin{align*}
+  \alpha_1 + \alpha_2 = 1, \alpha_1, \alpha_2 \geq 0
+\end{align*}
+としたとき
+\begin{align*}
+  \alpha_1 \mathbf{x}_1 + \alpha_2 \mathbf{x}_2 \in \mathcal{K}
+\end{align*}
+となることをいう。凸な錐は$\mathcal{K}$を凸錐と呼ばれ、その凸錐が閉集合の時、その錐のことを閉凸錐と呼ばれる。
 
-すると、次の定理を得る事ができる。
+$S_+^n$はこの定義のもと凸錐となる。実際、
 \begin{theorem*}
   $S_+^n$は凸錐である。
 \end{theorem*}
-
 \begin{proof}
-  まず、$S_+^n$が錐であることを示す。$\alpha > 0$と任意のベクトル$\mathbf{x} \in \mathbb{R}^n$および$A \in S_+^n$に対して、$\alpha A$が$S_+^n$に入るかを確認する。
+  まず、$S_+^n$が錐であることを示す。$\alpha > 0$と任意のベクトル$\mathbf{x} \in \mathbb{R}^n$および$A \in S_+^n$に対して、$\alpha A$が$S_+^n$に入るかを確認する。そのために$\mathbf{x}^T \alpha A \mathbf{x}$が非負であるかを確かめる。まず、$\alpha$が非負の実数であることから
   \begin{align*}
     \mathbf{x}^T \alpha A \mathbf{x} = \alpha \mathbf{x}^T A \mathbf{x}
   \end{align*}
-  であり、$\alpha > 0$、$\mathbf{x}^T A \mathbf{x} \geq 0$より、$\alpha \mathbf{x}^T A \mathbf{x} \geq 0$。すなわち$\alpha A \in S_+^n$である。
+  となり、$A \in S_+^n$、$\alpha > 0$という仮定から$\mathbf{x}^T A \mathbf{x} \geq 0$より、$\alpha \mathbf{x}^T A \mathbf{x} \geq 0$。従って$\alpha A \in S_+^n$となるので$S_+^n$は錐である。
 
   次に、$S_+^n$が凸であることを示す。任意の$A, B \in S_+^n$、$\alpha, \beta \geq 0$に対して、$\alpha + \beta = 1$とする。任意のベクトル$\mathbf{x} \in \mathbf{R}^n$に対して、
   \begin{align*}
     \mathbf{x}^T (\alpha A + \beta B) \mathbf{x} = \alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x}
   \end{align*}
-  。ここで、$\alpha \mathbf{x}^T A \mathbf{x} \geq 0$であることと$\beta \mathbf{x}^T B \mathbf{x} \geq 0$であることより、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \geq 0$。したがって、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \in S_+^n$。
-\end{proof}
+  。ここで、仮定$A, B \in S_+^n$、つまり$\mathbf{x}^T A \mathbf{x} \geq 0, \mathbf{x}^T B \mathbf{x} \geq 0$および$\alpha, \beta \geq 0$から$\alpha \mathbf{x}^T A \mathbf{x} \geq 0$かつ$\beta \mathbf{x}^T B \mathbf{x} \geq 0$より、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \geq 0$。したがって、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \in S_+^n$。ゆえに$S_+^n$は凸である。
 
-\subsection{最適化問題}
-最適化問題とはある空間$X$の部分集合$S$の中で関数$f: X \rightarrow R$を最小化・最大化する問題のことをいう。それは例えば
-\begin{align*}
-  \begin{array}{ll}
-    \text{minimize} & f(\mathbf{x}) \\
-    \text{s.t.}     & \mathbf{x} \in S
-  \end{array}
-\end{align*}
-のような問題の事を言う。与えられる関数$f$のことを目的関数といい、$S$のことを実行可能領域という。$S$を決定する条件を制約といい、$S$の要素を許容解という。許容解のうち、目的関数を最小化するような解のことを最適解といい、最適解によって得られる目的関数値を最適値という。
-
-\subsection{半正定値計画問題}
-半正定値計画問題(SDP)とは
-\begin{align*}
-  \begin{array}{lll}
-    \mathrm{minimize} & C \cdot X \\
-    \mathrm{s.t.}     & A_i \cdot X = b_i & (i = 1, 2, \cdots, m) \\
-                      & X \succeq 0
-  \end{array}
-\end{align*}
-と表される問題のことを言う。この問題の双対問題は
-\begin{align*}
-  \begin{array}{lll}
-    \mathrm{maximize} & \mathbf{b}^T \mathbf{y} \\
-    \mathrm{s.t.}     & \displaystyle{\sum_{i = 1}^m} y_i A_i + S = C \\
-                      & S \succeq 0
-  \end{array}
-\end{align*}
-となる。この主問題と双対問題との間には次のような弱双対性と言われる関係性が存在している事が知られている:
-\begin{align*}
-  C \cdot X \geq \mathbf{b}^T \mathbf{y}
-\end{align*}
-。これは次のように簡単に示す事ができる。
-\begin{theorem*}
-  \begin{align*}
-    C \cdot X \geq \mathbf{b}^T \mathbf{y}
-  \end{align*}
-\end{theorem*}
-\begin{proof}
-  \begin{align*}
-    C \cdot X - \mathbf{b}^T \mathbf{y} = (S + \displaystyle{\sum_{i = 1}^m} y_i A_i) \cdot X - \displaystyle{\sum_{i = 1}^m} y_i A_i \cdot X = S \cdot X \geq 0
-  \end{align*}
+  以上から集合$S_+^n$は凸かつ錐となるので、$S_+^n$は凸錐である。
 \end{proof}
-等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の解は存在し、それは最適値となるが、等号が成立しないとき、すなわち、$C \cdot X \geq \mathbf{b}^T \mathbf{y}$のとき、双対ギャップが存在するという。このとき、主問題と双対問題の解は一致しない。
+という定理から凸錐である事実がわかる。
 
 \section{固有値分解}
 \subsection{固有値分解}
@@ -141,7 +137,7 @@ $n$次実対称行列$A$の固有ベクトルは互いに直行している。$\
                   & \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1 \\
   \Leftrightarrow & (\lambda_1 - \lambda_2) \mathbf{x}_2^T \mathbf{x}_1 = 0
 \end{align*}
-。$\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^T \mathbf{x}_1 = 0$。この事実は$A$の固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べている。この事実から次の定理を得る。
+。$\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^T \mathbf{x}_1 = 0$。この事実は$A$の固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べている。この事実から
 \begin{theorem*}
   $A$の固有値を対角成分に並べた行列$\Lambda = \displaystyle{\left(\begin{array}{ccc} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{array}\right)}$とする。$A$は$A = V \Lambda V^T$に分解される。
 \end{theorem*}
@@ -152,6 +148,7 @@ $n$次実対称行列$A$の固有ベクトルは互いに直行している。$\
   \end{align*}
   。
 \end{proof}
+を得る。
 
 このように$n$次実対称行列を固有ベクトル$V$と$A$の固有値を対角成分に並べた行列$\Lambda$との積に分解する事を固有値分解という。
 \subsection{行列の平方根}
@@ -194,7 +191,95 @@ $n$次実対称行列$A$の固有ベクトルは互いに直行している。$\
                                                   \right) \\
                                               & = \Lambda
 \end{align*}
-。
+となる。
+
+行列の平方根を用いれば、$A, B \in S_+^n$同士の内積$A \cdot B$は非負になることが言える。なぜならば
+\begin{theorem} \label{SemidefiniteInnerProduct}
+  $A, B \in S_+^n$とすると
+  \begin{align*}
+    A \cdot B \geq 0
+  \end{align*}
+  が成り立つ。
+\end{theorem}
+\begin{proof}
+  $A, B$をそれぞれ
+  \begin{align*}
+    A = U \Lambda_A U^T \\
+    B = V \Lambda_B U^T
+  \end{align*}
+  と固有値分解する。これらは行列の平方根を用いて、
+  \begin{align*}
+    A = U \Lambda_A^\frac{1}{2} \Lambda_A^\frac{1}{2} U^T = (U \Lambda_A^\frac{1}{2}) (U \Lambda_A^\frac{1}{2})^T\\
+    B = V \Lambda_B^\frac{1}{2} \Lambda_A^\frac{1}{2} V^T = (V \Lambda_B^\frac{1}{2}) (V \Lambda_B^\frac{1}{2})^T
+  \end{align*}
+  と書き表すことができ、
+  \begin{align*}
+    A \cdot B & = \mathrm{tr}\left((U \Lambda_A^\frac{1}{2}) (U \Lambda_A^\frac{1}{2})^T (V \Lambda_B^\frac{1}{2}) (V \Lambda_B^\frac{1}{2})^T\right) \\
+              & = \mathrm{tr}\left((U \Lambda_A^\frac{1}{2})^T (V \Lambda_B^\frac{1}{2}) \left((U \Lambda_A^\frac{1}{2})^T (V \Lambda_B^\frac{1}{2})\right)^T\right) \\
+              & \geq 0
+  \end{align*}
+  となるので、$A \cdot B \geq 0$である。
+\end{proof}
+だからである。
+
+\subsection{半正定値計画問題}
+半正定値計画問題(SDP)とは$C \in S^n$および$A_1, A_2, \cdots, A_m \in S^n$、$\mathbf{b} \in \mathbb{R}^m$を用いて、
+\begin{align} \label{MainProblem}
+  \left\{
+    \begin{array}{lll}
+      \mathrm{minimize} & C \cdot X \\
+      \mathrm{s.t.}     & A_i \cdot X = b_i & (i = 1, 2, \cdots, m) \\
+                        & X \succeq 0
+    \end{array}
+  \right.
+\end{align}
+と表される問題のことを言う。この問題の双対問題は$\mathbf{y} \in \mathbb{R}^n$を用いて
+\begin{align} \label{DualProblem}
+  \left\{
+    \begin{array}{lll}
+      \mathrm{maximize} & \mathbf{b}^T \mathbf{y} \\
+      \mathrm{s.t.}     & \displaystyle{\sum_{i = 1}^m} y_i A_i + S = C \\
+                        & S \succeq 0
+    \end{array}
+  \right.
+\end{align}
+と表される。この主問題(\ref{MainProblem})と双対問題(\ref{DualProblem})との間には
+\begin{align*}
+  C \cdot X \geq \mathbf{b}^T \mathbf{y}
+\end{align*}
+という弱双対性という関係が知られている。この事実は
+\begin{theorem*}
+  (\ref{MainProblem})を主問題、(\ref{DualProblem})を双対問題とすると、
+  \begin{align*}
+    C \cdot X \geq \mathbf{b}^T \mathbf{y}
+  \end{align*}
+  となる。
+\end{theorem*}
+\begin{proof}
+  主問題(\ref{MainProblem})と双対問題(\ref{DualProblem})の目的関数の差$C \cdot X - \mathbf{b}^T \mathbf{y}$を考える。すると、双対問題(\ref{DualProblem})の条件から
+  \begin{align*}
+    C = \displaystyle{\sum_{i = 1}^m} y_i A_i + S
+  \end{align*}
+  、主問題(\ref{MainProblem})の条件から
+  \begin{align*}
+    \mathbf{b}_i = A_i \cdot X \,\, (i = 1, 2, \cdots m)
+  \end{align*}
+  であるので、
+  \begin{align*}
+    C \cdot X - \mathbf{b}^T \mathbf{y} = \left(S + \displaystyle{\sum_{i = 1}^m} y_i A_i\right) \cdot X - \displaystyle{\sum_{i = 1}^m} y_i A_i \cdot X = S \cdot X
+  \end{align*}
+  となる。ここで、定理\ref{SemidefiniteInnerProduct}から、
+  \begin{align*}
+    S \cdot X \geq 0
+  \end{align*}
+  であるので、
+  \begin{align*}
+    C \cdot X - \mathbf{b}^T \mathbf{y} \geq 0
+  \end{align*}
+  となり、$C \cdot X \geq \mathbf{b}^T \mathbf{y}$が示された。
+\end{proof}
+と示すことができる。等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致するが、等号が成立しないとき、すなわち、$C \cdot X > \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致しない。このように主問題と双対問題が一致しないことを双対ギャップが存在するという。
+
 
 \section{Chubanovのアルゴリズム}
 Chubanovは線形計画問題
@@ -205,28 +290,32 @@ Chubanovは線形計画問題
                     & \mathbf{x} \geq \mathbf{0}
   \end{array}
 \end{align*}
-という半正定値計画問題の特殊ケースの許容解を探し出す強多項式時間アルゴリズムを提案した。このアルゴリズムは2つの手続き
+の許容解を探し出す強多項式時間アルゴリズムを提案した。このアルゴリズムは2つの手続き
 \begin{itemize}
   \item Basic Procedure
   \item Main Procedure
 \end{itemize}
 から構成されている。
 
-Basic Procedureは$A$と$\mathbf{y} \mathbf{1} = 1$となるようなアルゴリズムの開始点$\mathbf{y}$を入力として受け取り、次の3つのうちどれかをさがし、アルゴリズムによって更新した$\mathbf{y}^{out}$とともに出力する。
+Basic Procedureは$m \times n$行列$A$と$\mathbf{y} \mathbf{1} = 1$となるようなアルゴリズムの開始点$\mathbf{y}^T \in \mathbb{R}^n$を入力として受け取り、アルゴリズムによって更新した$\mathbf{y}^{out}$とともに
 \begin{itemize}
   \item 許容解$\mathbf{x}^* > 0$
   \item 許容解すべてにおいて$k$番目の要素$\mathbf{x}_k^*$が$0$となっている$P_A \mathbf{y}^T$
   \item 許容解すべてにおいて$k$番目の要素$\mathbf{x}_k^*$が$\frac{1}{2}$以下になっているときの$P_A \mathbf{y}^T$
 \end{itemize}
-$P_A$は$A$への射影を表している。このアルゴリズムの計算量は$O(n)$で、最大でも$O(n^3)$である。
+のうちどれかを出力する。$P_A$は
+\begin{align*}
+  P_A = I - A^T (A A^T)^{-1} A
+\end{align*}
+とあらわされる、$\{\mathbf{x} | A \mathbf{x} = \mathbf{0}\}$への射影を表している。このアルゴリズムの計算量は$O(n^3)$である。
 
-Main Procedureは$A$を入力とし、このBasic Procedureを呼び出して次の3つを探し出す。
+Main Procedureは$m \times n$行列$A$を入力とし、Basic Procedureを呼び出して
 \begin{itemize}
   \item 許容解$\mathbf{x}^* > 0$
   \item 許容解はないが$\mathbf{y} = \mathbf{z} A、\mathbf{y} > \mathbf{0}$となる$\mathbf{y}$が存在する
   \item 許容解は存在しない
 \end{itemize}
-このアルゴリズムの計算量は$O(n^4 + n^3 L_{\text{min}})$である。$L_{\text{min}}$はMain Procedureのループを一定回数で終了するための上限値である。
+のうちどれか1つを導く。このアルゴリズムの計算量は$O(n^4 + n^3 L_{\text{min}})$であり、$L_{\text{min}}$はMain Procedureのループを一定回数で終了するための上限値である。
 
 \section{ChubanovのアルゴリズムのSDPへの拡張}
 ChubanovのアルゴリズムをSDPへと拡張したアルゴリズムを実装した。そのアルゴリズムをここに記す。
@@ -316,9 +405,9 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
   \end{algorithmic}
 \end{algorithm}
 
-このアルゴリズムの計算量を示すために、いくつかの補題を示す。
+このアルゴリズムの計算量を示すために、いくつかの補題を示す。まず、
 \begin{lemma*}
-  $q$を$Z$のもっとも小さい固有値における単位固有ベクトルとする。
+  $\mathbf{q}$を$Z$のもっとも小さい固有値における単位固有ベクトルとする。
   \begin{align*}
     Z \cdot (\mathbf{q} \mathbf{q}^T) \leq 0
   \end{align*}
@@ -356,11 +445,15 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
   \end{align*}
   。$\|\mathbf{q}\|^4 \geq 0$で、$\lambda_n < 0$なので、$Z \cdot (\mathbf{q} \mathbf{q}^T) \leq 0$。
 \end{proof}
+となる。
 
+次に、
 \begin{lemma*}
+  $Y_{i + 1}$を$\mathcal{A}$に射影$P_\mathcal{A}$で射影した点$P_\mathcal{A} Y_{i + 1}$と$Y_i$を$P_\mathcal{A}$で射影した点$P_\mathcal{A} Y_i$の間には
   \begin{align*}
     \frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2} \geq \frac{1}{\|P_\mathcal{A} Y_i\|^2} + 1
   \end{align*}
+  とい関係式が成り立つ。
 \end{lemma*}
 \begin{proof}
   \begin{align*}
@@ -401,9 +494,11 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
   \begin{align*}
     \frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2} \geq \frac{1}{\|Z\|^2} + \frac{1}{\|P\|^2} \geq \frac{1}{\|Z\|^2} + 1
   \end{align*}
-  。
+  が成立する。
 \end{proof}
+となる。
 
+さらに
 \begin{lemma*}
   $Y_{i + 1} \succ 0$かつ$Y_{i + 1} \cdot I = 1$のとき、$\|Y_{i + 1}\|_1 \geq 1$
 \end{lemma*}
@@ -417,10 +512,11 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
   \end{align*}
   より、$\|Y_{i + 1}\|_1 \geq 1$。
 \end{proof}
+である。
 
-以上の補題からこのアルゴリズムの計算量を求めることができる。
+以上の補題からこのアルゴリズムの計算量は
 \begin{theorem} \label{BasicProcedureOrder}
-  Basic Procedureの計算量は最大で$O (n^5)$である。
+  Basic Procedureの計算量は$O (n^5)$である。
 \end{theorem}
 \begin{proof}
   $\|Y_I$は$\|Y\|_1 \geq 1$なので、$Z \not= 0, P \not= 0$であり、$Z \not\succ 0, P \not\succ 0$であるとき、$\|P_\mathcal{A} Y_i\| \leq \displaystyle{\frac{1}{2 n}}$が最も反復回数が多くなる。
@@ -429,6 +525,7 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
   \end{align*}
   から$\displaystyle{\frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2}}$はすくなくとも1増加するので、最大でもこのアルゴリズムは$n^2$回は反復を行なう。射影$Z$の計算にかかる計算量はGauss Eliminationを用いれば$O (n^3)$で計算することができるので、このアルゴリズムの計算量は$O(n^5)$
 \end{proof}
+となる。
 
 \subsection{Main Procedure}
 このアルゴリズムは
@@ -440,12 +537,13 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
     \end{array}
   \right.
 \end{align*}
-を入力として受けとり、次のいずれかを出力する。
+を入力として受けとり、
 \begin{enumerate}[label=(\alph*)]
   \item $\displaystyle{\sum_{i = 1}^m u_i A_i \succeq 0}$となるような$\mathbf{u}$ \label{DualSolution}
   \item $\begin{array}{ll} A_o \cdot X = 0 & (i = 1, 2, \cdots, m) \end{array}$となるような$X \succ 0$。すなわち許容解 \label{FeasibleSolution}
   \item $X \succeq \epsilon I, A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X$が存在しないこと \label{NoSolution}
 \end{enumerate}
+のいずれかを出力する。
 
 アルゴリズムはAlgorithm \ref{MainProcedure}のようになる。
 \begin{algorithm}
