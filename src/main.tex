@@ -1,5 +1,5 @@
 \section{はじめに}
-Chubanovが$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、$A \mathbf{x} = 0, \mathbf{x} \geq 0$という問題の許容解を得るための強多項式時間アルゴリズムを提案した。それは$\{\mathbf{x} | A \mathbf{x} = \mathbf{0}\}$という空間への射影$P_A$の各列ベクトル$\mathbf{p}_1, \mathbf{p}_2, \cdots, \mathbf{p}_n$の中で$\mathbf{p}_i^T \mathbf{x} > \mathbf{0} \,\, (i = 1, 2, \cdots, n)$を満たさないもの、すなわち$\mathbf{p}_i^T \mathbf{x} < 0$となる$\mathbf{p}_i$および$\mathbf{x}$を$\mathbf{x}' = \alpha \mathbf{x} + (1 - \alpha) \mathbf{p}$と次々凸結合して$\mathbf{x}$を$\mathbf{x}'$へと更新していくBasic Procedureと呼ばれるアルゴリズムと$\mathbf{p}_i^T \mathbf{x} < 0 (i = 1, 2, \cdots, n)$となる$A$の$i$行目を$1 / 2$倍するMain Procedureと呼ばれるアルゴリズムの2つからなる。この2つを使って、$\mathbf{x} > \mathbf{0}$となる許容解かそれともそのような許容解が存在しないかを導く。
+Chubanovが$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、$A \mathbf{x} = 0, \mathbf{x} \geq 0$という問題の許容解を得るための強多項式時間アルゴリズムを提案した。それは$\left\{\mathbf{x} | A \mathbf{x} = \mathbf{0}\right\}$という空間への射影$P_A$の各列ベクトル$\mathbf{p}_1, \mathbf{p}_2, \cdots, \mathbf{p}_n$の中で$\mathbf{p}_i^T \mathbf{x} > \mathbf{0} \,\, (i = 1, 2, \cdots, n)$を満たさないもの、すなわち$\mathbf{p}_i^T \mathbf{x} < 0$となる$\mathbf{p}_i$および$\mathbf{x}$を$\mathbf{x}' = \alpha \mathbf{x} + (1 - \alpha) \mathbf{p}$と次々凸結合して$\mathbf{x}$を$\mathbf{x}'$へと更新していくBasic Procedureと呼ばれるアルゴリズムと$\mathbf{p}_i^T \mathbf{x} < 0 (i = 1, 2, \cdots, n)$となる$A$の$i$行目を$1 / 2$倍するMain Procedureと呼ばれるアルゴリズムの2つからなる。この2つを使って、$\mathbf{x} > \mathbf{0}$となる許容解かそれともそのような許容解が存在しないかを導く。
 
 本論文ではこのアルゴリズムを$A_i \cdot X = 0, X \succeq 0 \,\, (i = 1, 2, \cdots m)$の許容解$X \succ 0$が存在するかを導けるように拡張したアルゴリズムを提案する。すなわち、
 \begin{align}
@@ -9,7 +9,7 @@ Chubanovが$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、$
                   & X \succ 0
   \end{array}
 \end{align} \label{SDP}
-という問題を解くアルゴリズムを提案する。
+という問題を解くアルゴリズムを提案する。 \cite{SemidefiniteDuality}
 
 \section{半正定値計画問題}
 \subsection{半正定値と正定値}
@@ -115,29 +115,36 @@ $S_+^n$はこの定義のもと凸錐となる。実際、
 
 \section{固有値分解}
 \subsection{固有値分解}
-$n$次実対称行列$A$の固有ベクトルは互いに直行している。$\lambda_1 \not= \lambda_2$を$A$の固有値とする。すると、
-\begin{align*}
-  A \mathbf{x}_1 = \lambda_1 \mathbf{x}_1 \\
-  A \mathbf{x}_2 = \lambda_2 \mathbf{x}_2
-\end{align*}
-となる固有ベクトル$\mathbf{x}_1, \mathbf{x}_2$が存在するが、この各固有ベクトルの転置$\mathbf{x}_1^T, \mathbf{x}_2^T$をそれぞれ左からかけると、
-\begin{align*}
-  \mathbf{x}_2^T A \mathbf{x}_1 = \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 \\
-  \mathbf{x}_1^T A \mathbf{x}_2 = \lambda_2 \mathbf{x}_1^T \mathbf{x}_2
-\end{align*}
-となる。$A$は対称行列なので、
-\begin{align*}
-  \mathbf{x}_2^T A \mathbf{x}_1 & = (A \mathbf{x}_2)^T \mathbf{x}_1 \\
-                                & = (\mathbf{x}_1^T A \mathbf{x_2}) \\
-                                & = (\lambda_2 \mathbf{x}_1^T \mathbf{x}_2)^T \\
-                                & = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1
-\end{align*}
-となる。したがって、
-\begin{align*}
-                  & \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1 \\
-  \Leftrightarrow & (\lambda_1 - \lambda_2) \mathbf{x}_2^T \mathbf{x}_1 = 0
-\end{align*}
-。$\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^T \mathbf{x}_1 = 0$。この事実は$A$の固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べている。この事実から
+$n$次実対称行列$A$の固有ベクトルは
+\begin{theorem*}
+  $n$次実対称行列$A$の固有ベクトルは互いに直行する。
+\end{theorem*}
+\begin{proof}
+  $\lambda_1,\lambda_2$を$A$の異なる固有値とする。すると、
+  \begin{align*}
+    A \mathbf{x}_1 = \lambda_1 \mathbf{x}_1 \\
+    A \mathbf{x}_2 = \lambda_2 \mathbf{x}_2
+  \end{align*}
+  となる$\lambda_1, \lambda_2$に対応する固有ベクトル$\mathbf{x}_1, \mathbf{x}_2$が存在するが、この各固有ベクトルの転置$\mathbf{x}_1^T, \mathbf{x}_2^T$をそれぞれ左からかけると、
+  \begin{align*}
+    \mathbf{x}_2^T A \mathbf{x}_1 = \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 \\
+    \mathbf{x}_1^T A \mathbf{x}_2 = \lambda_2 \mathbf{x}_1^T \mathbf{x}_2
+  \end{align*}
+  となる。$A$は対称行列なので、
+  \begin{align*}
+    \mathbf{x}_2^T A \mathbf{x}_1 & = (A \mathbf{x}_2)^T \mathbf{x}_1 \\
+                                  & = (\mathbf{x}_1^T A \mathbf{x_2}) \\
+                                  & = (\lambda_2 \mathbf{x}_1^T \mathbf{x}_2)^T \\
+                                  & = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1
+  \end{align*}
+  となる。したがって、
+  \begin{align*}
+                    & \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1 \\
+    \Leftrightarrow & (\lambda_1 - \lambda_2) \mathbf{x}_2^T \mathbf{x}_1 = 0
+  \end{align*}
+  。$\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^T \mathbf{x}_1 = 0$。
+\end{proof}
+から互いに直行する事がわかる。この事実は$A$の固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べている。この事実から
 \begin{theorem*}
   $A$の固有値を対角成分に並べた行列$\Lambda = \displaystyle{\left(\begin{array}{ccc} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{array}\right)}$とする。$A$は$A = V \Lambda V^T$に分解される。
 \end{theorem*}
@@ -152,28 +159,32 @@ $n$次実対称行列$A$の固有ベクトルは互いに直行している。$\
 
 このように$n$次実対称行列を固有ベクトル$V$と$A$の固有値を対角成分に並べた行列$\Lambda$との積に分解する事を固有値分解という。
 \subsection{行列の平方根}
-固有値分解を使うと、$n$次実対称行列$A$の平方根$\displaystyle{A^{\frac{1}{2}}}$、すなわち
-\begin{align*}
-  A^{\frac{1}{2}} = V \Lambda^{\frac{1}{2}} V^T
-\end{align*}
-を考える事ができる。これは2乗すると、
-\begin{align*}
-  A^{\frac{1}{2}} A^{\frac{1}{2}} & = (V \Lambda^{\frac{1}{2}} V^T) (V \Lambda^{\frac{1}{2}} V^T) \\
-                                  & = V \Lambda^{\frac{1}{2}} \Lambda^{\frac{1}{2}} V^T \\
-                                  & = V \Lambda V^T \\
-                                  & = A
-\end{align*}
-となり、元の$A$と一致することがわかる。$\displaystyle{\Lambda^{\frac{1}{2}}}$は
+固有値分解を使うと、$n$次実対称行列$A$の平方根$\displaystyle{A^{\frac{1}{2}}}$を定義することができる。$\lambda_1, \lambda_2, \cdots, \lambda_n$を$A$の固有値とすると、
 \begin{align*}
   \Lambda^{\frac{1}{2}} = \left(
                             \begin{array}{ccc}
-                              \sqrt{\Lambda_1} &        & \\
+                              \sqrt{\lambda_1} &        & \\
                                                & \ddots & \\
                                                &        & \sqrt{\Lambda_n}
                             \end{array}
                           \right)
 \end{align*}
-とすれば良い。実際、
+、$X$を固有値に対応する固有ベクトル$\mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_n$を列に並べたもの、すなわち
+\begin{align*}
+  X = \left(\mathbf{x}_1, \cdots, \mathbf{x}_n\right)
+\end{align*}
+とすると、$A^\frac{1}{2}$は
+\begin{align*}
+  A^\frac{1}{2} = X \Lambda^{\frac{1}{2}} X^T
+\end{align*}
+と表される。なぜならば2乗すると、
+\begin{align*}
+  A^{\frac{1}{2}} A^{\frac{1}{2}} & = \left(X \Lambda^{\frac{1}{2}} X^T\right) \left(X \Lambda^{\frac{1}{2}} X^T\right) \\
+                                  & = X \Lambda^{\frac{1}{2}} \Lambda^{\frac{1}{2}} X^T \\
+                                  & = X \Lambda X^T \\
+                                  & = A
+\end{align*}
+となり、
 \begin{align*}
   \Lambda^{\frac{1}{2}} \Lambda^{\frac{1}{2}} & = \left(
                                                     \begin{array}{ccc}
@@ -191,7 +202,7 @@ $n$次実対称行列$A$の固有ベクトルは互いに直行している。$\
                                                   \right) \\
                                               & = \Lambda
 \end{align*}
-となる。
+から、元の$A$と一致することからわかる。
 
 行列の平方根を用いれば、$A, B \in S_+^n$同士の内積$A \cdot B$は非負になることが言える。なぜならば
 \begin{theorem} \label{SemidefiniteInnerProduct}
@@ -209,13 +220,13 @@ $n$次実対称行列$A$の固有ベクトルは互いに直行している。$\
   \end{align*}
   と固有値分解する。これらは行列の平方根を用いて、
   \begin{align*}
-    A = U \Lambda_A^\frac{1}{2} \Lambda_A^\frac{1}{2} U^T = (U \Lambda_A^\frac{1}{2}) (U \Lambda_A^\frac{1}{2})^T\\
-    B = V \Lambda_B^\frac{1}{2} \Lambda_A^\frac{1}{2} V^T = (V \Lambda_B^\frac{1}{2}) (V \Lambda_B^\frac{1}{2})^T
+    A = U \Lambda_A^\frac{1}{2} \Lambda_A^\frac{1}{2} U^T = \left(U \Lambda_A^\frac{1}{2}\right) \left(U \Lambda_A^\frac{1}{2}\right)^T\\
+    B = V \Lambda_B^\frac{1}{2} \Lambda_A^\frac{1}{2} V^T = \left(V \Lambda_B^\frac{1}{2}\right) \left(V \Lambda_B^\frac{1}{2}\right)^T
   \end{align*}
   と書き表すことができ、
   \begin{align*}
-    A \cdot B & = \mathrm{tr}\left((U \Lambda_A^\frac{1}{2}) (U \Lambda_A^\frac{1}{2})^T (V \Lambda_B^\frac{1}{2}) (V \Lambda_B^\frac{1}{2})^T\right) \\
-              & = \mathrm{tr}\left((U \Lambda_A^\frac{1}{2})^T (V \Lambda_B^\frac{1}{2}) \left((U \Lambda_A^\frac{1}{2})^T (V \Lambda_B^\frac{1}{2})\right)^T\right) \\
+    A \cdot B & = \mathrm{tr}\left(\left(U \Lambda_A^\frac{1}{2}\right) \left(U \Lambda_A^\frac{1}{2}\right)^T \left(V \Lambda_B^\frac{1}{2}\right) \left(V \Lambda_B^\frac{1}{2}\right)^T\right) \\
+              & = \mathrm{tr}\left(\left(U \Lambda_A^\frac{1}{2}\right)^T \left(V \Lambda_B^\frac{1}{2}\right) \left(\left(U \Lambda_A^\frac{1}{2}\right)^T \left(V \Lambda_B^\frac{1}{2}\right)\right)^T\right) \\
               & \geq 0
   \end{align*}
   となるので、$A \cdot B \geq 0$である。
@@ -297,25 +308,36 @@ Chubanovは線形計画問題
 \end{itemize}
 から構成されている。
 
-Basic Procedureは$m \times n$行列$A$と$\mathbf{y} \mathbf{1} = 1$となるようなアルゴリズムの開始点$\mathbf{y}^T \in \mathbb{R}^n$を入力として受け取り、アルゴリズムによって更新した$\mathbf{y}^{out}$とともに
-\begin{itemize}
-  \item 許容解$\mathbf{x}^* > 0$
-  \item 許容解すべてにおいて$k$番目の要素$\mathbf{x}_k^*$が$0$となっている$P_A \mathbf{y}^T$
-  \item 許容解すべてにおいて$k$番目の要素$\mathbf{x}_k^*$が$\frac{1}{2}$以下になっているときの$P_A \mathbf{y}^T$
-\end{itemize}
-のうちどれかを出力する。$P_A$は
+\subsection{Basic Procedure}
+このアルゴリズムは$m \times n$行列$A$と$\mathbf{y} \mathbf{1} = 1$となるような開始点$\mathbf{y}^T \in \mathbb{R}^n$を入力として受け取る。この$\mathbf{y}$と$\mathrm{ker}A \left\{\mathbf{x} | A \mathbf{x} = \mathbf{0}\right\}$への射影
 \begin{align*}
   P_A = I - A^T (A A^T)^{-1} A
 \end{align*}
-とあらわされる、$\{\mathbf{x} | A \mathbf{x} = \mathbf{0}\}$への射影を表している。このアルゴリズムの計算量は$O(n^3)$である。
+を使用して、$\mathbf{x} = P_A \mathbf{y}$を計算し、この$\mathbf{x}$および$\mathbf{y}$を
+\begin{align*}
+  \alpha = \frac{\mathbf{p}^T (\mathbf{p} - \mathbf{x})^T}{\|\mathbf{p} - \mathbf{x}\|^2}
+\end{align*}
+をもちいて
+\begin{align*}
+  \mathbf{y}' & = \alpha \mathbf{y} + (1 - \alpha) \mathbf{e}_i \\
+  \mathbf{x}' & = \alpha \mathbf{x} + (1 - \alpha) \mathbf{p}
+\end{align*}
+として更新していく。$i$は$x_i \leq 0$となる$\mathbf{x}$のインデックスであり、$\mathbf{p}$は$P_A$の$i$番目の列ベクトル、$\mathbf{e}_i$は$i$番目の要素だけ$1$で、それ以外が$0$の$n$次元横ベクトである。こうすることで、
+\begin{itemize}
+  \item 許容解$\mathbf{x}^* > 0$
+  \item 許容解すべてにおいて$k$番目の要素$x_k^*$が$0$
+  \item 許容解すべてにおいて$k$番目の要素$x_k^*$が$\frac{1}{2}$以下になっている
+\end{itemize}
+のうちどれかを得る事ができる。このアルゴリズムによって得られた解とこの解における$\mathbf{y}$を出力する。このアルゴリズムの計算量は$O(n^3)$となる。
 
-Main Procedureは$m \times n$行列$A$を入力とし、Basic Procedureを呼び出して
+\subsection{Main Proceudre}
+このアルゴリズムはは$m \times n$行列$A$を入力とし、Basic Procedureを呼び出して得られる解のうち許容解すべてにおいて$k$番目の要素$x_k^*$が$\frac{1}{2}$以下になっているとき、$A$の$k$列目を$1 / 2$倍し、またBasic Procedureを呼び出す、ということを繰り返す。こうすることで
 \begin{itemize}
   \item 許容解$\mathbf{x}^* > 0$
   \item 許容解はないが$\mathbf{y} = \mathbf{z} A、\mathbf{y} > \mathbf{0}$となる$\mathbf{y}$が存在する
   \item 許容解は存在しない
 \end{itemize}
-のうちどれか1つを導く。このアルゴリズムの計算量は$O(n^4 + n^3 L_{\text{min}})$であり、$L_{\text{min}}$はMain Procedureのループを一定回数で終了するための上限値である。
+のうちどれか1つを導く。このアルゴリズムの計算量は$O(n^4 + n^3 L_{\text{min}})$であり、$L_{\text{min}}$はループを一定回数で終了するための上限値である。
 
 \section{ChubanovのアルゴリズムのSDPへの拡張}
 ChubanovのアルゴリズムをSDPへと拡張したアルゴリズムを実装した。そのアルゴリズムをここに記す。
@@ -324,9 +346,9 @@ ChubanovのアルゴリズムをSDPへと拡張したアルゴリズムを実装
 このアルゴリズムは、
 \begin{align*}
   \left\{
-    \begin{array}{ll}
+    \begin{array}{l}
       A_1, A_2, \cdots, A_m \in S^n \\
-      Y_0 \in S_+^n                 & \text{ただし}I \cdot Y_0 = 1
+      I \cdot Y_0 = 1\text{となる}Y_0 \in S_+^n
     \end{array}
   \right.
 \end{align*}
@@ -336,7 +358,7 @@ ChubanovのアルゴリズムをSDPへと拡張したアルゴリズムを実装
   \item $A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X \succ 0$、すなわち許容解
   \item $\displaystyle{\sum_{i = 1}^m u_i A_i \succ 0}$となるような$\mathbf{u} \in \mathbb{R}^m$
 \end{itemize}
-$P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot Y = 0 (i = 1, 2, \cdots, m)\}$への射影を、$Y_0$はアルゴリズムの開始点をそれぞれ表している。
+$P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \left\{Y \in S^n | A_i \cdot Y = 0 \,\, (i = 1, 2, \cdots, m)\right\}$への射影を、$Y_0$はアルゴリズムの開始点をそれぞれ表している。
 
 アルゴリズムはAlgorithm \ref{BasicProcedure}のようになる。
 \begin{algorithm}
@@ -398,22 +420,29 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
   \caption{$Z = P_\mathcal{A} Y$の計算}
   \label{projection}
   \begin{algorithmic}[1]
-    \State $G_{i j} \leftarrow \mathrm{tr}(A_i A_j)$
-    \State $b_j \leftarrow A_j \cdot Y$
+    \For {$i = 1$ to $m$}
+      \For {$j = 1$ to $m$}
+        \State $G_{i j} \leftarrow \mathrm{tr}(A_i A_j)$
+      \EndFor
+    \EndFor
+    \For {$i = 1$ to $m$}
+      \State $b_i \leftarrow A_i \cdot Y$
+    \EndFor
     \State $G {\bm \lambda} = \mathbf{b}$を解く。
     \State \Return $Z \leftarrow Y - \displaystyle{\sum_{i = 1}^m \lambda_i A_i}$
   \end{algorithmic}
 \end{algorithm}
 
 このアルゴリズムの計算量を示すために、いくつかの補題を示す。まず、
-\begin{lemma*}
-  $\mathbf{q}$を$Z$のもっとも小さい固有値における単位固有ベクトルとする。
+\begin{lemma} \label{NegativeInnerProduct}
+  $Y \in S_+^n$の$P_\mathcal{A}$への射影を$Z$とし、$\mathbf{q}$を$Z \in S^n$のもっとも小さい固有値における単位固有ベクトルとする。すると、
   \begin{align*}
     Z \cdot (\mathbf{q} \mathbf{q}^T) \leq 0
   \end{align*}
-\end{lemma*}
+  が成立する。
+\end{lemma}
 \begin{proof}
-  $Z$を固有値分解したときの固有値が対角成分に並ぶ行列を
+  $Z$を固有値分解したときの$Z$の固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$が対角成分に並ぶ行列を
   \begin{align*}
     \Lambda = \left(
                 \begin{array}{ccc}
@@ -423,47 +452,50 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
                 \end{array}
               \right)
   \end{align*}
-  、単位固有ベクトルを列ベクトルとしたものの行列を
+  、その各固有値に対応する単位固有ベクトル$\mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_n$を列ベクトルとしたものの行列を
   \begin{align*}
-    X = \left(
-          \begin{array}{ccc}
-            \mathbf{x}_1 & \cdots & \mathbf{x}_n
-          \end{array}
-        \right)
+    X = \left(\mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_n\right)
   \end{align*}
   とする。このとき、$\lambda_1 \geq \cdots \geq \lambda_n$となるようにする。すると、
   \begin{align*}
     Z \cdot (\mathbf{q} \mathbf{q}^T) & = (X \Lambda X^T) \cdot (\mathbf{q} \mathbf{q}^T) \\
                                       & = \mathrm{tr}(X \Lambda X^T \mathbf{q} \mathbf{q}^T) \\
-                                      & = \mathrm{tr}(X \Lambda (\mathbf{q} \mathbf{q}^T X)^T) \\
-                                      & = \mathrm{tr}(X \Lambda (\mathbf{q} \left(0, \cdots, 0, \|\mathbf{q}\|^2\right))^T) \\
-                                      & = \mathrm{tr}(X \Lambda \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ \|\mathbf{q}\|^2 \end{array}\right) \mathbf{q}^T) \\
-                                      & = \mathrm{tr}(X \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ \lambda_n \|\mathbf{q}\|^2 \end{array}\right) \mathbf{q}^T) \\
-                                      & = \mathrm{tr}(\lambda_n \|\mathbf{q}\|^2 \mathbf{q} \mathbf{q}^T) \\
-                                      & = \mathrm{tr}(\lambda_n \|\mathbf{q}\|^4) \\
+                                      & = \mathrm{tr}\left(X \Lambda \left(\mathbf{q} \mathbf{q}^T X\right)^T\right) \\
+                                      & = \mathrm{tr}\left(X \Lambda \left(\mathbf{q} \left(0, \cdots, 0, \|\mathbf{q}\|^2\right)\right)^T\right) \\
+                                      & = \mathrm{tr}\left(X \Lambda \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ \|\mathbf{q}\|^2 \end{array}\right) \mathbf{q}^T\right) \\
+                                      & = \mathrm{tr}\left(X \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ \lambda_n \|\mathbf{q}\|^2 \end{array}\right) \mathbf{q}^T\right) \\
+                                      & = \mathrm{tr}\left(\lambda_n \|\mathbf{q}\|^2 \mathbf{q} \mathbf{q}^T\right) \\
+                                      & = \mathrm{tr}\left(\lambda_n \|\mathbf{q}\|^4\right) \\
                                       & = \lambda_n \|\mathbf{q}\|^4
   \end{align*}
-  。$\|\mathbf{q}\|^4 \geq 0$で、$\lambda_n < 0$なので、$Z \cdot (\mathbf{q} \mathbf{q}^T) \leq 0$。
+  となり、$\|\mathbf{q}\|^4 \geq 0$で、$\lambda_n < 0$なので、$Z \cdot (\mathbf{q} \mathbf{q}^T) \leq 0$。
 \end{proof}
-となる。
-
-次に、
-\begin{lemma*}
-  $Y_{i + 1}$を$\mathcal{A}$に射影$P_\mathcal{A}$で射影した点$P_\mathcal{A} Y_{i + 1}$と$Y_i$を$P_\mathcal{A}$で射影した点$P_\mathcal{A} Y_i$の間には
+となる。さらに
+\begin{lemma} \label{Increment}
+  $Z$を、$Y_i \in S_+^n$を$P_\mathcal{A}$で射影した点、$C$を$Z$のもっとも小さな固有値に対応する固有ベクトル$\mathbf{q}$によって生成される行列$\mathbf{q} \mathbf{q}^T$とする。$Y_{i + 1} \in S_+^n$を
+  \begin{align*}
+    \alpha = \frac{P \cdot (P - Z)}{\|Z - P\|^2}
+  \end{align*}
+  を用いて、
+  \begin{align*}
+    Y_{i + 1} = \alpha Y_i + (1 - \alpha) C
+  \end{align*}
+  とすると、$P_\mathcal{A} Y_{i + 1}$と$P_\mathcal{A} Y_i$の間には
   \begin{align*}
     \frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2} \geq \frac{1}{\|P_\mathcal{A} Y_i\|^2} + 1
   \end{align*}
   とい関係式が成り立つ。
-\end{lemma*}
+\end{lemma}
 \begin{proof}
+  $P$を、$P_\mathcal{A}$によって$C$を$\mathrm{ker} \mathcal{A} = \left\{X \in S^n | A_i \cdot Y = 0 \,\,(i = 1, 2, \cdots, m)\right\}$に移した点とする。すると
   \begin{align*}
     Z \cdot P = \mathrm{tr}(Z P) = \mathrm{tr}(Z^T P_\mathcal{A} C) = \mathrm{tr}((P_\mathcal{A} Z)^T C) = (P_\mathcal{A} Z) \cdot C
   \end{align*}
-  であり、$P_\alpha$が射影であることから、$P_\mathcal{A} Z = Z$。なぜならば、$Z$はすでに$\mathcal{A}$上に射影された$Y_i$だからである。したがって、
+  であり、$P_\mathcal{A}$が射影であることから、$P_\mathcal{A} Z = Z$。なぜならば、$Z$はすでに$\mathcal{A}$上に射影された$Y_i$だからである。したがって、補題\ref{NegativeInnerProduct}から
   \begin{align*}
-    (P_\mathcal{A} Z) \cdot C = Z \cdot C \leq 0
+    (P_\mathcal{A} Z) \cdot C = Z \cdot C = Z \cdot \mathbf{q} \mathbf{q}^T \leq 0
   \end{align*}
-  したがって、
+  ゆえに、
   \begin{align*}
     \|Z - P\|^2 = \mathrm{tr}((Z - P)(Z - P)) = \mathrm{tr}(Z^2 - 2 P Z + P^2) = \|Z\|^2 - 2 Z \cdot P + \|P\|^2 > 0
   \end{align*}
@@ -490,40 +522,24 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \{Y \in S^n \mid A_i \cdot
             & = \mathrm{tr}(C P_\mathcal{A} C) \\
             & = C \cdot P
   \end{align*}
-  であること、$P \in \mathrm{ker} \mathcal{A}$という性質から、$\|P\|^2 \leq \|C\|^2 \leq 1$。以上から
+  であること、$P \in S^n$という性質および補題\ref{NegativeInnerProduct}から、$\|P\|^2 = C \cdot P = 0$となるので、$\|P\|^2 \leq \|C\|^2 \leq 1$。以上から
   \begin{align*}
     \frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2} \geq \frac{1}{\|Z\|^2} + \frac{1}{\|P\|^2} \geq \frac{1}{\|Z\|^2} + 1
   \end{align*}
   が成立する。
 \end{proof}
-となる。
-
-さらに
-\begin{lemma*}
-  $Y_{i + 1} \succ 0$かつ$Y_{i + 1} \cdot I = 1$のとき、$\|Y_{i + 1}\|_1 \geq 1$
-\end{lemma*}
-\begin{proof}
-  \begin{align*}
-    Y_{i + 1} \cdot I = \displaystyle{\sum_{j = 1}^m y_{j j}^{(i + 1)}} = 1
-  \end{align*}
-  であり、
-  \begin{align*}
-    \displaystyle{\sum_{j = 1}^m y_{j j}^{(i + 1)}} \leq \displaystyle{\sum_{j = 1}^m |y_{j j}^{(i + 1)}|} = \|Y_{i + 1}\|_1
-  \end{align*}
-  より、$\|Y_{i + 1}\|_1 \geq 1$。
-\end{proof}
 である。
 
 以上の補題からこのアルゴリズムの計算量は
 \begin{theorem} \label{BasicProcedureOrder}
-  Basic Procedureの計算量は$O (n^5)$である。
+  Basic Procedureの計算量は$O (n^6)$である。
 \end{theorem}
 \begin{proof}
-  $\|Y_I$は$\|Y\|_1 \geq 1$なので、$Z \not= 0, P \not= 0$であり、$Z \not\succ 0, P \not\succ 0$であるとき、$\|P_\mathcal{A} Y_i\| \leq \displaystyle{\frac{1}{2 n}}$が最も反復回数が多くなる。
+  $Y_i \succ 0$を$I \cdot Y_i = 1$となるようにする。すると、$Z \not= 0, P \not= 0$であり、$Z \not\succ 0, P \not\succ 0$であるとき、$\|P_\mathcal{A} Y_i\| \leq \displaystyle{\frac{1}{n^\frac{3}{2}}}$が最も反復回数が多くなる。補題\ref{Increment}から
   \begin{align*}
     \frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2} \geq \frac{1}{\|Z\|^2} + \frac{1}{\|P\|^2} \geq \frac{1}{\|Z\|^2} + 1
   \end{align*}
-  から$\displaystyle{\frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2}}$はすくなくとも1増加するので、最大でもこのアルゴリズムは$n^2$回は反復を行なう。射影$Z$の計算にかかる計算量はGauss Eliminationを用いれば$O (n^3)$で計算することができるので、このアルゴリズムの計算量は$O(n^5)$
+  となり、$\displaystyle{\frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2}}$はすくなくとも1増加するので、最大でもこのアルゴリズムは$n^3$回は反復を行なう。射影$Z$の計算にかかる計算量はGauss Eliminationを用いれば$O (n^3)$で計算することができるので、このアルゴリズムの計算量は$O(n^6)$
 \end{proof}
 となる。
 
