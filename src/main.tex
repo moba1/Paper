@@ -1,15 +1,16 @@
 \section{はじめに}
 Chubanovが$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、$A \mathbf{x} = 0, \mathbf{x} \geq 0$という問題の許容解を得るための強多項式時間アルゴリズムを提案した。それは$\left\{\mathbf{x} | A \mathbf{x} = \mathbf{0}\right\}$という空間への射影$P_A$の各列ベクトル$\mathbf{p}_1, \mathbf{p}_2, \cdots, \mathbf{p}_n$の中で$\mathbf{p}_i^T \mathbf{x} > \mathbf{0} \,\, (i = 1, 2, \cdots, n)$を満たさないもの、すなわち$\mathbf{p}_i^T \mathbf{x} < 0$となる$\mathbf{p}_i$および$\mathbf{x}$を$\mathbf{x}' = \alpha \mathbf{x} + (1 - \alpha) \mathbf{p}$と次々凸結合して$\mathbf{x}$を$\mathbf{x}'$へと更新していくBasic Procedureと呼ばれるアルゴリズムと$\mathbf{p}_i^T \mathbf{x} < 0 (i = 1, 2, \cdots, n)$となる$A$の$i$行目を$1 / 2$倍するMain Procedureと呼ばれるアルゴリズムの2つからなる。この2つを使って、$\mathbf{x} > \mathbf{0}$となる許容解かそれともそのような許容解が存在しないかを導く。
 
-本論文ではこのアルゴリズムを$A_i \cdot X = 0, X \succeq 0 \,\, (i = 1, 2, \cdots m)$の許容解$X \succ 0$が存在するかを導けるように拡張したアルゴリズムを提案する。すなわち、
-\begin{align}
-  \begin{array}{lll}
-    \mathrm{find} & X \\
-    \mathrm{s.t.} & A_i \cdot X = 0 & (i = 1, 2, \cdots, m) \\
-                  & X \succ 0
+本論文ではこのアルゴリズムを対称錐に拡張した結果をSDPに制限したものを実装し、実験を行った。すなわち、
+\begin{align*}
+  \begin{array}{ll} \\
+    \text{find} & X \\
+    \text{s.t.} & A_i \cdot X = 0 (i = 1, 2, \cdots, m) \\
+                & X \succeq 0
   \end{array}
-\end{align} \label{SDP}
-という問題を解くアルゴリズムを提案する。 \cite{SemidefiniteDuality}
+\end{align*}
+の許容解$X \succ 0$が存在するかを導けるように拡張したアルゴリズムの実装・実験を行った。
+
 
 \section{半正定値計画問題}
 \subsection{半正定値と正定値}
@@ -54,13 +55,13 @@ $A$が半正定値ならば$A$の全ての固有値$\lambda_1, \lambda_2, \cdots
 から簡単に示すことができる。正定値の場合は(\ref{PD})を使い、同様の手順で簡単に示す事ができる。
 
 さらに、$\mathbf{x} \in \mathbb{R}^n$に対して、
-\begin{lemma*} %\ref{SemidefiniteDuality}
+\begin{theorem} \label{PsdMatrix}
   $\mathbf{x} \in \mathbb{R}^n$に対して、$\mathbf{x} \mathbf{x}^T \in S_+^n$である。
-\end{lemma*}
+\end{theorem}
 \begin{proof}
   任意の$\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$に対し、$\mathbf{y}^T \mathbf{x} \mathbf{x}^T \mathbf{y}$を考える。すると
   \begin{align*}
-    \mathbf{y}^T \mathbf{x} \mathbf{x}^T \mathbf{y} = (\mathbf{x}^T \mathbf{y})^T \mathbf{x}^T \mathbf{y} = |\mathbf{x}^T \mathbf{y}|^2 \geq 0
+    \mathbf{y}^T \mathbf{x} \mathbf{x}^T \mathbf{y} = (\mathbf{x}^T \mathbf{y})^T \mathbf{x}^T \mathbf{y} = \left(\mathbf{x}^T \mathbf{y}\right)^2 \geq 0
   \end{align*}
   となる。よって$\mathbf{x} \mathbf{x}^T \in S_+^n$である。
 \end{proof}
@@ -291,6 +292,13 @@ $n$次実対称行列$A$の固有ベクトルは
 \end{proof}
 と示すことができる。等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致するが、等号が成立しないとき、すなわち、$C \cdot X > \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致しない。このように主問題と双対問題が一致しないことを双対ギャップが存在するという。
 
+半正定値計画問題は
+\begin{itemize}
+  \item Quardratic Programming
+  \item Linear Probramming
+\end{itemize}
+を特殊ケースとして含む。2次制約
+
 
 \section{Chubanovのアルゴリズム}
 Chubanovは線形計画問題
@@ -344,6 +352,15 @@ ChubanovのアルゴリズムをSDPへと拡張したアルゴリズムを実装
 
 \subsection{Basic Procedure}
 このアルゴリズムは、
+\begin{align*} \label{ScaledProblem}
+  \begin{array}{ll}
+    \text{find} & X \\
+    \text{s.t.} & A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m) \\
+                & I \cdot Y = 1 \\
+                & X \succ 0
+  \end{array}
+\end{align*}
+という問題を解く。そのために
 \begin{align*}
   \left\{
     \begin{array}{l}
@@ -352,7 +369,7 @@ ChubanovのアルゴリズムをSDPへと拡張したアルゴリズムを実装
     \end{array}
   \right.
 \end{align*}
-を入力とし、次のうちどれかを出力として返す。
+を入力とする。入力を受けとったのち、問題\ref{ScaledProblem}をといて、のうちどれかを出力として返す。
 \begin{itemize}
   \item $\displaystyle{\|P_\mathcal{A} Y\| \leq \frac{1}{n^{\frac{3}{2}}} \mathrm{tr}(Y)}$となるような$Y \succ 0$
   \item $A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X \succ 0$、すなわち許容解
@@ -370,7 +387,7 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \left\{Y \in S^n | A_i \cd
     \While {$Z \not= 0 \And Z \not\succ 0 \And \|Z\| > \displaystyle{\frac{1}{n^\frac{3}{2}} I \cdot Y_i}$}
       \State $C \leftarrow \text{getIdempotent}(Z)$
       \State $P \leftarrow P_\mathcal{A} C$
-      \If {$P \not= 0 \And P \not\succ 0 \And \|P\| > \displaystyle{\frac{1}{n^{\frac{3}{2}}} I \cdot C}$}
+      \If {$P \not= O \And P \not\succ 0 \And \|P\| > \displaystyle{\frac{1}{n^{\frac{3}{2}}} I \cdot C}$}
         \State $\alpha \leftarrow \displaystyle{\frac{P \cdot (P - Z)}{\|Z - P\|^2}}$
         \State $Y_{i + 1} \leftarrow \alpha Y_i + (1 - \alpha) C$
       \Else
@@ -470,7 +487,40 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \left\{Y \in S^n | A_i \cd
   \end{align*}
   となり、$\|\mathbf{q}\|^4 \geq 0$で、$\lambda_n < 0$なので、$Z \cdot (\mathbf{q} \mathbf{q}^T) \leq 0$。
 \end{proof}
-となる。さらに
+となる。また、$C$は$Z$の最小の固有値に対応する単位固有ベクトル$\mathbf{q}$から生成される$\mathbf{q} \mathbf{q}^T$という行列なので、$q_i \,\, (i = 1, 2, \cdots n)$を$\mathbf{q}$の$i$番目の成分とすると
+\begin{align*}
+  \|C\|^2 & = C \cdot C \\
+          & = \mathrm{tr} \left(\mathbf{q} \mathbf{q}^T \mathbf{q} \mathbf{q}^T\right) \\
+          & = \mathrm{tr} \left(\mathbf{q} \mathbf{q}^T\right) \\
+          & = \displaystyle{\sum_{i = 1}^m q_i^2} \\
+          & = 1
+\end{align*}
+であり、
+\begin{lemma} \label{Shrink}
+  $P_\mathcal{A}$を$\mathrm{ker} \mathcal{A} = \left\{Y \in S^n | A_i \cdot Y = 0 \,\, (i = 1, 2, \cdots, m)\right\}$への射影とする。すると、
+  \begin{align*}
+    \|P_\mathcal{A} X\| \leq \|X\|
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  $\|X\|^2$をを考える。すると、
+  \begin{align*}
+    \|X\|^2 & = X^T X \\
+            & = X^T (I - P_\mathcal{A} + P_\mathcal{A}) X \\
+            & = X^T (I - P_\mathcal{A}) X + X^T P_\mathcal{A} X \\
+  \end{align*}
+  となる。$(I - P_\mathcal{A}) = (I - P_\mathcal{A})^2$となるので、
+  \begin{align*}
+    X^T (I - P_\mathcal{A}) X + X^T P_\mathcal{A} X & = X^T (I - P_\mathcal{A}) (I - P_\mathcal{A}) X + X^T P_\mathcal{A} P_\mathcal{A} X\\
+                                                    & = \|X^T (I - P_\mathcal{A})\|^2 + \|P_\mathcal{A} X\|^2
+  \end{align*}
+  である。以上から、
+  \begin{align*}
+    \|P_\mathcal{A} X\| \leq \|X\|
+  \end{align*}
+  である。
+\end{proof}
+である。さらに
 \begin{lemma} \label{Increment}
   $Z$を、$Y_i \in S_+^n$を$P_\mathcal{A}$で射影した点、$C$を$Z$のもっとも小さな固有値に対応する固有ベクトル$\mathbf{q}$によって生成される行列$\mathbf{q} \mathbf{q}^T$とする。$Y_{i + 1} \in S_+^n$を
   \begin{align*}
@@ -515,14 +565,29 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \left\{Y \in S^n | A_i \cd
                                   & = \frac{\|P\|^2 \|Z\|^2 - (P \cdot Z)^2}{\|Z\|^2 + \|P\|^2 - 2 P \cdot Z} \\
                                   & \leq \frac{\|P\|^2 \|Z\|^2}{\|Z\|^2 + \|P\|^2}
   \end{align*}
-  。ここで
+  。ここで、補題\ref{Shrink}から
   \begin{align*}
-    \|P\|^2 & = P \cdot P \\
-            & = \mathrm{tr}((P_\mathcal{A} C)^T P_\mathcal{A} C)\\
-            & = \mathrm{tr}(C P_\mathcal{A} C) \\
-            & = C \cdot P
+    \|P\|^2 = \|P_\mathcal{A} C\|^2 \leq \|C\|^2
   \end{align*}
-  であること、$P \in S^n$という性質および補題\ref{NegativeInnerProduct}から、$\|P\|^2 = C \cdot P = 0$となるので、$\|P\|^2 \leq \|C\|^2 \leq 1$。以上から
+  であり、
+  \begin{align*}
+    \|C\|^2 & = C \cdot C \\
+            & = \mathrm{tr} \left(C C\right) \\
+            & = \mathrm{tr} \left(\left(\mathbf{q} \mathbf{q}^T)\right) \left(\mathbf{q} \mathbf{q}^T)\right)\right) \\
+            & = \mathrm{tr} \left(\mathbf{q} \mathbf{q}^T\right) \\
+            & = \mathrm{tr} \left(C\right) \\
+            & = \mathrm{tr} \left(
+                              \begin{array}{ccc}
+                                q_1 q_1 & \cdots & q_1 q_n \\
+                                \vdots  & \ddots & \vdots \\
+                                q_n q_1 & \cdots & q_n q_n
+                              \end{array}
+                            \right) \\
+            & = \displaystyle{\sum_{i = 1}^n} q_i^2 \\
+            & = \|\mathbf{q}\|^2 \\
+            & = 1
+  \end{align*}
+  なので、$\|P\|^2 \leq \|C\|^2 = 1$。したがって、
   \begin{align*}
     \frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2} \geq \frac{1}{\|Z\|^2} + \frac{1}{\|P\|^2} \geq \frac{1}{\|Z\|^2} + 1
   \end{align*}
@@ -591,3 +656,10 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \left\{Y \in S^n | A_i \cd
     \State \Goto{CallBasicProcedure}
   \end{algorithmic}
 \end{algorithm}
+
+
+\section{実験}
+アルゴリズムを実装し、各データセットにおけるアルゴリズムの実行時間をそれぞれ示す。
+
+\subsection{実験1}
+
