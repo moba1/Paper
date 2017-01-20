@@ -1,0 +1,79 @@
+\subsection{行列の内積とノルム}
+$n$次実対称行列$X, Y$に対して、行列の内積を
+\begin{align*}
+  X \cdot Y = \mathrm{tr}(X Y)
+\end{align*}
+、ノルムを
+\begin{align*}
+  \|X\| = \sqrt{X \cdot X}
+\end{align*}
+とする。
+
+\subsection{半正定値計画問題}
+半正定値計画問題(SDP)とは$C \in S^n$および$A_1, A_2, \cdots, A_m \in S^n$、$\mathbf{b} \in \mathbb{R}^m$を用いて、
+\begin{align} \label{MainProblem}
+  \left\{
+    \begin{array}{lll}
+      \mathrm{minimize} & C \cdot X \\
+      \mathrm{s.t.}     & A_i \cdot X = b_i & (i = 1, 2, \cdots, m) \\
+                        & X \succeq 0
+    \end{array}
+  \right.
+\end{align}
+と表される問題のことを言う。この問題の双対問題は$\mathbf{y} \in \mathbb{R}^n$を用いて
+\begin{align} \label{DualProblem}
+  \left\{
+    \begin{array}{lll}
+      \mathrm{maximize} & \mathbf{b}^T \mathbf{y} \\
+      \mathrm{s.t.}     & \displaystyle{\sum_{i = 1}^m} y_i A_i + S = C \\
+                        & S \succeq 0
+    \end{array}
+  \right.
+\end{align}
+と表される。
+
+\subsection{双対性}
+反省て一計画問題の主問題(\ref{MainProblem})と双対問題(\ref{DualProblem})との間には
+\begin{align*}
+  C \cdot X \geq \mathbf{b}^T \mathbf{y}
+\end{align*}
+という弱双対性という関係が知られている。この事実は
+\begin{theorem*}
+  (\ref{MainProblem})を主問題、(\ref{DualProblem})を双対問題とすると、
+  \begin{align*}
+    C \cdot X \geq \mathbf{b}^T \mathbf{y}
+  \end{align*}
+  となる。
+\end{theorem*}
+\begin{proof}
+  主問題(\ref{MainProblem})と双対問題(\ref{DualProblem})の目的関数の差$C \cdot X - \mathbf{b}^T \mathbf{y}$を考える。すると、双対問題(\ref{DualProblem})の条件から
+  \begin{align*}
+    C = \displaystyle{\sum_{i = 1}^m} y_i A_i + S
+  \end{align*}
+  、主問題(\ref{MainProblem})の条件から
+  \begin{align*}
+    \mathbf{b}_i = A_i \cdot X \,\, (i = 1, 2, \cdots m)
+  \end{align*}
+  であるので、
+  \begin{align*}
+    C \cdot X - \mathbf{b}^T \mathbf{y} = \left(S + \displaystyle{\sum_{i = 1}^m} y_i A_i\right) \cdot X - \displaystyle{\sum_{i = 1}^m} y_i A_i \cdot X = S \cdot X
+  \end{align*}
+  となる。ここで、定理\ref{SemidefiniteInnerProduct}から、
+  \begin{align*}
+    S \cdot X \geq 0
+  \end{align*}
+  であるので、
+  \begin{align*}
+    C \cdot X - \mathbf{b}^T \mathbf{y} \geq 0
+  \end{align*}
+  となり、$C \cdot X \geq \mathbf{b}^T \mathbf{y}$が示された。
+\end{proof}
+と示すことができる。等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致するが、等号が成立しないとき、すなわち、$C \cdot X > \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致しない。このように主問題と双対問題が一致しないことを双対ギャップが存在するという。
+
+半正定値計画問題は
+\begin{itemize}
+  \item Quardratic Programming
+  \item Linear Probramming
+\end{itemize}
+を特殊ケースとして含む。2次制約
+
