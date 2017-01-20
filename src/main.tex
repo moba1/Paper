@@ -637,7 +637,7 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \left\{Y \in S^n | A_i \cd
     \For {$i = 1$ to $m$}
       \State $A_i^0 \leftarrow A_i$
     \EndFor
-    \State Basic Procedureを$Y_k$と$A_1^k, A_2^k, \cdots A_m^k$を入力として呼び出す \label{CallBasicProcedure}
+    \State Basic Procedureを$Y_k$と$A_1, A_2, \cdots A_m$を入力として呼び出す \label{CallBasicProcedure}
     \If {Basic Procedureからの返り値が\ref{DualSolution}}
       \State \Return $\mathbf{u}$
     \ElsIf {Basic Procedureからの返り値が\ref{FeasibleSolution}}
@@ -649,7 +649,7 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \left\{Y \in S^n | A_i \cd
       \State \Return \ref{NoSolution}
     \EndIf
     \For {$i = 1$ to $m$}
-      \State $\displaystyle{A_i^{k + 1} \leftarrow W_k^\frac{1}{2} A_i^k W_k^\frac{1}{2}}$
+      \State $\displaystyle{A_i \leftarrow W_k^\frac{1}{2} A_i W_k^\frac{1}{2}}$
     \EndFor
     \State $\displaystyle{Y_{k + 1} \leftarrow \frac{1}{I \cdot Y_k} Y_k}$
     \State $k \leftarrow k + 1$
@@ -662,4 +662,63 @@ $P_\mathcal{A} X$は$X$の$\mathrm{ker}\mathcal{A} := \left\{Y \in S^n | A_i \cd
 アルゴリズムを実装し、各データセットにおけるアルゴリズムの実行時間をそれぞれ示す。
 
 \subsection{実験1}
+\begin{align*}
+  A_1 & = \left(
+            \begin{array}{ccc}
+              2 &  0 &  0 \\
+              0 &  0 & -1 \\
+              0 & -1 &  0
+            \end{array}
+          \right) \\
+  A_2 & = \left(
+            \begin{array}{ccc}
+              0 & 0 & 0 \\
+              0 & 1 & 0 \\
+              0 & 0 & 0
+            \end{array}
+          \right) \\
+  A_3 & = \left(
+            \begin{array}{ccc}
+              0 & 0 & 1 \\
+              0 & 0 & 0 \\
+              1 & 0 & 0
+            \end{array}
+          \right) \\
+  A_4 & = \left(
+            \begin{array}{ccc}
+              0 & 0 & 1 \\
+              0 & 0 & 0 \\
+              1 & 0 & 0
+            \end{array}
+          \right)
+\end{align*}
+を条件として使用した。
 
+\subsection{実験2}
+\begin{align*}
+  A_1 & = \left(
+            \begin{array}{ccc}
+              0 &  0 &  0 \\
+              0 &  1 & -1 \\
+              0 & -1 &  0
+            \end{array}
+          \right) \\
+  A_2 & = \left(
+            \begin{array}{ccc}
+              0 & 0 & 0 \\
+              0 & 1 & 0 \\
+              0 & 0 & 0
+            \end{array}
+          \right) \\
+  A_3 & = \left(
+            \begin{array}{ccc}
+              0 &  0 &  0 \\
+              0 & -1 &  0 \\
+              0 &  0 & -2
+            \end{array}
+          \right) \\
+\end{align*}
+を条件として使用した。
+
+\subsection{実験3}
+$100$次実対称行列を30個用意し、
