@@ -30,7 +30,12 @@ $n$次実対称行列$X, Y$に対して、行列の内積を
     \end{array}
   \right.
 \end{align}
-と表される。
+と表される。半正定値計画問題は
+\begin{itemize}
+  \item Quardratic Programming
+  \item Linear Probramming
+\end{itemize}
+を特殊ケースとして含んでいる
 
 \subsection{双対性}
 反省て一計画問題の主問題(\ref{MainProblem})と双対問題(\ref{DualProblem})との間には
@@ -69,11 +74,3 @@ $n$次実対称行列$X, Y$に対して、行列の内積を
   となり、$C \cdot X \geq \mathbf{b}^T \mathbf{y}$が示された。
 \end{proof}
 と示すことができる。等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致するが、等号が成立しないとき、すなわち、$C \cdot X > \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致しない。このように主問題と双対問題が一致しないことを双対ギャップが存在するという。
-
-半正定値計画問題は
-\begin{itemize}
-  \item Quardratic Programming
-  \item Linear Probramming
-\end{itemize}
-を特殊ケースとして含む。2次制約
-
