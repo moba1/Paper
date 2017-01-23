@@ -35,10 +35,10 @@ $n$次実対称行列$X, Y$に対して、行列の内積を
   \item Quardratic Programming
   \item Linear Probramming
 \end{itemize}
-を特殊ケースとして含んでいる
+を特殊ケースとして含んでいる。SDPの応用例は\cite{Applications}を参照してもらいたい。
 
 \subsection{双対性}
-反省て一計画問題の主問題(\ref{MainProblem})と双対問題(\ref{DualProblem})との間には
+半正定値計画問題の主問題(\ref{MainProblem})と双対問題(\ref{DualProblem})との間には
 \begin{align*}
   C \cdot X \geq \mathbf{b}^T \mathbf{y}
 \end{align*}
@@ -73,4 +73,4 @@ $n$次実対称行列$X, Y$に対して、行列の内積を
   \end{align*}
   となり、$C \cdot X \geq \mathbf{b}^T \mathbf{y}$が示された。
 \end{proof}
-と示すことができる。等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致するが、等号が成立しないとき、すなわち、$C \cdot X > \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致しない。このように主問題と双対問題が一致しないことを双対ギャップが存在するという。
+と示すことができる。等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致するが、等号が成立しないとき、すなわち、$C \cdot X > \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致しない。このように主問題と双対問題が一致しないことを双対ギャップが存在するという。しかし、半正定値計画問題において、一般に等号が成立することはない\cite{SemidefiniteDuality}。

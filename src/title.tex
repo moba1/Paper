@@ -1,6 +1,6 @@
 \documentclass[a4paper,uplatex]{jsarticle}
 
-\usepackage[backend=biber, style=numeric]{biblatex}
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{algorithm, algpseudocode}
 \usepackage{enumitem}
@@ -9,6 +9,8 @@
 \usepackage{url}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{braket}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 
 % アルゴリズム関連
 \algnewcommand\algorithmicinput{\textbf{INPUT: }}
@@ -31,8 +33,41 @@
 % 参考文献
 \addbibresource{paper.bib}
 
+% 表紙
+\makeatletter
+
+\def\@thesis{卒業論文}
+\def\id#1{\def\@id{#1}}
+\def\department#1{\def\@department{#1}}
+
+\def\@maketitle{
+  \centering
+  {\huge \@thesis \par}
+  \vspace{10mm}
+  {\LARGE\bf \@title \par}    % タイトル
+  \vspace{10mm}
+  {\Large \@date\par}	        % 年月日
+  \vspace{20mm}
+  {\Large \@department \par}	% 所属
+  {\Large 学籍番号　\@id \par}	% 学籍番号
+  \vspace{10mm}
+  {\large \@author}           % 氏名
+  \par\vskip 1.5em
+}
+\title{Chubanovのにおけるアルゴリズムの\\SDPへの拡張における実装実験}
+\author{福田 優真}
+\date{\today}
+\department{電気通信大学\\情報理工学部情報・通信工学科\\情報数理学コース村松研究室\\4年}
+\id{1311169}
+
+\makeatother
+
 \begin{document}
+  \maketitle
+  \newpage
+
   \tableofcontents
+  \newpage
 
   \input main.tex
 
