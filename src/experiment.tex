@@ -1,4 +1,21 @@
-アルゴリズムを実装し、各データセットにおけるアルゴリズムの実行時間をそれぞれ示す。本実験ではMain Procedureに与える小さな実数$\epsilon > 0$を$i \times 10^{-j} \,\, (i = 9, 8, \cdots, 1\text{および}j = 1, 2, \cdots, 10)$と変化させて実験を行っている。
+アルゴリズムを実装し、各データセットにおけるアルゴリズムの実行時間をそれぞれ示す。実験環境は
+\begin{description}
+  \item[OS] Mac OS X El Caption (10.11.6)
+  \item[CPU] Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz
+  \item[Memory] 16GB 1600MHz DDR3
+\end{description}
+でおこない、Main Procedureに与える小さな実数$\epsilon > 0$は
+\begin{algorithm}
+  \caption{$epsilon > 0$の与え方}
+  \begin{algorithmic}
+    \For {$i = 1$ to $10$}
+      \For {$j = 9$ to $1$}
+        \State $\epsilon = j \times 10^{-i}$
+      \EndFor
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+として、Forループ1反復ごとの$\epsilon$とともにMain Procedureを100回呼び出してその実行時間を計測した。実装はMATLAB 2016bを用いて行った。
 
 \subsection{実験1}
 \begin{align*}
@@ -25,13 +42,27 @@
           \right) \\
   A_4 & = \left(
             \begin{array}{ccc}
-              0 & 0 & 1 \\
+              0 & 1 & 0 \\
               0 & 0 & 0 \\
-              1 & 0 & 0
+              0 & 0 & 0
             \end{array}
           \right)
 \end{align*}
-を条件として使用した。
+を条件として使用して実験を行った。この実験では双対問題の許容解
+\begin{align} \label{test1-results}
+  \displaystyle{\sum_{i = 1}^4} u_i A_i \succ 0\text{となる}\mathbf{u}
+\end{align}
+がアルゴリズムの結果として得られる。
+
+実際に得られた実験結果は図\ref{test1}のようになっている。
+\begin{figure}
+  \centering
+  \includegraphics[width=10cm]{test1.png}
+  \label{test1}
+  \caption{実験1の実験結果}
+\end{figure}
+
+理論的には問題(\ref{MainProblem})の許容解は出ずに、双対問題の許容解(\ref{test1-results})が結果として得られるはずであるが、$\epsilon$が大きい間はMain Procedureが先に終了してしまうため、アルゴリズムが解までたどり着くことができない。しかし、ある程度$\epsilon$が小さくなるとMain Procedureも十分な回数分反復することができるようになるため、理論的な結果と一致するようになったと考えられる。実際、図中の縦棒である、$10^{-5}$以降は理論的な結果と一致して双対問題の許容解(\ref{test1-results})が得られた。これ以降はどれほど$\epsilon$を小さくしようとも、双対問題の許容解(\ref{test1-results})が得られるため、実行時間が一定になっている。
 
 \subsection{実験2}
 \begin{align*}
@@ -57,8 +88,30 @@
             \end{array}
           \right) \\
 \end{align*}
-を条件として使用した。
+を条件として使用した。この実験では
+\begin{align*}
+  \displaystyle{\sum_{i = 1}^4} u_i A_i \succ 0\text{となる}\mathbf{u}
+\end{align*}
+や、問題\ref{MainProblem}の許容解$X \succ 0$は得ることができない。
+
+実際に得られた結果は図\ref{test2}の通りである。
+\begin{figure}
+  \centering
+  \includegraphics[width=10cm]{test2.png}
+  \label{test2-results}
+  \caption{実験2の実験結果}
+\end{figure}
+
+この実験ではアルゴリズムは双対問題の許容解(\ref{test1-results})や、問題\ref{MainProblem}の許容解$X \succ 0$を得ることはできない。今回の実装として、100回Main Procedureが反復を行った場合、強制的にアルゴリズムを終了するようになっている。そのため、$10^{-6}$以降はこの最大反復回数を超えてしまうため、一定の実行時間しか得られなかった。
 
 \subsection{実験3}
-$100$次実対称行列を30個用意し、
+$50$次実対称行列を30個用意した。各要素の値はpythonのメルセンヌツイスタを用いて$[-10,10]$の範囲で生成した整数を用いている。
+
+実験結果は図\ref{test3}のようになった。
+\begin{figure}
+  \centering
+  \includegraphics[width=10cm]{randomtest.png}
+  \label{randomtest-results}
+  \caption{実験3の実験結果}
+\end{figure}
 

@@ -1,11 +1,11 @@
 Chubanovが$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、$A \mathbf{x} = 0, \mathbf{x} \geq 0$という問題の許容解を得るための強多項式時間アルゴリズムを提案した。それは$\Set{\mathbf{x} | A \mathbf{x} = \mathbf{0}}$という空間への射影$P_A$の各列ベクトル$\mathbf{p}_1, \mathbf{p}_2, \cdots, \mathbf{p}_n$の中で$\mathbf{p}_i^T \mathbf{x} > \mathbf{0} \,\, (i = 1, 2, \cdots, n)$を満たさないもの、すなわち$\mathbf{p}_i^T \mathbf{x} < 0$となる$\mathbf{p}_i$および$\mathbf{x}$を$\mathbf{x}' = \alpha \mathbf{x} + (1 - \alpha) \mathbf{p}$と次々凸結合して$\mathbf{x}$を$\mathbf{x}'$へと更新していくBasic Procedureと呼ばれるアルゴリズムと$\mathbf{p}_i^T \mathbf{x} < 0 (i = 1, 2, \cdots, n)$となる$A$の$i$行目を$1 / 2$倍するMain Procedureと呼ばれるアルゴリズムの2つからなる。この2つを使って、$\mathbf{x} > \mathbf{0}$となる許容解かそれともそのような許容解が存在しないかを導く。
 
 村松がそのアルゴリズムを許容解が対称錐内にあって線型写像によって写像した結果が$\mathbf{0}$になるような問題に適用できるように拡張した。対称錐は半正定値な行列の集合でできた錐を含むので、村松が拡張したアルゴリズムを半正定値な行列の集合でできた錐を制約としてもつ半正定値計画問題に対しても適用することができる。そこで、本論文では村松が対称錐へと拡張したChubanovのアルゴリズムを半正定値な行列の集合がなす錐に制限した
-\begin{align*}
+\begin{align} \label{MainProblem}
   \begin{array}{ll} \\
     \text{find} & X \\
     \text{s.t.} & A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m) \\
                 & X \succ 0
   \end{array}
-\end{align*}
+\end{align}
 という問題の許容解$X \succ 0$が存在するかを導けるように拡張したアルゴリズムの実装・実験を行った。
