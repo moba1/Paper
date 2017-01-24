@@ -2,7 +2,7 @@ Chubanovは線形計画問題
 \begin{align*}
   \begin{array}{ll}
     \text{minimize} & \mathbf{c}^T \mathbf{x} \\
-    \text{s.t.}     & A \mathbf{x} = \mathbf{b} \\
+    \text{s.t.}     & A \mathbf{x} = \mathbf{0} \\
                     & \mathbf{x} \geq \mathbf{0}
   \end{array}
 \end{align*}
@@ -14,18 +14,18 @@ Chubanovは線形計画問題
 から構成されている。
 
 \subsection{Basic Procedure}
-このアルゴリズムは$m \times n$行列$A$と$\mathbf{y} \mathbf{1} = 1$となるような開始点$\mathbf{y}^T \in \mathbb{R}^n$を入力として受け取る。この$\mathbf{y}$と$\mathrm{ker}A \Set{\mathbf{x} | A \mathbf{x} = \mathbf{0}}$への射影
+このアルゴリズムは$m \times n$行列$A$と$\mathbf{y}^T \mathbf{1} = 1$となるような開始点$\mathbf{y} \in \mathbb{R}^n$を入力として受け取る。この$\mathbf{y}$と$\mathrm{ker}A \Set{\mathbf{x} | A \mathbf{x} = \mathbf{0}}$への射影
 \begin{align*}
-  P_A = I - A^T (A A^T)^{-1} A
+  P_A = I - A^T \left(A A^T\right)^{-1} A
 \end{align*}
 を使用して、$\mathbf{x} = P_A \mathbf{y}$を計算し、この$\mathbf{x}$および$\mathbf{y}$を
 \begin{align*}
-  \alpha = \frac{\mathbf{p}^T (\mathbf{p} - \mathbf{x})^T}{\|\mathbf{p} - \mathbf{x}\|^2}
+  \alpha = \frac{\mathbf{p}^T \left(\mathbf{p} - \mathbf{x}\right)^T}{\|\mathbf{p} - \mathbf{x}\|^2}
 \end{align*}
 をもちいて
 \begin{align*}
-  \mathbf{y}' & = \alpha \mathbf{y} + (1 - \alpha) \mathbf{e}_i \\
-  \mathbf{x}' & = \alpha \mathbf{x} + (1 - \alpha) \mathbf{p}
+  \mathbf{y}' & = \alpha \mathbf{y} + \left(1 - \alpha\right) \mathbf{e}_i \\
+  \mathbf{x}' & = \alpha \mathbf{x} + \left(1 - \alpha\right) \mathbf{p}
 \end{align*}
 として更新していく。$i$は$x_i \leq 0$となる$\mathbf{x}$のインデックスであり、$\mathbf{p}$は$P_A$の$i$番目の列ベクトル、$\mathbf{e}_i$は$i$番目の要素だけ$1$で、それ以外が$0$の$n$次元横ベクトである。こうすることで、
 \begin{itemize}
@@ -33,14 +33,12 @@ Chubanovは線形計画問題
   \item 許容解すべてにおいて$k$番目の要素$x_k^*$が$0$
   \item 許容解すべてにおいて$k$番目の要素$x_k^*$が$\frac{1}{2}$以下になっている
 \end{itemize}
-のうちどれかを得る事ができる。このアルゴリズムによって得られた解とこの解における$\mathbf{y}$を出力する。このアルゴリズムの計算量は$O(n^3)$となる。
+のうちどれかを得る事ができる。このアルゴリズムによって得られた解とこの解における$\mathbf{y}$を出力する。このアルゴリズムの計算量論文中ではは$O(n^3)$と示されている。
 
 \subsection{Main Proceudre}
 このアルゴリズムはは$m \times n$行列$A$を入力とし、Basic Procedureを呼び出して得られる解のうち許容解すべてにおいて$k$番目の要素$x_k^*$が$\frac{1}{2}$以下になっているとき、$A$の$k$列目を$1 / 2$倍し、またBasic Procedureを呼び出す、ということを繰り返す。こうすることで
 \begin{itemize}
-  \item 許容解$\mathbf{x}^* > 0$
-  \item 許容解はないが$\mathbf{y} = \mathbf{z} A、\mathbf{y} > \mathbf{0}$となる$\mathbf{y}$が存在する
+  \item $A\mathbf{x}^*=\mathbf{b}$となる許容解$\mathbf{x}^* > 0$
   \item 許容解は存在しない
 \end{itemize}
-のうちどれか1つを導く。このアルゴリズムの計算量は$O(n^4 + n^3 L_{\text{min}})$であり、$L_{\text{min}}$はループを一定回数で終了するための上限値である。
-
+のうちどれか1つを導く。このアルゴリズムの計算量は$O\left(n^4 + n^3 L_{\text{min}}\right)$と論文中ではしめされており、$L_{\text{min}}$はループを一定回数で終了するための上限値である。

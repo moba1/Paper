@@ -1,3 +1,4 @@
+\subsection{錐}
 錐$\mathcal{K} \subseteq \mathbb{R}^n$とは任意の$\mathbf{x} \in \mathcal{K}, \alpha > 0$に対して、$\alpha \mathbf{x} \in \mathcal{K}$となるような集合のことをいい、集合$\mathcal{K}$が凸であるとは
 \begin{align*}
   \mathbf{x}_1, \mathbf{x}_2 \in \mathcal{K}, \alpha_1, \alpha_2 \in \mathbb{R}
@@ -10,9 +11,9 @@
 \begin{align*}
   \alpha_1 \mathbf{x}_1 + \alpha_2 \mathbf{x}_2 \in \mathcal{K}
 \end{align*}
-となることをいう。凸な錐は$\mathcal{K}$を凸錐と呼ばれ、その凸錐が閉集合の時、その錐のことを閉凸錐と呼ばれる。
+となることをいう。凸な錐$\mathcal{K}$は凸錐と呼ばれ、その凸錐が閉集合の時、その錐のことを閉凸錐と呼ぶ。
 
-$S_+^n$はこの定義のもと凸錐となる。実際、
+$S_+^n$はこの定義のもと凸錐となる。実際、次の定理が成り立つ。
 \begin{theorem*}
   $S_+^n$は凸錐である。
 \end{theorem*}
@@ -25,23 +26,19 @@ $S_+^n$はこの定義のもと凸錐となる。実際、
 
   次に、$S_+^n$が凸であることを示す。任意の$A, B \in S_+^n$、$\alpha, \beta \geq 0$に対して、$\alpha + \beta = 1$とする。任意のベクトル$\mathbf{x} \in \mathbf{R}^n$に対して、
   \begin{align*}
-    \mathbf{x}^T (\alpha A + \beta B) \mathbf{x} = \alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x}
+    \mathbf{x}^T \left(\alpha A + \beta B\right) \mathbf{x} = \alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x}
   \end{align*}
   。ここで、仮定$A, B \in S_+^n$、つまり$\mathbf{x}^T A \mathbf{x} \geq 0, \mathbf{x}^T B \mathbf{x} \geq 0$および$\alpha, \beta \geq 0$から$\alpha \mathbf{x}^T A \mathbf{x} \geq 0$かつ$\beta \mathbf{x}^T B \mathbf{x} \geq 0$より、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \geq 0$。したがって、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \in S_+^n$。ゆえに$S_+^n$は凸である。
 
   以上から集合$S_+^n$は凸かつ錐となるので、$S_+^n$は凸錐である。
 \end{proof}
-という定理から凸錐である事実がわかる。
 \begin{figure}
   \includegraphics{PSDcone.png}
-  \caption[]{$\displaystyle{S_+^2 = \Set{
-                                      \left(
-                                        \begin{array}{cc}
-                                          x & z \\
-                                          z & y
-                                        \end{array}
-                                      \right)
-                                      | x \geq 0, z \geq 0, xz \geq y^2
-                                    }}$}
+  \caption[]{$S_+^2$の図}
 \end{figure}
 
+\subsection{双対錐}
+錐$\mathcal{K}$に対して
+\begin{align*}
+  \mathcal{K}^* = \Set{x | }
+\end{align*}

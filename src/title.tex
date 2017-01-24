@@ -1,4 +1,4 @@
-\documentclass[a4paper,uplatex]{jsarticle}
+\documentclass[a4paper,uplatex,12pt]{jsarticle}
 
 \usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
 \usepackage{amsmath, amsthm, amssymb}
@@ -9,8 +9,13 @@
 \usepackage{url}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{braket}
+\usepackage[prefernoncjk]{pxcjkcat}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{exscale}
+\usepackage{fix-cm}
+\usepackage[top=20truemm,bottom=20truemm,left=20truemm,right=20truemm]{geometry}
 
 % アルゴリズム関連
 \algnewcommand\algorithmicinput{\textbf{INPUT: }}
@@ -33,32 +38,36 @@
 % 参考文献
 \addbibresource{paper.bib}
 
+% 内積
+\def\dot<#1>{\langle #1 \rangle}
+\def\parenthesis(#1){\left( #1 \right)}
+
 % 表紙
 \makeatletter
 
-\def\@thesis{卒業論文}
-\def\id#1{\def\@id{#1}}
-\def\department#1{\def\@department{#1}}
-
 \def\@maketitle{
+  \vfill
+  \hfill 電気通信大学情報理工学部 \\
+  \hfill 情報・通信工学科情報数理工学コース卒業論文
+  \vfill
   \centering
-  {\huge \@thesis \par}
-  \vspace{10mm}
-  {\LARGE\bf \@title \par}    % タイトル
-  \vspace{10mm}
-  {\Large \@date\par}	        % 年月日
-  \vspace{20mm}
-  {\Large \@department \par}	% 所属
-  {\Large 学籍番号　\@id \par}	% 学籍番号
-  \vspace{10mm}
-  {\large \@author}           % 氏名
-  \par\vskip 1.5em
+  {\Large \@title}
+
+  {\@date}
+
+  {
+    \large
+    情報数理工学コース\\[1cm]
+    学籍番号 1311169\\[1cm]
+    \@author
+  }
+
+  指導教員 村松正和
+  \vfill
 }
-\title{Chubanovのにおけるアルゴリズムの\\SDPへの拡張における実装実験}
+\title{Chubanovのにおけるアルゴリズムの\\SDPへの拡張とその実装}
 \author{福田 優真}
 \date{\today}
-\department{電気通信大学\\情報理工学部情報・通信工学科\\情報数理学コース村松研究室\\4年}
-\id{1311169}
 
 \makeatother
 

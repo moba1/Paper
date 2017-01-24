@@ -4,18 +4,21 @@
   \item[CPU] Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz
   \item[Memory] 16GB 1600MHz DDR3
 \end{description}
-でおこない、Main Procedureに与える小さな実数$\epsilon > 0$は
+でおこない、
 \begin{algorithm}
   \caption{$\epsilon > 0$の与え方}
   \begin{algorithmic}
     \For {$i = 1$ to $10$}
       \For {$j = 9$ to $1$}
         \State $\epsilon = j \times 10^{-i}$
+        \For {$k = 1$ to $100$}
+          \State Main Procedureを$\epsilon$と実験で用いる$A_1, A_2, \cdots, A_m$を引数に呼び出し、実行時間を計測
+        \EndFor
       \EndFor
     \EndFor
   \end{algorithmic}
 \end{algorithm}
-として、Forループ1反復ごとの$\epsilon$とともにMain Procedureを100回呼び出してその実行時間を計測した。実装はMATLAB 2016bを用いて行った。
+として、Forループ1反復ごとの$\epsilon$とともにMain Procedureを100回呼び出してMain Procedureの実行時間から平均実行時間を算出した。実装はMATLAB 2016bを用いて行った。
 
 \subsection{実験1}
 \begin{align*}

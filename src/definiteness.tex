@@ -2,16 +2,11 @@ $n$次実対称行列$A$が半正定値であるとは
 \begin{align} \label{PSD}
   \forall \mathbf{x} \in \mathbb{R}^n, \mathbf{x}^T A \mathbf{x} \geq 0
 \end{align}
-であることをいい、$A$が正定値であるとは任意の$\mathbf{0}$でない$\mathbf{x} \in \mathbb{R}^n$に対して、
-\begin{align} \label{PD}
-  \mathbf{x}^T A \mathbf{x} > 0
-\end{align}
-であることをいう。$A$が半正定値・正定値を示すときはそれぞれ
-\begin{description}
-  \item[半正定値] $A \succeq 0$
-  \item[正定値]   $A \succ 0$
-\end{description}
-で表す。また、$n$次対称行列の集合を$S^n$、$n$次対称行列のなかでも半正定値の集合を$S_+^n$と表記する。半正定値な行列の例としては
+であることをいう。$A$が半正定値であることを示すときは
+\begin{align*}
+  A \succeq 0
+\end{align*}
+で表す。正定値は先に定義したものを使用する。また、$n$次対称行列の集合を$S^n$、$n$次対称行列のなかでも半正定値の集合を$S_+^n$と表記する。半正定値な行列の例としては
 \begin{align*}
   \left(
     \begin{array}{cc}
@@ -20,7 +15,7 @@ $n$次実対称行列$A$が半正定値であるとは
     \end{array}
   \right)
 \end{align*}
-がある。半正定値かどうかを確かめてみると任意の$\mathbf{x} = (x_1, x_2)^T \in \mathbb{R}^2$に対して
+がある。半正定値かどうかを確かめてみると任意の$\mathbf{x} = \left(x_1, x_2\right)^T \in \mathbb{R}^2$に対して
 \begin{align*}
   \begin{array}{cc}
          \mathbf{x}^T
@@ -31,7 +26,7 @@ $n$次実対称行列$A$が半正定値であるとは
              \end{array}
            \right)
          \mathbf{x}
-    =    (x_1, 2x_2)
+    =    \left(x_1, 2x_2\right)
            \left(
              \begin{array}{c}
                x_1 \\
@@ -44,7 +39,7 @@ $n$次実対称行列$A$が半正定値であるとは
 \end{align*}
 となり、半正定値であることがわかる。
 
-$A$が半正定値ならば$A$の全ての固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$が非負、すなわち$\lambda_i \geq 0 \,\, (i = 1, 2, \cdots, n)$であり、$A$が正定値であるなら正、すなわち$\lambda_i > 0 \,\, (i = 1, 2, \cdots, n)$である。実際、半正定値の場合だけ見てみると、
+また、半正定値の固有値は以下の定理からすべて非負であることがわかる。
 \begin{theorem*}
   $A$が半正定値ならば$A$の全ての固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$は非負である。
 \end{theorem*}
@@ -53,7 +48,7 @@ $A$が半正定値ならば$A$の全ての固有値$\lambda_1, \lambda_2, \cdots
   \begin{align*}
     \mathbf{x}_\lambda^T A \mathbf{x}_\lambda \geq 0
   \end{align*}
-  である。$\lambda$は$A$の固有値なので、
+  である。$\lambda$は$A$の固有値なので固有値の定義より、
   \begin{align*}
     A \mathbf{x}_\lambda = \lambda \mathbf{x}_\lambda
   \end{align*}
@@ -67,16 +62,16 @@ $A$が半正定値ならば$A$の全ての固有値$\lambda_1, \lambda_2, \cdots
   \end{align*}
   となる。ここで、$\|\mathbf{x}_\lambda\|^2 \geq 0$なので、$\lambda \geq 0$。
 \end{proof}
-から簡単に示すことができる。正定値の場合は(\ref{PD})を使い、同様の手順で簡単に示す事ができる。
+正定値の場合は(\ref{PD})を使い、同様の手順で簡単に示す事ができる。
 
-また、任意の$\mathbf{x} \in \mathbb{R}^n$に対して、
+また、以下のような定理が成立する。
 \begin{theorem} \label{PsdMatrix}
   $\mathbf{x} \in \mathbb{R}^n$に対して、$\mathbf{x} \mathbf{x}^T \in S_+^n$である。
 \end{theorem}
 \begin{proof}
   任意の$\mathbf{x}, \mathbf{y} \in \mathbb{R}^n$に対し、$\mathbf{y}^T \mathbf{x} \mathbf{x}^T \mathbf{y}$を考える。すると
   \begin{align*}
-    \mathbf{y}^T \mathbf{x} \mathbf{x}^T \mathbf{y} = (\mathbf{x}^T \mathbf{y})^T \mathbf{x}^T \mathbf{y} = \left(\mathbf{x}^T \mathbf{y}\right)^2 \geq 0
+    \mathbf{y}^T \mathbf{x} \mathbf{x}^T \mathbf{y} = \left(\mathbf{x}^T \mathbf{y}\right)^T \mathbf{x}^T \mathbf{y} = \left(\mathbf{x}^T \mathbf{y}\right)^2 \geq 0
   \end{align*}
   となる。よって$\mathbf{x} \mathbf{x}^T \in S_+^n$である。
 \end{proof}

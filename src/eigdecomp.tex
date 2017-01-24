@@ -1,7 +1,7 @@
 \subsection{固有値分解}
-$n$次実対称行列$A$の固有ベクトルは
+$n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
 \begin{theorem*}
-  $n$次実対称行列$A$の固有ベクトルは互いに直行する。
+  $n$次実対称行列$A$の異なる固有ベクトルは互いに直行する。
 \end{theorem*}
 \begin{proof}
   $\lambda_1,\lambda_2$を$A$の異なる固有値とする。すると、
@@ -16,32 +16,31 @@ $n$次実対称行列$A$の固有ベクトルは
   \end{align*}
   となる。$A$は対称行列なので、
   \begin{align*}
-    \mathbf{x}_2^T A \mathbf{x}_1 & = (A \mathbf{x}_2)^T \mathbf{x}_1 \\
-                                  & = (\mathbf{x}_1^T A \mathbf{x_2}) \\
-                                  & = (\lambda_2 \mathbf{x}_1^T \mathbf{x}_2)^T \\
+    \mathbf{x}_2^T A \mathbf{x}_1 & = \left(A \mathbf{x}_2\right)^T \mathbf{x}_1 \\
+                                  & = \left(\mathbf{x}_1^T A \mathbf{x_2}\right) \\
+                                  & = \left(\lambda_2 \mathbf{x}_1^T \mathbf{x}_2\right)^T \\
                                   & = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1
   \end{align*}
   となる。したがって、
   \begin{align*}
                     & \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1 \\
-    \Leftrightarrow & (\lambda_1 - \lambda_2) \mathbf{x}_2^T \mathbf{x}_1 = 0
+    \Leftrightarrow & \left(\lambda_1 - \lambda_2\right) \mathbf{x}_2^T \mathbf{x}_1 = 0
   \end{align*}
   。$\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^T \mathbf{x}_1 = 0$。
 \end{proof}
-から互いに直行する事がわかる。この事実は$A$の固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べている。この事実から
+この事実は$A$の固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べているので、以下の定理が得られる。
 \begin{theorem*}
   $A$の固有値を対角成分に並べた行列$\Lambda = \displaystyle{\left(\begin{array}{ccc} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{array}\right)}$とする。$A$は$A = V \Lambda V^T$に分解される。
 \end{theorem*}
 \begin{proof}
-  先ほどの固有ベクトルは直行するという事実を使うと、$V^T V = I$から$V^T = V^{-1}$という関係を導出する事ができる。この事実から
+  先ほどの固有ベクトルは直行するという事実を使うと、$V^T V = I$から$V^T = V^{-1}$という関係を導出する事ができる。したがって、
   \begin{align*}
-    A V = V \Lambda \Rightarrow A = V \Lambda V^{-1} = V \Lambda V^T
+    A V = V \Lambda \Rightarrow A = V \Lambda V^{-1} = V \Lambda V^T.
   \end{align*}
-  。
 \end{proof}
-を得る。
 
-このように$n$次実対称行列を固有ベクトル$V$と$A$の固有値を対角成分に並べた行列$\Lambda$との積に分解する事を固有値分解という。
+このように$n$次実対称行列$A$を固有ベクトル$V$と$A$の固有値を対角成分に並べた固有値行列$\Lambda$との積に分解する事を固有値分解という。
+
 \subsection{行列の平方根}
 固有値分解を使うと、$n$次実対称行列$A$の平方根$\displaystyle{A^{\frac{1}{2}}}$を定義することができる。$\lambda_1, \lambda_2, \cdots, \lambda_n$を$A$の固有値とすると、
 \begin{align*}
@@ -72,16 +71,16 @@ $n$次実対称行列$A$の固有ベクトルは
 \begin{align*}
   \Lambda^{\frac{1}{2}} \Lambda^{\frac{1}{2}} & = \left(
                                                     \begin{array}{ccc}
-                                                      \sqrt{\Lambda_1} &        & \\
+                                                      \sqrt{\lambda_1} &        & \\
                                                                        & \ddots & \\
-                                                                       &        & \sqrt{\Lambda_n}
+                                                                       &        & \sqrt{\lambda_n}
                                                     \end{array}
                                                   \right)
                                                   \left(
                                                     \begin{array}{ccc}
-                                                      \sqrt{\Lambda_1} &        & \\
+                                                      \sqrt{\lambda_1} &        & \\
                                                                        & \ddots & \\
-                                                                       &        & \sqrt{\Lambda_n}
+                                                                       &        & \sqrt{\lambda_n}
                                                     \end{array}
                                                   \right) \\
                                               & = \Lambda
