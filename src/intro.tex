@@ -1,21 +1,49 @@
 線形計画問題において、
+\begin{itemize}
+  \item 内点法(interior point method)
+  \item 単体法(simplex method)
+\end{itemize}
+という2つのアルゴリズムが最適値を求めるための効率の良いアルゴリズムとして長らく使用されていた。
 
-Chubanovが$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、$A \mathbf{x} = 0, \mathbf{x} \geq 0$という問題の許容解かそのような許容解が存在しないかを求めることができる強多項式時間アルゴリズムを提案した\cite{Chubanov}。Chubanovのアルゴリズムでは次々と凸結合をつくっていくBasic ProcedureとBasic Procedureを呼び出し、その返り値に基づいて制約中にでてくる$A$をスケールするMain Procedureを組み合わせて、$\mathbf{x} > \mathbf{0}$となる許容解かそれともそのような許容解が存在しないかを導く。
+単体法とは線形計画問題を不等式標準形、等式標準形と変形していき、等式標準形の等式制約を「辞書」としてこの辞書を非増加となるように更新していくアルゴリズムである。このアルゴリズムは幾何的な許容領域上の頂点をたどるように動作する。
 
-村松らがそのアルゴリズムを許容解が対称錐内にあって線型写像によって写像した結果が$\mathbf{0}$になるような問題に適用できるように拡張した\cite{SymmetricCone}。対称錐は半正定値な行列の集合でできた錐を含むので、村松らが拡張したアルゴリズムを半正定値な行列の集合でできた錐を制約としてもつ半正定値計画問題に対しても適用することができる。そこで、本論文では$n$次実対称行列$X, Y$に対して、行列の内積を行列のトレース$\mathrm{tr}$を用いて、
+内点法とはカーマーカー法をはじめとする一連のアルゴリズムの総称であり、単体法の許容領域上の頂点をたどるように動作するのとは違い、許容領域の内点をたどりながら最適解に収束するように動作する。
+
+どちらのアルゴリズムも効率が良いため、様々な改良が提案されている\cite{Optimization}\cite{InteriorPointMethod}。
+
+Chubanovはこれらのアルゴリズムに対して新しいアルゴリズムを提案した\cite{Chubanov}。その新しいアルゴリズムとは単体法と内点法の2つのように線形計画問題を解いて最適解を求めるのではなく、線形計画問題の許容解を求める。そのChubanovの提案したアルゴリズムは、$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、
 \begin{align*}
-  X \cdot Y = \mathrm{tr}(X Y)
+  A \mathbf{x} = 0, \mathbf{x} \geq 0
 \end{align*}
-と定義し、さらに行列$A$が正定値、すなわち
-\begin{align}
-  \text{任意の} \mathbf{0} \text{でない} \mathbf{x}^T \text{に対して} \mathbf{x}^T A \mathbf{x} > 0 \label{PD}
-\end{align}
-を$A \succ 0$と定義し、村松らが対称錐へと拡張したChubanovのアルゴリズムを半正定値な行列の集合がなす錐に制限した
-\begin{align} \label{SemidefiniteSystem}
-  \begin{array}{ll} \\
-    \text{find} & X \\
-    \text{s.t.} & A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m) \\
-                & X \succ 0
+という同次な不等式制約を入力として次々と凸結合をつくっていくBasic ProcedureとBasic Procedureを呼び出し、その返り値に基づいて制約中にでてくる$A$をスケールするMain Procedureの2つを組み合わせて同次な不等式標準制約をもつ線形計画問題を多項式時間で解く。
+
+線形計画問題の拡張として2次錐計画問題や本論文で取り扱う半正定値計画問題、対称錐計画問題があり、このChubanovが提案したアルゴリズムをこれらの線形計画問題を拡張した問題に拡張する研究がなされている\cite{SOCP}\cite{SymmetricCone}。
+
+村松らはChubanovのアルゴリズムを許容解が対称錐計画問題の許容解を探し出せるアルゴリズムとして拡張した\cite{SymmetricCone}。対称錐計画問題とは
+\begin{align*}
+  \begin{array}{ll}
+    \text{min}  & \dot<\mathbf{c}, \mathbf{x}> \\
+    \text{s.t.} & \dot<\mathbf{a}_i, \mathbf{x}> = b_i \,\, (i = 1, 2, \cdots, m) \\
+                & \mathbf{x} \in \mathcal{K}
   \end{array}
-\end{align}
-という問題における許容解$X \succ 0$が存在するかを導けるように拡張したアルゴリズムの実装・実験を行った。
+\end{align*}
+という問題である。$\mathcal{K}$は対称錐を表しており、$\mathbf{a}_i$は線形写像を、$\dot<\cdot, \cdot>$は内積を表している。この対称錐計画問題は半正定値計画問題を部分クラスとして含むため、村松らが提案した対称錐計画問題におけるChubanovのアルゴリズムの拡張を半正定値計画問題に対しても制限した形で適用することが可能である。
+
+本論文ではその村松らが拡張した対称錐計画問題におけるChubanovのアルゴリズムの拡張を半正定値錐を制約としてもつ半正定値計画問題に対して制限したアルゴリズムを実装し、その効率を測る。
+% そこで、本論文では$n$次実対称行列$X, Y$に対して、行列の内積を行列のトレース$\mathrm{tr}$を用いて、
+% \begin{align*}
+%   X \cdot Y = \mathrm{tr}(X Y)
+% \end{align*}
+% と定義し、さらに行列$A$が正定値、すなわち
+% \begin{align}
+%   \text{任意の} \mathbf{0} \text{でない} \mathbf{x}^T \text{に対して} \mathbf{x}^T A \mathbf{x} > 0 \label{PD}
+% \end{align}
+% を$A \succ 0$と定義し、村松らが対称錐へと拡張したChubanovのアルゴリズムを半正定値な行列の集合がなす錐に制限した
+% \begin{align} \label{SemidefiniteSystem}
+%   \begin{array}{ll} \\
+%     \text{find} & X \\
+%     \text{s.t.} & A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m) \\
+%                 & X \succ 0
+%   \end{array}
+% \end{align}
+% という問題における許容解$X \succ 0$が存在するかを導けるように拡張したアルゴリズムの実装・実験を行った。
