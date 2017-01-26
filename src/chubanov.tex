@@ -33,9 +33,9 @@ Chubanovは線形計画問題
   \item 許容解すべてにおいて$k$番目の要素$x_k^*$が$0$
   \item 許容解すべてにおいて$k$番目の要素$x_k^*$が$\frac{1}{2}$以下になっている
 \end{itemize}
-のうちどれかを得る事ができる。このアルゴリズムによって得られた解とこの解における$\mathbf{y}$を出力する。このアルゴリズムの計算量論文中ではは$O(n^3)$と示されている。
+のうちどれかを得る事ができる。このアルゴリズムによって得られた解とこの解における$\mathbf{y}$を出力する。このアルゴリズムの計算量は論文中で$O(n^3)$と示されている。
 
-\subsection{Main Proceudre}
+\subsection{Main Procedure}
 このアルゴリズムはは$m \times n$行列$A$を入力とし、Basic Procedureを呼び出して得られる解のうち許容解すべてにおいて$k$番目の要素$x_k^*$が$\frac{1}{2}$以下になっているとき、$A$の$k$列目を$1 / 2$倍し、またBasic Procedureを呼び出す、ということを繰り返す。こうすることで
 \begin{itemize}
   \item $A\mathbf{x}^*=\mathbf{b}$となる許容解$\mathbf{x}^* > 0$

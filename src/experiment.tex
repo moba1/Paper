@@ -22,31 +22,31 @@
 
 \subsection{実験1}
 \begin{align*}
-  A_1 & = \left(
+  A_1 = \left(
             \begin{array}{ccc}
               2 &  0 &  0 \\
               0 &  0 & -1 \\
               0 & -1 &  0
             \end{array}
-          \right) \\
-  A_2 & = \left(
+          \right),
+  A_2 = \left(
             \begin{array}{ccc}
               0 & 0 & 0 \\
               0 & 1 & 0 \\
               0 & 0 & 0
             \end{array}
-          \right) \\
-  A_3 & = \left(
+          \right),
+  A_3 = \left(
             \begin{array}{ccc}
               0 & 0 & 1 \\
               0 & 0 & 0 \\
               1 & 0 & 0
             \end{array}
-          \right) \\
-  A_4 & = \left(
+          \right),
+  A_4 = \left(
             \begin{array}{ccc}
               0 & 1 & 0 \\
-              0 & 0 & 0 \\
+              1 & 0 & 0 \\
               0 & 0 & 0
             \end{array}
           \right)
@@ -55,7 +55,93 @@
 \begin{align} \label{test1-results}
   \displaystyle{\sum_{i = 1}^4} u_i A_i \succ 0\text{となる}\mathbf{u}
 \end{align}
-がアルゴリズムの結果として得られる。実際に得られた実験結果は図\ref{test1}のようになっている。
+がアルゴリズムの結果として得られる。そのような例としては
+\begin{align*}
+    0 \cdot \left(
+              \begin{array}{ccc}
+                2 &  0 &  0 \\
+                0 &  0 & -1 \\
+                0 & -1 &  0
+              \end{array}
+            \right)
+  + 2 \cdot \left(
+              \begin{array}{ccc}
+                0 & 0 & 0 \\
+                0 & 1 & 0 \\
+                0 & 0 & 0
+              \end{array}
+            \right)
+  + 0 \cdot \left(
+              \begin{array}{ccc}
+                0 & 0 & 1 \\
+                0 & 0 & 0 \\
+                1 & 0 & 0
+              \end{array}
+            \right)
+  + 0 \cdot \left(
+              \begin{array}{ccc}
+                0 & 1 & 0 \\
+                1 & 0 & 0 \\
+                0 & 0 & 0
+              \end{array}
+            \right)
+\end{align*}
+となる
+\begin{align*}
+  \mathbf{u} = \left(
+                 \begin{array}{c}
+                   0 \\
+                   2 \\
+                   0 \\
+                   0
+                 \end{array}
+               \right)
+\end{align*}
+がある。実際、半正定値となるかを確認すると、
+\begin{align*}
+    0 \cdot \left(
+              \begin{array}{ccc}
+                2 &  0 &  0 \\
+                0 &  0 & -1 \\
+                0 & -1 &  0
+              \end{array}
+            \right)
+  + 2 \cdot \left(
+              \begin{array}{ccc}
+                0 & 0 & 0 \\
+                0 & 1 & 0 \\
+                0 & 0 & 0
+              \end{array}
+            \right)
+  + 0 \cdot \left(
+              \begin{array}{ccc}
+                0 & 0 & 1 \\
+                0 & 0 & 0 \\
+                1 & 0 & 0
+              \end{array}
+            \right)
+  + 0 \cdot \left(
+              \begin{array}{ccc}
+                0 & 1 & 0 \\
+                1 & 0 & 0 \\
+                0 & 0 & 0
+              \end{array}
+            \right)
+  = \left(
+      \begin{array}{ccc}
+        0 & 0 & 0 \\
+        0 & 2 & 0 \\
+        0 & 0 & 0
+      \end{array}
+    \right)
+\end{align*}
+の固有値を確かめると、
+\begin{align*}
+  \det \left(\lambda I - \left(\begin{array}{ccc} 0 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 0\end{array}\right)\right) = x^2 \left(x - 2\right)
+\end{align*}
+よって、固有値は$\lambda = 2, 0$でどちらも非負となるので、この行列は半正定値である。
+
+さて、この条件下で作成したプログラムを実際に走らせると図\ref{test1}の実験結果が得られた。
 \begin{figure}
   \centering
   \includegraphics[width=10cm]{test1.png}
@@ -67,21 +153,21 @@
 
 \subsection{実験2}
 \begin{align*}
-  A_1 & = \left(
+  A_1 = \left(
             \begin{array}{ccc}
               0 &  0 &  0 \\
               0 &  1 & -1 \\
               0 & -1 &  0
             \end{array}
-          \right) \\
-  A_2 & = \left(
+          \right),
+  A_2 = \left(
             \begin{array}{ccc}
               0 & 0 & 0 \\
               0 & 1 & 0 \\
               0 & 0 & 0
             \end{array}
-          \right) \\
-  A_3 & = \left(
+          \right),
+  A_3 = \left(
             \begin{array}{ccc}
               0 &  0 &  0 \\
               0 & -1 &  0 \\

@@ -11,8 +11,12 @@ Louren\c{c}oがChubanovのアルゴリズムを対称錐計画問題へ適用で
 という問題を解いている。この問題の双対問題は
 \begin{align*}
   \begin{array}{ll}
+    \text{find} & \mathbf{u} \\
+    \text{s.t.} & \displaystyle{\sum_{i = 1}^m} u_i A_i \succeq 0 \\
+                & \mathbf{u} \not= \mathbf{0}
   \end{array}
 \end{align*}
+である。この双対問題に許容解が存在することはない。
 
 \subsection{Basic Procedure}
 \subsubsection{アルゴリズム}

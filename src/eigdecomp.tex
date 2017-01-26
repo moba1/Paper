@@ -1,5 +1,81 @@
 \subsection{固有値分解}
-$n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
+$n$次実対称行列$A$の固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$は次の定理から実数であることがわかる。
+\begin{theorem}
+  $n$次実対称行列$A$の固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$は全て実数である。
+\end{theorem}
+\begin{proof}
+  $A$の任意の固有値を$\lambda$と置く。この固有値に対応する固有ベクトルを$\mathbf{x}_\lambda \not= \mathbf{0}$とすると、固有値と固有ベクトルの定義から
+  \begin{align} \label{EigenEquation}
+    A \mathbf{x}_\lambda = \lambda \mathbf{x}_\lambda.
+  \end{align}
+  ここで、
+  \begin{align*}
+    A = \left(
+          \begin{array}{ccc}
+            a_{1 1} & \cdots & a_{1 n} \\
+            \vdots  & \ddots & \vdots \\
+            a_{n 1} & \cdots & a_{n n}
+          \end{array}
+        \right),
+    \mathbf{x}_\lambda = \left(
+                           \begin{array}{c}
+                             x_{\lambda, 1} \\
+                             \vdots \\
+                             x_{\lambda, n}
+                           \end{array}
+                         \right)
+  \end{align*}
+  の共役をそれぞれ
+  \begin{align*}
+    \overline{A} = \left(
+                     \begin{array}{ccc}
+                       \overline{a}_{1 1} & \cdots & \overline{a}_{1 n} \\
+                       \vdots             & \ddots & \vdots \\
+                       \overline{a}_{n 1} & \cdots & \overline{a}_{n n}
+                     \end{array}
+                   \right),
+    \overline{\mathbf{x}_\lambda} = \left(
+                                      \begin{array}{c}
+                                        \overline{x}_{\lambda, 1} \\
+                                        \vdots \\
+                                        \overline{x}_{\lambda, n}
+                                      \end{array}
+                                    \right)
+  \end{align*}
+  とし、$\lambda$の共役を$\overline{\lambda}$とする。(\ref{EigenEquation})の両辺の共役を取ると
+  \begin{align*}
+    \overline{A} \overline{\mathbf{x}}_\lambda = \overline{\lambda} \overline{\mathbf{x}}_\lambda
+  \end{align*}
+  となる。ここで、$A$は$n$次実対称行列であることから、
+  \begin{align} \label{ComplexConjugate}
+    A \overline{\mathbf{x}}_\lambda = \overline{\lambda} \overline{\mathbf{x}}_\lambda
+  \end{align}
+  と変形することができる。$A \mathbf{x}_\lambda$に左から$\overline{\mathbf{x}_\lambda}^T$かけたものを考えると、
+  \begin{align*}
+    \overline{\mathbf{x}}_\lambda^T A \mathbf{x}_\lambda = \overline{\mathbf{x}}_\lambda^T A^T \mathbf{x}_\lambda
+                                                         = \left(A \overline{\mathbf{x}}_\lambda\right)^T \mathbf{x}_\lambda
+  \end{align*}
+  となり、(\ref{ComplexConjugate})から
+  \begin{align*}
+    \left(A \overline{\mathbf{x}}_\lambda\right)^T \mathbf{x}_\lambda = \left(\overline{\lambda} \overline{\mathbf{x}}_\lambda\right) \mathbf{x}_\lambda
+                                                                      = \overline{\lambda} \overline{\mathbf{x}}_\lambda^T \mathbf{x}_\lambda
+  \end{align*}
+  となる。さらに、(\ref{EigenEquation})から
+  \begin{align*}
+    \overline{\mathbf{x}_\lambda}^T A \mathbf{x}_\lambda = \overline{\mathbf{x}_\lambda}^T \lambda \mathbf{x}_\lambda
+                                                         = \lambda \overline{\mathbf{x}_\lambda}^T \mathbf{x}_\lambda
+  \end{align*}
+  となることから、
+  \begin{align*}
+    \overline{\lambda} \overline{\mathbf{x}}_\lambda^T \mathbf{x}_\lambda = \lambda \overline{\mathbf{x}}_\lambda^T \mathbf{x}_\lambda
+  \end{align*}
+  となり、両辺を$\overline{\mathbf{x}}_\lambda^T \mathbf{x}_\lambda$で割ると、
+  \begin{align*}
+    \overline{\lambda} = \lambda.
+  \end{align*}
+  よって固有値の共役が自分自身となるため、$A$の固有値は必ず実数となる。
+\end{proof}
+また、$n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
 \begin{theorem}
   $n$次実対称行列$A$の相異なる固有値に対応する固有ベクトルは互いに直交する。
 \end{theorem}
@@ -9,28 +85,28 @@ $n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
     A \mathbf{x}_1 = \lambda_1 \mathbf{x}_1 \\
     A \mathbf{x}_2 = \lambda_2 \mathbf{x}_2
   \end{align*}
-  となる$\lambda_1, \lambda_2$に対応する固有ベクトル$\mathbf{x}_1, \mathbf{x}_2$が存在するが、この各固有ベクトルの転置$\mathbf{x}_1^T, \mathbf{x}_2^T$をそれぞれ左からかけると、
+  となる$\lambda_1, \lambda_2$に対応する固有ベクトル$\mathbf{x}_1, \mathbf{x}_2$が存在するが、この各固有ベクトルの共役転置$\mathbf{x}_1^*, \mathbf{x}_2^*$をそれぞれ左からかけると、
   \begin{align*}
-    \mathbf{x}_2^T A \mathbf{x}_1 = \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 \\
-    \mathbf{x}_1^T A \mathbf{x}_2 = \lambda_2 \mathbf{x}_1^T \mathbf{x}_2
+    \mathbf{x}_2^* A \mathbf{x}_1 = \lambda_1 \mathbf{x}_2^* \mathbf{x}_1 \\
+    \mathbf{x}_1^* A \mathbf{x}_2 = \lambda_2 \mathbf{x}_1^* \mathbf{x}_2
   \end{align*}
   となる。$A$は対称行列なので、
   \begin{align*}
-    \mathbf{x}_2^T A \mathbf{x}_1 & = \left(A \mathbf{x}_2\right)^T \mathbf{x}_1 \\
-                                  & = \left(\mathbf{x}_1^T A \mathbf{x_2}\right) \\
-                                  & = \left(\lambda_2 \mathbf{x}_1^T \mathbf{x}_2\right)^T \\
-                                  & = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1
+    \mathbf{x}_2^* A \mathbf{x}_1 & = \left(A \mathbf{x}_2\right)^* \mathbf{x}_1 \\
+                                  & = \left(\mathbf{x}_1^* A \mathbf{x}_2\right)^* \\
+                                  & = \left(\lambda_2 \mathbf{x}_1^* \mathbf{x}_2\right)^* \\
+                                  & = \lambda_2 \mathbf{x}_2^* \mathbf{x}_1
   \end{align*}
   となる。したがって、
   \begin{align*}
-                    & \lambda_1 \mathbf{x}_2^T \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^T \mathbf{x}_1 \\
-    \Leftrightarrow & \left(\lambda_1 - \lambda_2\right) \mathbf{x}_2^T \mathbf{x}_1 = 0
+                    & \lambda_1 \mathbf{x}_2^* \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^* \mathbf{x}_1 \\
+    \Leftrightarrow & \left(\lambda_1 - \lambda_2\right) \mathbf{x}_2^* \mathbf{x}_1 = 0.
   \end{align*}
-  。$\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^T \mathbf{x}_1 = 0$。
+  $\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^* \mathbf{x}_1 = 0$.
 \end{proof}
-この事実は$A$の固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べているので、以下の定理が得られる。
+この事実は$A$の単位固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べているので、以下の定理が得られる。
 \begin{theorem}
-  $A$の固有値を対角成分に並べた行列$\Lambda = \displaystyle{\left(\begin{array}{ccc} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{array}\right)}$とする。$A$は$A = V \Lambda V^T$に分解される。
+  $A$の固有値を対角成分に並べた行列$\Lambda = \displaystyle{\left(\begin{array}{ccc} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{array}\right)}$とする。$A$は$A$の単位固有ベクトルを列ベクトルとした行列$V$と$\Lambda$を用いて、$A = V \Lambda V^T$に分解される。
 \end{theorem}
 \begin{proof}
   先ほどの固有ベクトルは直交するという事実を使うと、$V^T V = I$から$V^T = V^{-1}$という関係を導出する事ができる。したがって、

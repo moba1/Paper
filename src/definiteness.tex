@@ -74,6 +74,18 @@ $n$次対称行列の集合を$S^n$、$n$次対称行列のなかでも半正定
 \end{proof}
 正定値の場合は(\ref{PD})を使い、同様の手順で簡単に示す事ができる。
 
+逆に、$A$の固有値が全て非負の場合は次の定理から$A$は半正定値であることがわかる。
+\begin{theorem}
+  $A$の固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$が全て非負ならば$A$は半正定値である。
+\end{theorem}
+\begin{proof}
+  各固有値$\lambda_i \,\, (i = 1, 2, \cdots, n)$に対応する固有ベクトルを$\mathbf{x}_i$とすると、共役なベクトル$\mathbf{x}_i^*$を$A \mathbf{x}_i$に対して左からかけると
+  \begin{align*}
+    \mathbf{x}_i^* A \mathbf{x}_i = \mathbf{x}_i^* \lambda_i \mathbf{x}_i = \lambda_i \mathbf{x}_i^* \mathbf{x}_i \geq 0
+  \end{align*}
+  となり、半正定値の定義を満たしている。したがって、$A$の全ての固有値が非負となる場合、、$A$は半正定値となる。
+\end{proof}
+
 また、以下のような定理が成立する。
 \begin{theorem} \label{PsdMatrix}
   $\mathbf{x} \in \mathbb{R}^n$に対して、$\mathbf{x} \mathbf{x}^T \in S_+^n$である。
