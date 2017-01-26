@@ -1,7 +1,7 @@
 \subsection{固有値分解}
 $n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
 \begin{theorem}
-  $n$次実対称行列$A$の異なる固有ベクトルは互いに直行する。
+  $n$次実対称行列$A$の相異なる固有値に対応する固有ベクトルは互いに直交する。
 \end{theorem}
 \begin{proof}
   $\lambda_1,\lambda_2$を$A$の異なる固有値とする。すると、
@@ -33,7 +33,7 @@ $n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
   $A$の固有値を対角成分に並べた行列$\Lambda = \displaystyle{\left(\begin{array}{ccc} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{array}\right)}$とする。$A$は$A = V \Lambda V^T$に分解される。
 \end{theorem}
 \begin{proof}
-  先ほどの固有ベクトルは直行するという事実を使うと、$V^T V = I$から$V^T = V^{-1}$という関係を導出する事ができる。したがって、
+  先ほどの固有ベクトルは直交するという事実を使うと、$V^T V = I$から$V^T = V^{-1}$という関係を導出する事ができる。したがって、
   \begin{align*}
     A V = V \Lambda \Rightarrow A = V \Lambda V^{-1} = V \Lambda V^T.
   \end{align*}
@@ -87,7 +87,7 @@ $n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
 \end{align*}
 から、元の$A$と一致することからわかる。
 
-行列の平方根を用いれば、$A, B \in S_+^n$同士の内積$A \cdot B$は非負になることが言える。なぜならば
+行列の平方根を用いれば、$A, B \in S_+^n$同士の内積$A \cdot B$は非負になることが次の定理から言える。
 \begin{theorem} \label{SemidefiniteInnerProduct}
   $A, B \in S_+^n$とすると
   \begin{align*}
@@ -114,4 +114,3 @@ $n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
   \end{align*}
   となるので、$A \cdot B \geq 0$である。
 \end{proof}
-だからである。
