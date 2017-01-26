@@ -50,9 +50,9 @@ $n$次対称行列の集合を$S^n$、$n$次対称行列のなかでも半正定
 となり、半正定値であることがわかる。
 
 また、半正定値の固有値は以下の定理からすべて非負であることがわかる。
-\begin{theorem*}
+\begin{theorem}
   $A$が半正定値ならば$A$の全ての固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$は非負である。
-\end{theorem*}
+\end{theorem}
 \begin{proof}
   $A$の固有値のなかから任意にひとつとってきて$\lambda$とする。この固有値に対応する固有ベクトルを$\mathbf{x}_\lambda$とすると、(\ref{PSD})から
   \begin{align*}
@@ -64,9 +64,9 @@ $n$次対称行列の集合を$S^n$、$n$次対称行列のなかでも半正定
   \end{align*}
   という関係式が成立するので、
   \begin{align*}
-    \mathbf{x}_\lambda^T A \mathbf{x}_\lambda = \mathbf{x}_\lambda^T \lambda \mathbf{x}_\lambda \geq 0
+    \mathbf{x}_\lambda^T A \mathbf{x}_\lambda = \mathbf{x}_\lambda^T \lambda \mathbf{x}_\lambda \geq 0.
   \end{align*}
-  。$\lambda$は非負の実数なので
+  したがって、
   \begin{align*}
     \mathbf{x}_\lambda^T \lambda \mathbf{x}_\lambda = \lambda \mathbf{x}_\lambda^T \mathbf{x}_\lambda = \lambda \|\mathbf{x}_\lambda\|^2 \geq 0
   \end{align*}

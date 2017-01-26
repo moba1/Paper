@@ -135,14 +135,26 @@ Basic Procedureは、
     Z \cdot \left(\mathbf{q} \mathbf{q}^T\right) & = \left(X \Lambda X^T\right) \cdot \left(\mathbf{q} \mathbf{q}^T\right) \\
                                                  & = \mathrm{tr}\left(X \Lambda X^T \mathbf{q} \mathbf{q}^T\right) \\
                                                  & = \mathrm{tr}\left(X \Lambda \left(\mathbf{q} \mathbf{q}^T X\right)^T\right) \\
-                                                 & = \mathrm{tr}\left(X \Lambda \left(\mathbf{q} \left(0, \cdots, 0, \|\mathbf{q}\|^2\right)\right)^T\right) \\
-                                                 & = \mathrm{tr}\left(X \Lambda \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ \|\mathbf{q}\|^2 \end{array}\right) \mathbf{q}^T\right) \\
-                                                 & = \mathrm{tr}\left(X \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ \lambda_n \|\mathbf{q}\|^2 \end{array}\right) \mathbf{q}^T\right) \\
-                                                 & = \mathrm{tr}\left(\lambda_n \|\mathbf{q}\|^2 \mathbf{q} \mathbf{q}^T\right) \\
-                                                 & = \mathrm{tr}\left(\lambda_n \|\mathbf{q}\|^4\right) \\
-                                                 & = \lambda_n \|\mathbf{q}\|^4
+                                                 & = \mathrm{tr}\left(X \Lambda \left(\mathbf{q} \left(0, \cdots, 0, \|\mathbf{q}\|^2\right)\right)^T\right).
   \end{align*}
-  となり、$\|\mathbf{q}\|^4 \geq 0$で、$\lambda_n < 0$なので、$Z \cdot \left(\mathbf{q} \mathbf{q}^T\right) \leq 0$。
+  $\mathbf{q}$は単位ベクトルなので、
+  \begin{align*}
+    \|\mathbf{q}\|^2 = 1
+  \end{align*}
+  なので、
+  \begin{align*}
+        \mathrm{tr}\left(X \Lambda \left(\mathbf{q} \left(0, \cdots, 0, \|\mathbf{q}\|^2\right)\right)^T\right)
+    & = \mathrm{tr}\left(X \Lambda \left(\mathbf{q} \left(0, \cdots, 0, 1\right)\right)^T\right) \\
+    & = \mathrm{tr}\left(X \Lambda \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ 1 \end{array}\right) \mathbf{q}^T\right) \\
+    & = \mathrm{tr}\left(X \left(\begin{array}{c} 0 \\ \vdots \\ 0 \\ \lambda_n \|\mathbf{q}\|^2 \end{array}\right) \mathbf{q}^T\right) \\
+    & = \mathrm{tr}\left(\lambda_n \mathbf{q} \mathbf{q}^T\right) \\
+    & = \mathrm{tr}\left(\lambda_n \|\mathbf{q}\|^2\right) \\
+    & = \lambda_n
+  \end{align*}
+  となり、$\lambda_n < 0$なので、
+  \begin{align*}
+    Z \cdot \left(\mathbf{q} \mathbf{q}^T\right) \leq 0.
+  \end{align*}
 \end{proof}
 また、$C$は$Z$の最小の固有値に対応する単位固有ベクトル$\mathbf{q}$から生成される$\mathbf{q} \mathbf{q}^T$という行列なので、$q_i \,\, (i = 1, 2, \cdots n)$を$\mathbf{q}$の$i$番目の成分とすると
 \begin{align*}
@@ -277,7 +289,7 @@ Main Procedureは
 を入力として受けとり、
 \begin{enumerate}[label=(\alph*)]
   \item $\displaystyle{\sum_{i = 1}^m u_i A_i \succeq 0}$となるような$\mathbf{u}$ \label{DualSolution}
-  \item $A_o \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X \succ 0$。すなわち許容解 \label{FeasibleSolution}
+  \item $A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X \succ 0$。すなわち許容解 \label{FeasibleSolution}
   \item $X \succeq \epsilon I, A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X$が存在しないこと \label{NoSolution}
 \end{enumerate}
 のいずれかを出力する。

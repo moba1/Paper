@@ -14,9 +14,9 @@
 となることをいう。凸な錐$\mathcal{K}$は凸錐と呼ばれ、その凸錐が閉集合の時、その錐のことを閉凸錐と呼ぶ。
 
 $S_+^n$はこの定義のもと凸錐となる。実際、次の定理が成り立つ。
-\begin{theorem*}
+\begin{theorem}
   $S_+^n$は凸錐である。
-\end{theorem*}
+\end{theorem}
 \begin{proof}
   まず、$S_+^n$が錐であることを示す。$\alpha > 0$と任意のベクトル$\mathbf{x} \in \mathbb{R}^n$および$A \in S_+^n$に対して、$\alpha A$が$S_+^n$に入るかを確認する。そのために$\mathbf{x}^T \alpha A \mathbf{x}$が非負であるかを確かめる。まず、$\alpha$が非負の実数であることから
   \begin{align*}
@@ -26,9 +26,9 @@ $S_+^n$はこの定義のもと凸錐となる。実際、次の定理が成り�
 
   次に、$S_+^n$が凸であることを示す。任意の$A, B \in S_+^n$、$\alpha, \beta \geq 0$に対して、$\alpha + \beta = 1$とする。任意のベクトル$\mathbf{x} \in \mathbf{R}^n$に対して、
   \begin{align*}
-    \mathbf{x}^T \left(\alpha A + \beta B\right) \mathbf{x} = \alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x}
+    \mathbf{x}^T \left(\alpha A + \beta B\right) \mathbf{x} = \alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x}.
   \end{align*}
-  。ここで、仮定$A, B \in S_+^n$、つまり$\mathbf{x}^T A \mathbf{x} \geq 0, \mathbf{x}^T B \mathbf{x} \geq 0$および$\alpha, \beta \geq 0$から$\alpha \mathbf{x}^T A \mathbf{x} \geq 0$かつ$\beta \mathbf{x}^T B \mathbf{x} \geq 0$より、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \geq 0$。したがって、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \in S_+^n$。ゆえに$S_+^n$は凸である。
+  ここで、仮定$A, B \in S_+^n$、つまり$\mathbf{x}^T A \mathbf{x} \geq 0, \mathbf{x}^T B \mathbf{x} \geq 0$および$\alpha, \beta \geq 0$から$\alpha \mathbf{x}^T A \mathbf{x} \geq 0$かつ$\beta \mathbf{x}^T B \mathbf{x} \geq 0$より、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \geq 0$。したがって、$\alpha \mathbf{x}^T A \mathbf{x} + \beta \mathbf{x}^T B \mathbf{x} \in S_+^n$。ゆえに$S_+^n$は凸である。
 
   以上から集合$S_+^n$は凸かつ錐となるので、$S_+^n$は凸錐である。
 \end{proof}

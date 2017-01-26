@@ -1,8 +1,8 @@
 \subsection{固有値分解}
 $n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
-\begin{theorem*}
+\begin{theorem}
   $n$次実対称行列$A$の異なる固有ベクトルは互いに直行する。
-\end{theorem*}
+\end{theorem}
 \begin{proof}
   $\lambda_1,\lambda_2$を$A$の異なる固有値とする。すると、
   \begin{align*}
@@ -29,9 +29,9 @@ $n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
   。$\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^T \mathbf{x}_1 = 0$。
 \end{proof}
 この事実は$A$の固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べているので、以下の定理が得られる。
-\begin{theorem*}
+\begin{theorem}
   $A$の固有値を対角成分に並べた行列$\Lambda = \displaystyle{\left(\begin{array}{ccc} \lambda_1 & & \\ & \ddots & \\ & & \lambda_n \end{array}\right)}$とする。$A$は$A = V \Lambda V^T$に分解される。
-\end{theorem*}
+\end{theorem}
 \begin{proof}
   先ほどの固有ベクトルは直行するという事実を使うと、$V^T V = I$から$V^T = V^{-1}$という関係を導出する事ができる。したがって、
   \begin{align*}
