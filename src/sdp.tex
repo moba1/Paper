@@ -9,6 +9,42 @@
 \end{align*}
 と定義する。
 
+行列の平方根を用いれば、$A, B \in S_+^n$同士の内積$A \cdot B$は非負になることが次の定理から言える。
+\begin{theorem} \label{SemidefiniteInnerProduct}
+  $A, B \in S_+^n$とすると
+  \begin{align*}
+    A \cdot B \geq 0
+  \end{align*}
+  が成り立つ。
+\end{theorem}
+\begin{proof}
+  $A, B$をそれぞれ
+  \begin{align*}
+    A = U \Lambda_A U^T \\
+    B = V \Lambda_B U^T
+  \end{align*}
+  と固有値分解する。これらは行列の平方根を用いて、
+  \begin{align*}
+    A = U \Lambda_A^\frac{1}{2} \Lambda_A^\frac{1}{2} U^T = \left(U \Lambda_A^\frac{1}{2}\right) \left(U \Lambda_A^\frac{1}{2}\right)^T\\
+    B = V \Lambda_B^\frac{1}{2} \Lambda_A^\frac{1}{2} V^T = \left(V \Lambda_B^\frac{1}{2}\right) \left(V \Lambda_B^\frac{1}{2}\right)^T
+  \end{align*}
+  と書き表すことができ、
+  \begin{align*}
+    A \cdot B & = \mathrm{tr}\left(\left(U \Lambda_A^\frac{1}{2}\right) \left(U \Lambda_A^\frac{1}{2}\right)^T \left(V \Lambda_B^\frac{1}{2}\right) \left(V \Lambda_B^\frac{1}{2}\right)^T\right) \\
+              & = \mathrm{tr}\left(\left(U \Lambda_A^\frac{1}{2}\right)^T \left(V \Lambda_B^\frac{1}{2}\right) \left(\left(U \Lambda_A^\frac{1}{2}\right)^T \left(V \Lambda_B^\frac{1}{2}\right)\right)^T\right) \\
+              & \geq 0
+  \end{align*}
+  となるので、$A \cdot B \geq 0$である。
+\end{proof}
+系として、次が成り立つ。
+\begin{colollary} \label{PsdAndPdInnerProduct}
+  $A\succ 0$かつ$B \succeq 0, B \not= O$とすると、
+  \begin{align*}
+    A \cdot B > 0
+  \end{align*}
+  が成り立つ。
+\end{colollary}
+
 \subsection{半正定値計画問題}
 半正定値計画問題(SDP)とは$C \in S^n$および$A_1, A_2, \cdots, A_m \in S^n$、$\mathbf{b} \in \mathbb{R}^m$を用いて、
 \begin{align} \label{MainProblem}
@@ -31,7 +67,7 @@
   \item Quardratic Programming
   \item Linear Probramming
 \end{itemize}
-を特殊ケースとして含んでいる。SDPの応用例は\cite{Applications}を参照してもらいたい。
+を特殊ケースとして含んでいる。SDPの応用例は参考文献を参照してもらいたい\cite*{Applications}。
 
 \subsection{双対性}
 半正定値計画問題は以下で示す弱双対定理を満たす。
@@ -49,7 +85,7 @@
   \end{align*}
   、主問題(\ref{MainProblem})の条件から
   \begin{align*}
-    \mathbf{b}_i = A_i \cdot X \,\, \parenthesis(i = 1, 2, \cdots m)
+    b_i = A_i \cdot X \,\, \parenthesis(i = 1, 2, \cdots m)
   \end{align*}
   であるので、
   \begin{align*}
@@ -65,4 +101,4 @@
   \end{align*}
   となり、$C \cdot X \geq \mathbf{b}^T \mathbf{y}$が示された。
 \end{proof}
-等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致するが、等号が成立しないとき、すなわち、$C \cdot X > \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致しない。このように主問題と双対問題が一致しないことを双対ギャップが存在するという。しかし、半正定値計画問題において、一般に等号が成立することはない\cite{SemidefiniteDuality}。
+等号が成立するとき、すなわち$C \cdot X = \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致するが、等号が成立しないとき、すなわち、$C \cdot X > \mathbf{b}^T \mathbf{y}$のとき、主問題と双対問題の目的関数値は一致しない。このように主問題と双対問題が一致しないことを双対ギャップが存在するという。しかし、半正定値計画問題において、一般に等号が成立することはない\cite*{SemidefiniteDuality}。

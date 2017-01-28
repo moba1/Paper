@@ -51,11 +51,7 @@
             \end{array}
           \right)
 \end{align*}
-を条件として使用して実験を行った。この実験では双対問題の許容解
-\begin{align} \label{test1-results}
-  \displaystyle{\sum_{i = 1}^4} u_i A_i \succ 0\text{となる}\mathbf{u}
-\end{align}
-がアルゴリズムの結果として得られる。そのような例としては
+を条件として使用して実験を行った。この実験では双対問題\ref{DualSemidefiniteSystem}の許容解がアルゴリズムの結果として得られる。そのような例としては
 \begin{align*}
     0 \cdot \left(
               \begin{array}{ccc}
@@ -135,11 +131,11 @@
       \end{array}
     \right)
 \end{align*}
-の固有値を確かめると、
+の固有値は
 \begin{align*}
   \det \left(\lambda I - \left(\begin{array}{ccc} 0 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 0\end{array}\right)\right) = x^2 \left(x - 2\right)
 \end{align*}
-よって、固有値は$\lambda = 2, 0$でどちらも非負となるので、この行列は半正定値である。
+から$\lambda = 2, 0$でどちらも非負となるので、この行列は半正定値である。
 
 さて、この条件下で作成したプログラムを実際に走らせると図\ref{test1}の実験結果が得られた。
 \begin{figure}
@@ -149,7 +145,7 @@
   \label{test1}
 \end{figure}
 
-理論的には問題(\ref{SemidefiniteSystem})の許容解は出ずに、双対問題の許容解(\ref{test1-results})が結果として得られるはずであるが、$\epsilon$が大きい間はMain Procedureが先に終了してしまうため、アルゴリズムが解までたどり着くことができない。しかし、ある程度$\epsilon$が小さくなるとMain Procedureも十分な回数分反復することができるようになるため、理論的な結果と一致するようになったと考えられる。実際、図中の縦棒である、$10^{-5}$以降は理論的な結果と一致して双対問題の許容解(\ref{test1-results})が得られた。これ以降はどれほど$\epsilon$を小さくしようとも、双対問題の許容解(\ref{test1-results})が得られるため、実行時間が一定になっている。
+理論的には問題(\ref{MainSemidefiniteSystem})の許容解は出ずに、双対問題の許容解(\ref{DualSemidefiniteSystem})が結果として得られるはずであるが、$\epsilon$が大きい間はMain Procedureが先に終了してしまうため、アルゴリズムが解までたどり着くことができない。しかし、ある程度$\epsilon$が小さくなるとMain Procedureも十分な回数分反復することができるようになるため、理論的な結果と一致するようになったと考えられる。実際、図中の縦棒である、$10^{-5}$以降は理論的な結果と一致して双対問題の許容解(\ref{DualSemidefiniteSystem})が得られた。これ以降はどれほど$\epsilon$を小さくしようとも、双対問題の許容解(\ref{DualSemidefiniteSystem})が得られるため、実行時間が一定になっている。
 
 \subsection{実験2}
 \begin{align*}
@@ -175,18 +171,30 @@
             \end{array}
           \right) \\
 \end{align*}
-を条件として使用した。この実験では双対問題の解(\ref{test1-results})や、問題(\ref{SemidefiniteSystem})の許容解$X \succ 0$は得ることができない。実際に得られた結果は図\ref{test2}の通りである。
+を条件として使用した。この実験では内点実行可能解が存在しないので、双対問題の解\ref{DualSolution}は存在することはなく、またどれほど$\epsilon$を小さくしても主問題(\ref{MainSemidefiniteSystem})の許容解を得ることはできない。
+
+実際に得られた結果は図\ref{test2}の通りである。
 \begin{figure}
   \centering
   \includegraphics[width=10cm]{test2.png}
   \caption{実験2の実験結果}
   \label{test2}
 \end{figure}
-
-この実験ではアルゴリズムは双対問題の許容解(\ref{test1-results})や、問題(\ref{SemidefiniteSystem})の許容解$X \succ 0$を得ることはできない。今回の実装として、100回Main Procedureが反復を行った場合、強制的にアルゴリズムを終了するようになっている。そのため、$10^{-6}$以降はこの最大反復回数を超えてしまうため、一定の実行時間しか得られなかった。
+この結果から、アルゴリズムは内点実行可能解がない場合、$\epsilon$に依存して実行時間が伸びていることがわかる。
 
 \subsection{実験3}
-$50$次実対称行列を30個用意した。各要素の値はpythonのメルセンヌツイスタを用いて$[-10,10]$の範囲で生成した整数を用いている。
+条件として使用する$A_1, A_2, \cdots, A_{30}$をMATLAB標準のrandiを用いて、Algorithm \ref{MakeRandomMatrices}のようにして生成を行った。
+\begin{algorithm}
+  \caption{$100$次実対称行列群$A_1, A_2, \cdots, A_{30}$の生成}
+  \label{MakeRandomMatrices}
+  \begin{algorithmic}
+    \Input $\text{生成する整数の最小値} \And \text{生成する整数の最大値}$
+    \For {$i = 1$ to $30$}
+      \State $matrix \leftarrow \text{randi([生成する整数の最小値, 生成する整数の最大値], 100)}$
+      \State $A_i \leftarrow matrix + matrix^T$
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
 
 実験結果は図\ref{randomtest}のようになった。
 \begin{figure}
@@ -195,4 +203,4 @@ $50$次実対称行列を30個用意した。各要素の値はpythonのメル�
   \caption{実験3の実験結果}
   \label{randomtest}
 \end{figure}
-この実験では$\epsilon$がどのような値であっても問題(\ref{SemidefiniteSystem})の許容解$X \succ 0$がみつかる。しかし、前述の実験のように$\epsilon$の値に応じて常に実行時間線形の値となるわけではなく、起伏が激しくなってしまった。これは実行時間が短かすぎたために、コンテキストスイッチなどのアルゴリズムとは本質的には関係ない実行時間による影響が大きくなってしまったのではないかと考えられる。
+この実験では$\epsilon$がどのような値であっても問題(\ref{MainSemidefiniteSystem})の許容解$X \succ 0$がみつかる。しかし、前述の実験のように$\epsilon$の値に応じて常に実行時間線形の値となるわけではなく、起伏が激しくなってしまった。これは実行時間が短かすぎたために、コンテキストスイッチなどのアルゴリズムとは本質的には関係ない実行時間による影響が大きくなってしまったのではないかと考えられる。

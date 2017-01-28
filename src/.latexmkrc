@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-$latex        = 'uplatex -synctex=1 -kanji=utf-8 -no-guess-input-enc -halt-on-error';
+$latex        = 'uplatex -synctex=1 -kanji=utf-8 -no-guess-input-enc';
 $latex_silent = "$latex -interaction=batchmode";
 $bibtex       = 'pbibtex';
 $biber        = 'biber --bblencoding=utf8';

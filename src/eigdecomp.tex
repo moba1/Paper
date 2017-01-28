@@ -77,10 +77,10 @@ $n$次実対称行列$A$の固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$は
 \end{proof}
 また、$n$次実対称行列$A$の固有ベクトルは以下の定理を満たす。
 \begin{theorem}
-  $n$次実対称行列$A$の相異なる固有値に対応する固有ベクトルは互いに直交する。
+  $n$次実対称行列$A$の固有値に対応する固有ベクトルは互いに直交する。
 \end{theorem}
 \begin{proof}
-  $\lambda_1,\lambda_2$を$A$の異なる固有値とする。すると、
+  $\lambda_1,\lambda_2$を$A$の固有値とする。すると、
   \begin{align*}
     A \mathbf{x}_1 = \lambda_1 \mathbf{x}_1 \\
     A \mathbf{x}_2 = \lambda_2 \mathbf{x}_2
@@ -102,7 +102,15 @@ $n$次実対称行列$A$の固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$は
                     & \lambda_1 \mathbf{x}_2^* \mathbf{x}_1 = \lambda_2 \mathbf{x}_2^* \mathbf{x}_1 \\
     \Leftrightarrow & \left(\lambda_1 - \lambda_2\right) \mathbf{x}_2^* \mathbf{x}_1 = 0.
   \end{align*}
-  $\lambda_1 \not= \lambda_2$という仮定から、$\mathbf{x}_2^* \mathbf{x}_1 = 0$.
+  $\lambda_1 \not= \lambda_2$のとき、$\mathbf{x}_1^* \mathbf{x}_2 = 0$から$\mathbf{x}_1$と$\mathbf{x}_2$は直交する。また、$\lambda_1 = \lambda_2$となるとき、すなわち$A$の固有値$\lambda_i (i = 1, 2, \cdots, n)$が重複度$k$を持つ時、固有値$\lambda_i$についての一般固有空間
+  \begin{align*}
+    W \left(\lambda_i\right) = \Set{\mathbf{x} \in \mathbb{C}^n | \left(A - \lambda_i I\right)^k\mathbf{x} = \mathbf{0}}
+  \end{align*}
+  から基底を$k$個持って来れば良い。これは一般に$n$次正方行列の$A$の相違なる固有値を$\lambda_1, \lambda_2, \cdots, \lambda_r \,\, (r \text{は} r \leq n \text{となる非負整数})$とすると、
+  \begin{align*}
+    \mathbb{C}^n = \displaystyle{\bigoplus_{i = 1}^r} W \left(\lambda_i\right)
+  \end{align*}
+  と一般固有空間の直和に分解できるためである。
 \end{proof}
 この事実は$A$の単位固有ベクトルを列ベクトルとした行列$V$が$V^T V = I$という性質を満たす事を述べているので、以下の定理が得られる。
 \begin{theorem}
@@ -162,31 +170,3 @@ $n$次実対称行列$A$の固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$は
                                               & = \Lambda
 \end{align*}
 から、元の$A$と一致することからわかる。
-
-行列の平方根を用いれば、$A, B \in S_+^n$同士の内積$A \cdot B$は非負になることが次の定理から言える。
-\begin{theorem} \label{SemidefiniteInnerProduct}
-  $A, B \in S_+^n$とすると
-  \begin{align*}
-    A \cdot B \geq 0
-  \end{align*}
-  が成り立つ。
-\end{theorem}
-\begin{proof}
-  $A, B$をそれぞれ
-  \begin{align*}
-    A = U \Lambda_A U^T \\
-    B = V \Lambda_B U^T
-  \end{align*}
-  と固有値分解する。これらは行列の平方根を用いて、
-  \begin{align*}
-    A = U \Lambda_A^\frac{1}{2} \Lambda_A^\frac{1}{2} U^T = \left(U \Lambda_A^\frac{1}{2}\right) \left(U \Lambda_A^\frac{1}{2}\right)^T\\
-    B = V \Lambda_B^\frac{1}{2} \Lambda_A^\frac{1}{2} V^T = \left(V \Lambda_B^\frac{1}{2}\right) \left(V \Lambda_B^\frac{1}{2}\right)^T
-  \end{align*}
-  と書き表すことができ、
-  \begin{align*}
-    A \cdot B & = \mathrm{tr}\left(\left(U \Lambda_A^\frac{1}{2}\right) \left(U \Lambda_A^\frac{1}{2}\right)^T \left(V \Lambda_B^\frac{1}{2}\right) \left(V \Lambda_B^\frac{1}{2}\right)^T\right) \\
-              & = \mathrm{tr}\left(\left(U \Lambda_A^\frac{1}{2}\right)^T \left(V \Lambda_B^\frac{1}{2}\right) \left(\left(U \Lambda_A^\frac{1}{2}\right)^T \left(V \Lambda_B^\frac{1}{2}\right)\right)^T\right) \\
-              & \geq 0
-  \end{align*}
-  となるので、$A \cdot B \geq 0$である。
-\end{proof}

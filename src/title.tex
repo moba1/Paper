@@ -27,6 +27,7 @@
 \theoremstyle{definition}
 \newtheorem{theorem}{定理}
 \newtheorem{lemma}[theorem]{補題}
+\newtheorem{colollary}{系}
 \renewcommand\proofname{\textbf{証明}}
 \makeatletter
 \patchcmd{\@endtheorem}{\@endpefalse}{}{}{}
@@ -39,6 +40,17 @@
 % 内積
 \def\dot<#1>{\langle #1 \rangle}
 \def\parenthesis(#1){\left( #1 \right)}
+
+\newcommand{\op}{
+  \mathop{
+    \vphantom{\bigoplus}
+    \mathchoice
+      {\vcenter{\hbox{\resizebox{\widthof{$\displaystyle\bigoplus$}}{!}{$\boxplus$}}}}
+      {\vcenter{\hbox{\resizebox{\widthof{$\bigoplus$}}{!}{$\boxplus$}}}}
+      {\vcenter{\hbox{\resizebox{\widthof{$\scriptstyle\oplus$}}{!}{$\boxplus$}}}}
+      {\vcenter{\hbox{\resizebox{\widthof{$\scriptscriptstyle\oplus$}}{!}{$\boxplus$}}}}
+  }\displaylimits
+}
 
 % 表紙
 \makeatletter

@@ -9,17 +9,17 @@
 
 内点法とはカーマーカー法をはじめとする一連のアルゴリズムの総称であり、単体法の許容領域上の頂点をたどるように動作するのとは違い、許容領域の内点をたどりながら最適解に収束するように動作する。
 
-どちらのアルゴリズムも効率が良いため、様々な改良が提案されている\cite{Optimization}\cite{InteriorPointMethod}。
+どちらのアルゴリズムも効率が良いため、様々な改良が提案されている\cite*{Optimization}\cite*{InteriorPointMethod}。
 
-Chubanovはこれらのアルゴリズムに対して新しいアルゴリズムを提案した\cite{Chubanov}。その新しいアルゴリズムとは単体法と内点法の2つのように線形計画問題を解いて最適解を求めるのではなく、線形計画問題の許容解を求める。そのChubanovの提案したアルゴリズムは、$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、
+Chubanovはこれらのアルゴリズムに対して新しいアルゴリズムを提案した\cite*{Chubanov}。その新しいアルゴリズムとは単体法と内点法の2つのように線形計画問題を解いて最適解を求めるのではなく、線形計画問題の許容解を求める。そのChubanovの提案したアルゴリズムは、$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、
 \begin{align*}
   A \mathbf{x} = 0, \mathbf{x} \geq 0
 \end{align*}
 という同次な不等式制約を入力として次々と凸結合をつくっていくBasic ProcedureとBasic Procedureを呼び出し、その返り値に基づいて制約中にでてくる$A$をスケールするMain Procedureの2つを組み合わせて同次な不等式標準制約をもつ線形計画問題を多項式時間で解く。
 
-線形計画問題の拡張として2次錐計画問題や本論文で取り扱う半正定値計画問題、対称錐計画問題があり、このChubanovが提案したアルゴリズムをこれらの線形計画問題を拡張した問題に拡張する研究がなされている\cite{SOCP}\cite{SymmetricCone}。
+線形計画問題の拡張として2次錐計画問題や本論文で取り扱う半正定値計画問題、対称錐計画問題があり、このChubanovが提案したアルゴリズムをこれらの線形計画問題を拡張した問題に拡張する研究がなされている\cite*{SOCP}\cite*{SymmetricCone}。
 
-Louren\c{c}oらはChubanovのアルゴリズムを許容解が対称錐計画問題の許容解を探し出せるアルゴリズムとして拡張した\cite{SymmetricCone}。対称錐計画問題とは
+Louren\c{c}oらはChubanovのアルゴリズムを許容解が対称錐計画問題の許容解を探し出せるアルゴリズムとして拡張した\cite*{SymmetricCone}。対称錐計画問題とは
 \begin{align*}
   \begin{array}{ll}
     \text{min}  & \dot<\mathbf{c}, \mathbf{x}> \\

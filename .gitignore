@@ -11,3 +11,5 @@
 *.synctex.gz
 *-blx.bib
 *.toc
+.DS_Store
+

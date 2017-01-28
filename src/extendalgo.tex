@@ -1,22 +1,32 @@
-Louren\c{c}oがChubanovのアルゴリズムを対称錐計画問題へ適用できるように拡張している\cite{SymmetricCone}。対称錐計画問題は特殊ケースとして半正定値計画問題を含んでおり、Louren\c{c}oの提案したアルゴリズムは半正定値計画問題にも使用することができる。そこで本論文ではそのLouren\c{c}oらの提案したアルゴリズムを半正定値計画問題に適用できるよう制限した形で実装を行った。
+Louren\c{c}oがChubanovのアルゴリズムを対称錐計画問題へ適用できるように拡張している\cite*{SymmetricCone}。対称錐計画問題は特殊ケースとして半正定値計画問題を含んでおり、Louren\c{c}oの提案したアルゴリズムは半正定値計画問題にも使用することができる。そこで本論文ではそのLouren\c{c}oらの提案したアルゴリズムを半正定値計画問題に適用できるよう制限した形で実装を行った。
 
 具体的には、実装したアルゴリズムは半正定値計画問題の許容解を探す
-\begin{align*}
+\begin{align} \label{MainSemidefiniteSystem}
   \begin{array}{ll}
     \text{find} & X \\
     \text{s.t.} & A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m) \\
                 & X \succ 0
   \end{array}
-\end{align*}
-という問題を解いている。この問題の双対問題は
-\begin{align*}
+\end{align}
+という主問題を解いている。この問題の双対問題は
+\begin{align} \label{DualSemidefiniteSystem}
   \begin{array}{ll}
     \text{find} & \mathbf{u} \\
     \text{s.t.} & \displaystyle{\sum_{i = 1}^m} u_i A_i \succeq 0 \\
-                & \mathbf{u} \not= \mathbf{0}
+                & \displaystyle{\sum_{i = 1}^m} u_i A_i \not= O
   \end{array}
+\end{align}
+であり、この双対問題(\ref{DualSemidefiniteSystem})に許容解が存在すれば、主問題(\ref{MainSemidefiniteSystem})に許容解は存在しない。逆に主問題(\ref{MainSemidefiniteSystem})に許容解が存在すれば、(\ref{DualSemidefiniteSystem})に許容解は存在しない。なぜならば、両方が同次に成立するとすると、系\ref{PsdAndPdInnerProduct}から、
+\begin{align*}
+  \left(\displaystyle{\sum_{i = 1}^m} u_i A_i\right) \cdot X > 0
 \end{align*}
-である。この双対問題に許容解が存在することはない。
+となるが、内積の線形性から
+\begin{align*}
+  \left(\displaystyle{\sum_{i = 1}^m} u_i A_i\right) \cdot X = \displaystyle{\sum_{i = 1}^m} u_i \left(A_i \cdot X\right)
+                                                             = \displaystyle{\sum_{i = 1}^m} u_i \cdot 0
+                                                             = 0
+\end{align*}
+となり、先ほどの$0$より大きくなる結果と矛盾するからである。
 
 \subsection{Basic Procedure}
 \subsubsection{アルゴリズム}
@@ -298,7 +308,7 @@ Main Procedureは
 \begin{enumerate}[label=(\alph*)]
   \item $\displaystyle{\sum_{i = 1}^m u_i A_i \succeq 0}$となるような$\mathbf{u}$ \label{DualSolution}
   \item $A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X \succ 0$。すなわち許容解 \label{FeasibleSolution}
-  \item $X \succeq \epsilon I, A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X$が存在しないこと \label{NoSolution}
+  \item $X \geq \epsilon I, A_i \cdot X = 0 \,\, (i = 1, 2, \cdots, m)$となるような$X$(このような$X$のことを内点実行可能解と呼ぶ)が存在しないこと \label{NoSolution}
 \end{enumerate}
 のいずれかを出力する。
 
