@@ -137,7 +137,7 @@
 \end{align*}
 から$\lambda = 2, 0$でどちらも非負となるので、この行列は半正定値である。
 
-さて、この条件下で作成したプログラムを実際に走らせると図\ref{test1}の実験結果が得られた。
+さて、この条件下で作成したプログラムを実際に走らせると図\ref{test1}の実験結果が得られた。なお、横軸はMain Procedureに入力とする$\epsilon$を、縦軸は実行時間を表している。
 \begin{figure}
   \centering
   \includegraphics[width=10cm]{test1.png}
@@ -173,7 +173,7 @@
 \end{align*}
 を条件として使用した。この実験では内点実行可能解が存在しないので、双対問題の解\ref{DualSolution}は存在することはなく、またどれほど$\epsilon$を小さくしても主問題(\ref{MainSemidefiniteSystem})の許容解を得ることはできない。
 
-実際に得られた結果は図\ref{test2}の通りである。
+実際に実行して得られた結果は図\ref{test2}の通りである。なお、横軸はMain Procedureに入力とする$\epsilon$を、縦軸は実行時間を表している。
 \begin{figure}
   \centering
   \includegraphics[width=10cm]{test2.png}
@@ -196,7 +196,7 @@
   \end{algorithmic}
 \end{algorithm}
 
-実験結果は図\ref{randomtest}のようになった。
+実験結果は図\ref{randomtest}のようになった。なお、横軸はMain Procedureに入力とする$\epsilon$を、縦軸は実行時間を表している。
 \begin{figure}
   \centering
   \includegraphics[width=10cm]{randomtest.png}
@@ -204,3 +204,11 @@
   \label{randomtest}
 \end{figure}
 この実験では$\epsilon$がどのような値であっても問題(\ref{MainSemidefiniteSystem})の許容解$X \succ 0$がみつかる。しかし、前述の実験のように$\epsilon$の値に応じて常に実行時間線形の値となるわけではなく、起伏が激しくなってしまった。これは実行時間が短かすぎたために、コンテキストスイッチなどのアルゴリズムとは本質的には関係ない実行時間による影響が大きくなってしまったのではないかと考えられる。
+
+また、実行した際にえられた許容解の最小固有値を横軸に、縦軸を実行時間とすると、図\ref{eigen}のような結果が得られた。
+\begin{figure}
+  \centering
+  \includegraphics[width=10cm]{eigen.png}
+  \caption{最小固有値と実行時間}
+  \label{eigen}
+\end{figure}
