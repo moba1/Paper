@@ -7,6 +7,7 @@
 でおこない、
 \begin{algorithm}
   \caption{$\epsilon > 0$の与え方}
+  \label{MakeEpsilon}
   \begin{algorithmic}
     \For {$i = 1$ to $10$}
       \For {$j = 9$ to $1$}
@@ -183,7 +184,7 @@
 この結果から、アルゴリズムは内点実行可能解がない場合、$\epsilon$に依存して実行時間が伸びていることがわかる。
 
 \subsection{実験3}
-条件として使用する$A_1, A_2, \cdots, A_{30}$をMATLAB標準のrandiを用いて、Algorithm \ref{MakeRandomMatrices}のようにして生成を行った。
+条件として使用する$A_1, A_2, \cdots, A_{30}$をMATLAB標準のrandiを用いて、Algorithm \ref{MakeRandomMatrices}のようにして生成を行った。この実験では乱数を用いたので、$A_1, A_2, \cdots A_{30}$を生成して、そしてそれらについて$\epsilon$ごとに30回実行時間をソテクするということを1反復として実験を100回ほど行った。すなわち、$A_1, A_2, \cdots, A_{30}$に対してAlgorithm \ref{MakeEpsilon}を使用して、各$\epsilon$とともにMain Procedureの入力とし、$\epsilon$ごとに30回ほどその実行時間を測定した。
 \begin{algorithm}
   \caption{$100$次実対称行列群$A_1, A_2, \cdots, A_{30}$の生成}
   \label{MakeRandomMatrices}
@@ -203,6 +204,21 @@
   \caption{実験3の実験結果}
   \label{randomtest}
 \end{figure}
+
+実験結果からExcelを用いて二元配置法を用いて、測定結果における分散分析表を作成した(表\ref{AnalysisOfVarianceTable})。
+\begin{table}
+  \centering
+  \caption{実験3の分散分析表}
+  \label{AnalysisOfVarianceTable}
+  \begin{tabular}{c|cccccc} \hline
+    要因         & 平方和     & 自由度   & 平均平方              & 分散比     & $p$値                 & $F$境界値 \\ \hline
+    テスト       & $0.010711$ & $99$     & $0.000108$            & $6.081734$ & $4.7 \times 10^{-73}$ & $1.244736$ \\
+    $\epsilon$   & $0.03111$  & $89$     & $3.5 \times 10^{-5}$  & $19.65009$ & $1.41 \times 10^{-7}$ & $1.25871$ \\
+    交互作用     & $0.265943$ & $8811$   & $3.02 \times 10^{-5}$ & $1.696642$ & $0$                   & $1.025166$ \\
+    繰り返し誤差 & $7.845353$ & $441000$ & $1.78 \times 10^{-5}$ &            &                       & \\ \hline
+  \end{tabular}
+\end{table}
+
 この実験では$\epsilon$がどのような値であっても問題(\ref{MainSemidefiniteSystem})の許容解$X \succ 0$がみつかる。しかし、前述の実験のように$\epsilon$の値に応じて常に実行時間線形の値となるわけではなく、起伏が激しくなってしまった。これは実行時間が短かすぎたために、コンテキストスイッチなどのアルゴリズムとは本質的には関係ない実行時間による影響が大きくなってしまったのではないかと考えられる。
 
 また、実行した際にえられた許容解の最小固有値を横軸に、縦軸を実行時間とすると、図\ref{eigen}のような結果が得られた。
