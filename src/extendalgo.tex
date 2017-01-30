@@ -16,7 +16,7 @@ Louren\c{c}oがChubanovのアルゴリズムを対称錐計画問題へ適用で
                 & \displaystyle{\sum_{i = 1}^m} u_i A_i \not= O
   \end{array}
 \end{align}
-であり、この双対問題(\ref{DualSemidefiniteSystem})に許容解が存在すれば、主問題(\ref{MainSemidefiniteSystem})に許容解は存在しない。逆に主問題(\ref{MainSemidefiniteSystem})に許容解が存在すれば、(\ref{DualSemidefiniteSystem})に許容解は存在しない。なぜならば、両方が同次に成立するとすると、系\ref{PsdAndPdInnerProduct}から、
+であり、この双対問題(\ref{DualSemidefiniteSystem})に許容解が存在すれば、主問題(\ref{MainSemidefiniteSystem})に許容解は存在しない。逆に主問題(\ref{MainSemidefiniteSystem})に許容解が存在すれば、双対問題(\ref{DualSemidefiniteSystem})に許容解は存在しない。なぜならば、両方が同時に成立するとすると、系\ref{PsdAndPdInnerProduct}から、
 \begin{align*}
   \left(\displaystyle{\sum_{i = 1}^m} u_i A_i\right) \cdot X > 0
 \end{align*}
@@ -46,7 +46,7 @@ Basic Procedureは、
                 & X \succ 0
   \end{array}
 \end{align*}
-という問題をから解$X$を導こうとする。アルゴリズムが終了すると
+という問題から解$X$を導こうとする。アルゴリズムが終了すると
 \begin{itemize}
   \item $\displaystyle{\|P_\mathcal{A} Y\| \leq \frac{1}{n^{\frac{3}{2}}} \mathrm{tr}\parenthesis(Y)}$となるような$Y \succ 0$
   \item $A_i \cdot X = 0 \,\, \left(i = 1, 2, \cdots, m\right)$となるような$X \succ 0$、すなわち許容解
@@ -207,7 +207,6 @@ Basic Procedureは、
   \end{align*}
   である。
 \end{proof}
-である。
 \begin{lemma} \label{Increment}
   $Z$を、$Y_i \in S_+^n$を$P_\mathcal{A}$で射影した点、$C$を$Z$のもっとも小さな固有値に対応する固有ベクトル$\mathbf{q}$によって生成される行列$\mathbf{q} \mathbf{q}^T$とする。$Y_{i + 1} \in S_+^n$を
   \begin{align*}
@@ -221,7 +220,7 @@ Basic Procedureは、
   \begin{align*}
     \frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2} \geq \frac{1}{\|P_\mathcal{A} Y_i\|^2} + 1
   \end{align*}
-  とい関係式が成り立つ。
+  という関係式が成り立つ。
 \end{lemma}
 \begin{proof}
   $P$を、$P_\mathcal{A}$によって$C$を$\mathrm{ker} \mathcal{A} = \Set{X \in S^n | A_i \cdot Y = 0 \,\,(i = 1, 2, \cdots, m)}$に移した点とする。すると
@@ -280,9 +279,8 @@ Basic Procedureは、
   \end{align*}
   が成立する。
 \end{proof}
-である。
 
-以上の補題からこのアルゴリズムの計算量は
+以上の補題からこのアルゴリズムの計算量は$O(n^6)$となる。
 \begin{theorem} \label{BasicProcedureOrder}
   Basic Procedureの計算量は$O (n^6)$である。
 \end{theorem}
@@ -291,7 +289,7 @@ Basic Procedureは、
   \begin{align*}
     \frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2} \geq \frac{1}{\|Z\|^2} + \frac{1}{\|P\|^2} \geq \frac{1}{\|Z\|^2} + 1
   \end{align*}
-  となり、$\displaystyle{\frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2}}$はすくなくとも1増加するので、最大でもこのアルゴリズムは$n^3$回は反復を行なう。射影$Z$の計算にかかる計算量はGauss Eliminationを用いれば$O (n^3)$で計算することができるので、このアルゴリズムの計算量は$O(n^6)$
+  となり、$\displaystyle{\frac{1}{\|P_\mathcal{A} Y_{i + 1}\|^2}}$はすくなくとも1増加するので、最大でもこのアルゴリズムは$n^3$回は反復を行なう。射影$Z$の計算にかかる計算量はGauss Eliminationを用いれば$O (n^3)$で計算することができるので、このアルゴリズムの計算量は$O(n^6)$となる。
 \end{proof}
 
 \subsection{Main Procedure}

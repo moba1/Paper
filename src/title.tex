@@ -1,6 +1,6 @@
 \documentclass[a4paper,uplatex,12pt]{jsarticle}
 
-\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\usepackage[backend=biber, maxbibnames=99, sorting=none]{biblatex}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{algorithm, algpseudocode}
 \usepackage{enumitem}
@@ -62,20 +62,19 @@
   \vfill
   \centering
   {\Large \@title}
-
+  \vfill
   {\@date}
-
+  \vfill
   {
     \large
     情報数理工学コース\\[1cm]
     学籍番号 1311169\\[1cm]
-    \@author
+    \@author\\
   }
-
   指導教員 村松正和
   \vfill
 }
-\title{Chubanovのにおけるアルゴリズムの\\SDPへの拡張とその実装}
+\title{ChubanovのアルゴリズムのSDPへの拡張とその実装}
 \author{福田 優真}
 \date{\today}
 
