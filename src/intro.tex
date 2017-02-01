@@ -13,7 +13,7 @@
 
 Chubanovはこれらのアルゴリズムに対して新しいアルゴリズムを提案した\cite*{Chubanov}。その新しいアルゴリズムとは単体法と内点法の2つのように線形計画問題を解いて最適解を求めるのではなく、線形計画問題の許容解を求めるアルゴリズムである。そのChubanovの提案したアルゴリズムは、$m \times n$行列$A$と$\mathbf{x} \in \mathbb{R}^n$に対して、
 \begin{align*}
-  A \mathbf{x} = 0, \mathbf{x} \geq 0
+  A \mathbf{x} = \mathbf{0}, \mathbf{x} \geq \mathbf{0}
 \end{align*}
 という同次な不等式制約を入力として次々と凸結合をつくっていくBasic Procedureと、Basic Procedureを呼び出してその返り値に基づいて制約中にでてくる$A$をスケールするMain Procedureの2つを組み合わせて同次な不等式標準制約をもつ線形計画問題を多項式時間で解く。
 
