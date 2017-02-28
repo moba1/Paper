@@ -3,8 +3,9 @@
   \item[OS] Mac OS X El Caption (10.11.6)
   \item[CPU] Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz
   \item[Memory] 16GB 1600MHz DDR3
+  \item[言語] MATLAB 2016b
 \end{description}
-でおこない、Algorithm \ref{MakeEpsilon}
+でおこなった。実験1,2,3はAlgorithm \ref{MakeEpsilon}
 \begin{algorithm}
   \caption{$\epsilon > 0$の与え方}
   \label{MakeEpsilon}
@@ -19,7 +20,7 @@
     \EndFor
   \end{algorithmic}
 \end{algorithm}
-を使用してForループ1反復ごとの$\epsilon$とともにMain Procedureを100回呼び出してMain Procedureの実行時間から平均実行時間を算出した。実装はMATLAB 2016bを用いて行った。
+を使用してForループ1反復ごとの$\epsilon$とともにMain Procedureを100回呼び出してMain Procedureの実行時間から平均実行時間を算出した。
 
 \subsection{実験1}
 \begin{align*}
@@ -183,7 +184,7 @@
 \end{figure}
 この結果から、アルゴリズムは内点実行可能解がない場合、$\epsilon$に依存して実行時間が伸びていることがわかる。
 
-\subsection{実験3}
+\subsection{実験3} \label{exp3}
 問題として使用する$A_1, A_2, \cdots, A_{30}$をMATLAB標準のrandnを用いて、Algorithm \ref{MakeRandomMatrices}のようにして生成を行った。この実験では乱数を用いたので、$A_1, A_2, \cdots A_{30}$を生成して、そしてそれらについて$\epsilon$ごとに30回実行時間を測定するということを1反復として実験を100回ほど行った。すなわち、$A_1, A_2, \cdots, A_{30}$に対してAlgorithm \ref{MakeEpsilon}を使用して、各$\epsilon$とともにMain Procedureの入力とし、$\epsilon$ごとに30回ほどその実行時間を測定した。
 \begin{algorithm}
   \caption{$100$次実対称行列群$A_1, A_2, \cdots, A_{30}$の生成}
@@ -235,3 +236,49 @@
   \caption{最小固有値と実行時間}
   \label{eigen}
 \end{figure}
+
+\subsection{実験4}
+弱実行可能な場合\cite{FeasibleAnalysis}の半正定値システムを
+\begin{itemize}
+  \item 入力として使用する$\epsilon$を$10^{-9}$とし、生成する実対称行列の個数を$30$個として、その$30$個の実対称行列のサイズを変化させる
+  \item 入力として使用する$\epsilon$を$10^{-9}$とし、生成する実対称行列のサイズを$50$次として、生成する実対称行列の個数を変化させる
+  \item $50$次実対行列の行列を$40$個生成して、入力として使用する$\epsilon$の値をAlgorithm \ref{MakeEpsilon}を用いて変化させる
+\end{itemize}
+という3つの方法で生成して実験を行ったところ、図\ref{test4-size},\ref{test4-number},\ref{test4-epsilon}の3つの結果を得た。
+\begin{figure}
+  \centering
+  \includegraphics[width=10cm]{weakly_feasible/size.png}
+  \caption{行列のサイズを変化させた結果}
+  \label{test4-size}
+
+  \includegraphics[width=10cm]{weakly_feasible/number.png}
+  \caption{行列の個数を変化させた結果}
+  \label{test4-number}
+
+  \includegraphics[width=10cm]{weakly_feasible/epsilon.png}
+  \caption{$\epsilon$を変化させた結果}
+  \label{test4-epsilon}
+\end{figure}
+なお、縦軸は全て実行時間であり、横軸は変化させた対象である。また、図\ref{test4-size}だけ両対数グラフであり、図\ref{test4-number}及び\ref{test4-epsilon}は横軸だけ対数をとった片対数グラフである。これらの結果から、アルゴリズムは行列のサイズと行列の個数の変化に大きな影響を受けていることがうかがえる。
+
+\subsection{実験5}
+強実行可能な場合\cite{FeasibleAnalysis}の半正定値システムを
+\begin{itemize}
+  \item 入力として使用する$\epsilon$を$10^{-5}$とし、生成する実対称行列の個数を$10$個として、その$10$個の実対称行列のサイズを変化させる
+  \item 入力として使用する$\epsilon$を$10^{-5}$とし、生成する実対称行列のサイズを$20$次として、生成する実対称行列の個数を変化させる
+  \item $50$次実対行列の行列を$40$個生成して、入力として使用する$\epsilon$の値をAlgorithm \ref{MakeEpsilon}を用いて変化させる
+\end{itemize}
+という3つの方法で生成し、実験を行い、図\ref{test5-size},\ref{test5-number},\ref{test5-epsilon}の結果を得た。
+\begin{figure}
+  \centering
+  \includegraphics[width=10cm]{strongly_feasible/size.png}
+  \caption{行列のサイズを変化させた結果}
+  \label{test5-size}
+  \includegraphics[width=10cm]{strongly_feasible/number.png}
+  \caption{行列の個数を変化させた結果}
+  \label{test5-number}
+  \includegraphics[width=10cm]{strongly_feasible/epsilon.png}
+  \caption{$\epsilon$を変化させた結果}
+  \label{test5-epsilon}
+\end{figure}
+縦軸は実行時間を、横軸は変化させた対象をそれぞれ表しており、図\ref{test5-size}は両対数グラフで、図\ref{test5-number}及び\ref{test5-epsilon}は横軸だけ対数をとった片対数グラフとなっている。以上の結果から強実行可能な半正定値システムは弱実行可能な場合と同様に行列のサイズと行列の個数に非常に影響を受けやすいことが確認できた。

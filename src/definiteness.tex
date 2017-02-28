@@ -6,11 +6,11 @@ $n$次実対称行列$A$が半正定値であるとは
 \begin{align*}
   A \succeq 0
 \end{align*}
-で表す。また、$A$が正定値であるとは任意の$\mathbf{0}$でない$\mathbf{x} \in \mathbb{R}^n$に対して
+で表す。また、$A$が正定値であるとは任意の$\mathbf{0}$でない$\mathbf{x} \in \mathbb{R}^n$に対して$A$が
 \begin{align} \label{PD}
-  \mathbb{R}^n, \mathbf{x}^T A \mathbf{x} > 0
+  \mathbf{x}^T A \mathbf{x} > 0
 \end{align}
-であることを言う。$A$が正定値であることを示すときは
+を満たすことを言う。$A$が正定値であることを示すときは
 \begin{align*}
   A \succ 0
 \end{align*}
@@ -79,7 +79,7 @@ $n$次対称行列の集合を$S^n$、$n$次対称行列のなかでも半正定
   $A$の固有値$\lambda_1, \lambda_2, \cdots, \lambda_n$が全て非負ならば$A$は半正定値である。
 \end{theorem}
 \begin{proof}
-  各固有値$\lambda_i \,\, (i = 1, 2, \cdots, n)$に対応する固有ベクトルを$\mathbf{x}_i$とすると、共役なベクトル$\mathbf{x}_i^*$を$A \mathbf{x}_i$に対して左からかけると
+  各固有値$\lambda_i \,\, (i = 1, 2, \cdots, n)$に対応する固有ベクトルを$\mathbf{x}_i$とし、その固有ベクトル$\mathbf{x}_i$の共役なベクトル$\mathbf{x}_i^*$とする。$A \mathbf{x}_i$に対して$\mathbf{x}_i^*$を左からかけると
   \begin{align*}
     \mathbf{x}_i^* A \mathbf{x}_i = \mathbf{x}_i^* \lambda_i \mathbf{x}_i = \lambda_i \mathbf{x}_i^* \mathbf{x}_i \geq 0
   \end{align*}
