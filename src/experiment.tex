@@ -238,47 +238,26 @@
 \end{figure}
 
 \subsection{実験4}
-弱実行可能な場合\cite{FeasibleAnalysis}の半正定値システムを
+生成する$A_i$のサイズを$n$、$A_i$の個数を$m$とする。弱実行可能な場合と強実行可能な場合\cite{FeasibleAnalysis}の半正定値システムを
 \begin{itemize}
-  \item 入力として使用する$\epsilon$を$10^{-9}$とし、生成する実対称行列の個数を$30$個として、その$30$個の実対称行列のサイズを変化させる
-  \item 入力として使用する$\epsilon$を$10^{-9}$とし、生成する実対称行列のサイズを$50$次として、生成する実対称行列の個数を変化させる
-  \item $50$次実対行列の行列を$40$個生成して、入力として使用する$\epsilon$の値をAlgorithm \ref{MakeEpsilon}を用いて変化させる
+  \item 入力として使用する$\epsilon$を$10^{-9}$とし、$m = 30$として、$A_i$のサイズ$n$を変化させる
+  \item 入力として使用する$\epsilon$を$10^{-9}$とし、$n = 50$として、$A_i$の数$m$を変化させる
+  \item $n = 50, m = 40$として、入力として使用する$\epsilon$の値をAlgorithm \ref{MakeEpsilon}を用いて変化させる
 \end{itemize}
 という3つの方法で生成して実験を行ったところ、図\ref{test4-size},\ref{test4-number},\ref{test4-epsilon}の3つの結果を得た。
 \begin{figure}
   \centering
-  \includegraphics[width=10cm]{weakly_feasible/size.png}
+  \includegraphics[width=6cm, angle=-90]{size.png}
   \caption{行列のサイズを変化させた結果}
   \label{test4-size}
 
-  \includegraphics[width=10cm]{weakly_feasible/number.png}
+  \includegraphics[width=6cm, angle=-90]{number.png}
   \caption{行列の個数を変化させた結果}
   \label{test4-number}
 
-  \includegraphics[width=10cm]{weakly_feasible/epsilon.png}
+  \includegraphics[width=6cm, angle=-90]{epsilon.png}
   \caption{$\epsilon$を変化させた結果}
   \label{test4-epsilon}
 \end{figure}
-なお、縦軸は全て実行時間であり、横軸は変化させた対象である。また、図\ref{test4-size}だけ両対数グラフであり、図\ref{test4-number}及び\ref{test4-epsilon}は横軸だけ対数をとった片対数グラフである。これらの結果から、アルゴリズムは行列のサイズと行列の個数の変化に大きな影響を受けていることがうかがえる。
+なお、縦軸は全て実行時間であり、横軸は変化させた対象である。また、図\ref{test4-size}だけ両対数グラフであり、図\ref{test4-number}及び\ref{test4-epsilon}は横軸だけ対数をとった片対数グラフである。これらの結果から、アルゴリズムは行列のサイズと行列の個数の変化に大きな影響を受けていることがうかがえる。また、
 
-\subsection{実験5}
-強実行可能な場合\cite{FeasibleAnalysis}の半正定値システムを
-\begin{itemize}
-  \item 入力として使用する$\epsilon$を$10^{-5}$とし、生成する実対称行列の個数を$10$個として、その$10$個の実対称行列のサイズを変化させる
-  \item 入力として使用する$\epsilon$を$10^{-5}$とし、生成する実対称行列のサイズを$20$次として、生成する実対称行列の個数を変化させる
-  \item $50$次実対行列の行列を$40$個生成して、入力として使用する$\epsilon$の値をAlgorithm \ref{MakeEpsilon}を用いて変化させる
-\end{itemize}
-という3つの方法で生成し、実験を行い、図\ref{test5-size},\ref{test5-number},\ref{test5-epsilon}の結果を得た。
-\begin{figure}
-  \centering
-  \includegraphics[width=10cm]{strongly_feasible/size.png}
-  \caption{行列のサイズを変化させた結果}
-  \label{test5-size}
-  \includegraphics[width=10cm]{strongly_feasible/number.png}
-  \caption{行列の個数を変化させた結果}
-  \label{test5-number}
-  \includegraphics[width=10cm]{strongly_feasible/epsilon.png}
-  \caption{$\epsilon$を変化させた結果}
-  \label{test5-epsilon}
-\end{figure}
-縦軸は実行時間を、横軸は変化させた対象をそれぞれ表しており、図\ref{test5-size}は両対数グラフで、図\ref{test5-number}及び\ref{test5-epsilon}は横軸だけ対数をとった片対数グラフとなっている。以上の結果から強実行可能な半正定値システムは弱実行可能な場合と同様に行列のサイズと行列の個数に非常に影響を受けやすいことが確認できた。
