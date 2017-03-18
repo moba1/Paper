@@ -251,15 +251,18 @@
   \caption{行列のサイズ$n$を変化させた実験の結果}
   \label{test4-size}
 
-  \includegraphics[angle=-90, width=14cm]{number.png}
+  \includegraphics{number-times.eps}
   \caption{行列の個数$m$を変化させた実験の結果}
   \label{test4-number}
 \end{figure}
 \begin{figure}
   \centering
-  \includegraphics[width=14cm]{epsilon.png}
+  \includegraphics{epsilon-times.eps}
   \caption{$\epsilon$を変化させた実験の結果}
   \label{test4-epsilon}
 \end{figure}
 なお、縦軸は全て実行時間であり、横軸は変化させた対象($n$,$m$,$\epsilon$)である。
 
+以上の結果から、弱実行可能な場合は行列のサイズ$n$に影響を受けやすく、強実行可能な場合は行列の個数$m$と$\epsilon$の大きさに影響を受けやすいことがうかがえる。
+
+また、どちらも行列の個数$m$及び$\epsilon$よりも行列のサイズ$n$の変化によって実行時間が大きく影響を受けていると言えるだろう。
