@@ -247,17 +247,19 @@
 という3つの方法で生成して実験を行ったところ、図\ref{test4-size},\ref{test4-number},\ref{test4-epsilon}の3つの結果を得た。
 \begin{figure}
   \centering
-  \includegraphics[width=6cm, angle=-90]{size.png}
-  \caption{行列のサイズを変化させた結果}
+  \includegraphics{size-times.eps}
+  \caption{行列のサイズ$n$を変化させた実験の結果}
   \label{test4-size}
 
-  \includegraphics[width=6cm, angle=-90]{number.png}
-  \caption{行列の個数を変化させた結果}
+  \includegraphics[angle=-90, width=14cm]{number.png}
+  \caption{行列の個数$m$を変化させた実験の結果}
   \label{test4-number}
-
-  \includegraphics[width=6cm, angle=-90]{epsilon.png}
-  \caption{$\epsilon$を変化させた結果}
+\end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[width=14cm]{epsilon.png}
+  \caption{$\epsilon$を変化させた実験の結果}
   \label{test4-epsilon}
 \end{figure}
-なお、縦軸は全て実行時間であり、横軸は変化させた対象である。また、図\ref{test4-size}だけ両対数グラフであり、図\ref{test4-number}及び\ref{test4-epsilon}は横軸だけ対数をとった片対数グラフである。これらの結果から、アルゴリズムは行列のサイズと行列の個数の変化に大きな影響を受けていることがうかがえる。また、
+なお、縦軸は全て実行時間であり、横軸は変化させた対象($n$,$m$,$\epsilon$)である。
 
